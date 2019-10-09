@@ -4,6 +4,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
+//Michael Schmidt
+
 public class Timer : MonoBehaviour
 {
     [SerializeField]
@@ -34,7 +36,6 @@ public class Timer : MonoBehaviour
 
     void TimerCountdown()
     {
-        
 
         time = time.Subtract(new TimeSpan(0, 0, 0, 0, (int)(Time.deltaTime * 1000)));
 
@@ -48,6 +49,7 @@ public class Timer : MonoBehaviour
 
         if (currentDayTime == DayTime.Panic)
         {
+            //enable UI Timer
             uiTimer.text = string.Format("{0:0}:{1:00}", time.Minutes, time.Seconds);
 
             if ( time.Seconds < 0)
