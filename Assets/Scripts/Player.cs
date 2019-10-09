@@ -15,7 +15,7 @@ public class Player : MonoBehaviour
     }
     void Update()
     {
-        Vector2 move = new Vector2(Input.GetAxis("Vertical"), Input.GetAxis("Horizontal"));
+        Vector2 move = new Vector2(Input.GetAxis("Horizontal"), Input.GetAxis("Vertical"));
         rb.velocity = move * movementSpeed * Time.deltaTime;
     }
 }
