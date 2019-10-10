@@ -16,6 +16,7 @@ public class Player : MonoBehaviour
     private Animator characterAnimator;
     private CapsuleCollider2D characterCollider;
 
+
     private void Awake()
     {
         characterRB = GetComponent<Rigidbody2D>();
@@ -23,14 +24,12 @@ public class Player : MonoBehaviour
         characterCollider = GetComponent<CapsuleCollider2D>();
     }
 
-    void Start()
-    {
-        characterRB.GetComponent<Rigidbody2D>();
-    }
+
     void Update()
     {
         ApplyInput();
     }
+
 
     /// <summary>
     /// Translates  [User Input]
@@ -43,6 +42,7 @@ public class Player : MonoBehaviour
 
         transform.Translate(new Vector2(moveHorizontal, moveVertical));
     }
+
 
     /// <summary>
     /// Updates the [Player's Animation]
