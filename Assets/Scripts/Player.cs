@@ -12,6 +12,7 @@ public class Player : MonoBehaviour
     [SerializeField]
     private float movementSpeed;
 
+    private Stats stats;
     private Rigidbody2D characterRB;
     private Animator characterAnimator;
     private CapsuleCollider2D characterCollider;
@@ -19,6 +20,7 @@ public class Player : MonoBehaviour
 
     private void Awake()
     {
+        stats = GetComponent<Stats>();
         characterRB = GetComponent<Rigidbody2D>();
         characterAnimator = GetComponent<Animator>();
         characterCollider = GetComponent<CapsuleCollider2D>();
@@ -28,6 +30,11 @@ public class Player : MonoBehaviour
     void Update()
     {
         ApplyInput();
+        //comboTimer -= Time.deltaTime;
+        //if (comboTimer < 0f) lastCastID = "";
+
+        //AbilityFilterHandling();
+        ////CooldownManager();
     }
 
 
@@ -41,6 +48,7 @@ public class Player : MonoBehaviour
         float moveVertical = Input.GetAxis("Vertical") * movementSpeed * Time.deltaTime;
 
         transform.Translate(new Vector2(moveHorizontal, moveVertical));
+        //AnimationUpdate(moveHorizontal, moveVertical);
     }
 
 
@@ -72,4 +80,109 @@ public class Player : MonoBehaviour
             characterAnimator.SetBool("isWalking", false);
         }
     }
+
+
+
+
+
+
+    //public enum CastInput
+    //{
+    //    none = 0,
+    //    left = 1,
+    //    up = 2,
+    //    right = 3
+    //}
+
+    //public GameObject[] castedAbilities = new GameObject[200];
+    //private AbilityList abiList = new AbilityList();
+    //public GameObject CastPrefab;
+
+    //private bool doesHitAll;
+    //private string lastCastID;
+    //private float comboTimer;
+
+
+    //void AbilityFilterHandling()
+    //{
+
+    //    abiList.GetAbilityList(stats, int.Parse(GetCastID()), doesHitAll);
+    //    if (castedAbilities[199] == null) castedAbilities[199] = Instantiate(CastPrefab, transform.position, Quaternion.identity);
+    //    break;
+    //}
+
+
+    ////public void CooldownManager()
+    ////{
+    ////    if (castedAbilities[199] != null)
+    ////    {
+    ////        for (int i = 0; i < castedAbilities.Length; i++)
+    ////        {
+    ////            if (castedAbilities[i] == null)
+    ////            {
+    ////                castedAbilities[i] = castedAbilities[199];
+    ////                castedAbilities[199] = null;
+    ////            }
+    ////        }
+    ////    }
+
+    ////    for (int i = 0; i < castedAbilities.Length; i++)
+    ////    {
+    ////        if (castedAbilities[i] != null)
+    ////        {
+    ////            if (castedAbilities[i].GetComponent<Ability>().Cooldown <= 0f)
+    ////            {
+    ////                castedAbilities[i] = null;
+    ////            }
+    ////        }
+    ////    }
+    ////}
+
+
+    //public void ComboManager()
+    //{
+
+    //}
+
+
+
+
+#region This Ability Casting Works
+// selectedAbility = CastPrefab.GetComponent<Ability>();
+// selectedAbility.Initialize(113, Ability.CastType.casualCircle, "One-Hit-Circle", 2, 0.75f, 0.5f, 1f, 20f, null, LayerMask.NameToLayer("Enemy"));
+// lastCastedObject = Instantiate(CastPrefab, gameObject.transform.position, Quaternion.identity);
+#endregion
+
+#region This works too, but isn't as flexible
+// lastCastedObject = Instantiate(CastPrefab, gameObject.transform.position, Quaternion.identity);
+// lastCastedObject.GetComponent<Ability>().Initialize(1, Ability.CastType.burstCircle, "Cool bCircle", 1, 1f, 1f, 1f, 3f, 5f, null, LayerMask.NameToLayer("Enemy"));
+#endregion
+
+#region need a pausing timer?
+//IEnumerator WaitForThis(float timeToWait) { yield return new WaitForSeconds(timeToWait); }
+#endregion
+
+#region some crap
+
+
+// public void LeftMethod()
+// {
+//     Skipping Obj Declaration due to prefab use
+
+//     abilities[0].Initialize(113, Ability.CastType.casualCircle, "One-Hit-Circle", 2, 0.75f, 0.5f, 1f, 20f, null, LayerMask.NameToLayer("Enemy"));
+//     lastCastedObject = Instantiate(CastPrefab, gameObject.transform.position, Quaternion.identity);
+//     ^add a values definer so this can hold variables for each thing.
+// }
+
+
+// public void RightMethod()
+// {
+//     Skipping Obj Declaration due to prefab use
+
+
+
+//     abilities[1].Initialize(1, Ability.CastType.burstCircle, "Burst Circle", 50, 0.2f, 0.5f, 90f, 3f, 5f, null, LayerMask.NameToLayer("Enemy"));
+//     lastCastedObject = Instantiate(CastPrefab, gameObject.transform.position, Quaternion.identity);
+// }
+#endregion
 }
