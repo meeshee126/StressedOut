@@ -8,11 +8,11 @@ using UnityEngine.UI;
 
 public class Timer : MonoBehaviour
 {
-    [SerializeField]
-    int minutes, seconds;
+   
+    public int minutes, seconds;
 
     Text uiTimer;
-    TimeSpan time;
+    public TimeSpan time;
     bool showTimer;
     bool dayOver;
 
@@ -78,10 +78,16 @@ public class Timer : MonoBehaviour
         dayOver = false;
     }
 
+    public float TotalTimeInSeconds()
+    {
+        float total = (time.Minutes * 60) + time.Seconds;
+        return total;
+    }
+
     public enum DayTime
     {
-        Day = 0,
-        Panic = 1,
-        Night = 2
+        Day,
+        Panic,
+        Night
     }
 }
