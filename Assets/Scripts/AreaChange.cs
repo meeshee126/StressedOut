@@ -4,29 +4,40 @@ using UnityEngine;
 
 public class AreaChange : MonoBehaviour
 {
-    public Camera MainCamera;
+    public Camera mainCamera;
+    Vector3 newPosition;
+
+    private void Start()
+    {
+        newPosition = mainCamera.transform.position;
+    }
 
     void OnTriggerEnter2D(Collider2D enter)
     {
         if (enter.gameObject.tag == "EnterRight")
         {
-            MainCamera.transform.position = MainCamera.transform.position + new Vector3(25, 0, 0);
+            newPosition = mainCamera.transform.position + new Vector3(25, 0, 0);
             transform.position = transform.position + new Vector3(5,0,0);
         }
         if (enter.gameObject.tag == "EnterLeft")
         {
-            MainCamera.transform.position = MainCamera.transform.position + new Vector3(-25, 0, 0);
+            newPosition = mainCamera.transform.position + new Vector3(-25, 0, 0);
             transform.position = transform.position + new Vector3(-5, 0, 0);
         }
         if (enter.gameObject.tag == "EnterUp")
         {
-            MainCamera.transform.position = MainCamera.transform.position + new Vector3(0, 15, 0);
+            newPosition = mainCamera.transform.position + new Vector3(0, 15, 0);
             transform.position = transform.position + new Vector3(0, 5.5f, 0);
         }
         if (enter.gameObject.tag == "EnterDown")
         {
-            MainCamera.transform.position = MainCamera.transform.position + new Vector3(0, -15, 0);
+            newPosition = mainCamera.transform.position + new Vector3(0, -15, 0);
             transform.position = transform.position + new Vector3(0, -5.5f, 0);
         }
+    }
+
+    private void Update()
+    {
+        mainCamera.transform.position += (newPosition - mainCamera.transform.position) * 0.06f;
     }
 }
