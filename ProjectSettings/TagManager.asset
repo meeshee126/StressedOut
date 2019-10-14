@@ -6,6 +6,10 @@ TagManager:
   tags:
   - Resource
   - Consumeable
+  - EnterRight
+  - EnterLeft
+  - EnterUp
+  - EnterDown
   layers:
   - Default
   - TransparentFX
