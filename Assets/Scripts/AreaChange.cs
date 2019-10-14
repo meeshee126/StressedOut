@@ -21,12 +21,12 @@ public class AreaChange : MonoBehaviour
         if (enter.gameObject.tag == "EnterUp")
         {
             MainCamera.transform.position = MainCamera.transform.position + new Vector3(0, 15, 0);
-            transform.position = transform.position + new Vector3(0, 5, 0);
+            transform.position = transform.position + new Vector3(0, 5.5f, 0);
         }
         if (enter.gameObject.tag == "EnterDown")
         {
             MainCamera.transform.position = MainCamera.transform.position + new Vector3(0, -15, 0);
-            transform.position = transform.position + new Vector3(0, -5, 0);
+            transform.position = transform.position + new Vector3(0, -5.5f, 0);
         }
     }
 }

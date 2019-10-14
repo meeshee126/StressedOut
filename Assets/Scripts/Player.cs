@@ -44,11 +44,13 @@ public class Player : MonoBehaviour
     /// </summary>
     void ApplyInput()
     {
-        float moveHorizontal = Input.GetAxis("Horizontal") * movementSpeed * Time.deltaTime;
-        float moveVertical = Input.GetAxis("Vertical") * movementSpeed * Time.deltaTime;
+        float moveHorizontal = Input.GetAxis("Horizontal") * movementSpeed;
+        float moveVertical = Input.GetAxis("Vertical") * movementSpeed;
 
-        transform.Translate(new Vector2(moveHorizontal, moveVertical));
+        //transform.Translate(new Vector2(moveHorizontal, moveVertical));
         //AnimationUpdate(moveHorizontal, moveVertical);
+
+        characterRB.velocity = new Vector2(moveHorizontal, moveVertical);
     }
 
 
