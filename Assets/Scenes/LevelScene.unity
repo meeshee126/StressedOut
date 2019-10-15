@@ -1447,6 +1447,66 @@ Transform:
   m_Father: {fileID: 1872911007}
   m_RootOrder: 18
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 90}
+--- !u!1 &1013605667
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1013605669}
+  - component: {fileID: 1013605668}
+  m_Layer: 8
+  m_Name: GameObject
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1013605668
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1013605667}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7c1e778a6c55b18479fa3f999eed0031, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  CastName: 
+  HitAllEntities: 0
+  Damage: 0
+  Bursts: 0
+  CastingTime: 0
+  Duration: 0
+  BurstWait: 0
+  StartBurstWait: 0
+  ChildAbilityWait: 0
+  ColliderAreaAxisX: 0
+  ColliderAreaAxisY: 0
+  ColliderAreaRadius: 0
+  ChildAbility: {fileID: 0}
+  WhatCanItHit:
+    serializedVersion: 2
+    m_Bits: 0
+  attackDirection: {fileID: 0}
+--- !u!4 &1013605669
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1013605667}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 7
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1034122283
 GameObject:
   m_ObjectHideFlags: 0
@@ -1457,6 +1517,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1034122285}
   - component: {fileID: 1034122284}
+  - component: {fileID: 1034122286}
   m_Layer: 0
   m_Name: GameManager
   m_TagString: Untagged
@@ -1476,8 +1537,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c019482daa8dfd9429d2ff8c6094ccc2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  minutes: 10
-  seconds: 10
+  minutes: 2
+  seconds: 4
   currentDayTime: 0
 --- !u!4 &1034122285
 Transform:
@@ -1493,6 +1554,24 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1034122286
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1034122283}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3ccf628eb2660e145aaf3c6842b97b53, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  veryLowCost: 3000
+  lowCost: 4000
+  middleCost: 5000
+  highCost: 6000
+  durationInSeconds: 3
+  timeCost: 0
 --- !u!1 &1043001240
 GameObject:
   m_ObjectHideFlags: 0

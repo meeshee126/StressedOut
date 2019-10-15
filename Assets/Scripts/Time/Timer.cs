@@ -8,15 +8,15 @@ using UnityEngine.UI;
 
 public class Timer : MonoBehaviour
 {
-   
-    public int minutes, seconds;
+    [Header("Set Timer")]
+    public int minutes;
+    public int seconds;
+    public DayTime currentDayTime = DayTime.Day;
 
     Text uiTimer;
     public TimeSpan time;
     bool showTimer;
     bool dayOver;
-
-    public DayTime currentDayTime = DayTime.Day;
 
     void Start()
     {
@@ -71,6 +71,12 @@ public class Timer : MonoBehaviour
         }
     }
 
+    public void SpeedTime(int timeCost)
+    {
+        time = time.Subtract(new TimeSpan(0, 0, 0, 0, (int)(Time.deltaTime * timeCost)));
+    }
+    
+
     void NewDay()
     {
         currentDayTime = DayTime.Day;
@@ -90,4 +96,6 @@ public class Timer : MonoBehaviour
         Panic,
         Night
     }
+
+
 }
