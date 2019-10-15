@@ -17,9 +17,15 @@ public class Player : MonoBehaviour
     private Animator characterAnimator;
     private CapsuleCollider2D characterCollider;
 
+    //for testing
+    TimeBehaviour timeBehaviour;
+
 
     private void Awake()
     {
+        //for testing
+        timeBehaviour = GameObject.Find("GameManager").GetComponent<TimeBehaviour>();
+
         stats = GetComponent<Stats>();
         characterRB = GetComponent<Rigidbody2D>();
         characterAnimator = GetComponent<Animator>();
@@ -29,6 +35,12 @@ public class Player : MonoBehaviour
 
     void Update()
     {
+        //for testing
+        if (Input.GetKeyDown(KeyCode.Space))
+        {
+            timeBehaviour.timeCost = TimeBehaviour.TimeCost.highCost;
+        }
+
         ApplyInput();
         //comboTimer -= Time.deltaTime;
         //if (comboTimer < 0f) lastCastID = "";
