@@ -2,10 +2,12 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+// Michael Shcmidt
+
 public class TimeBehaviour : MonoBehaviour
 {
 
-    [Header("Timecosts in milliseconds")]
+    [Header("Timecosts multiplied in milliseconds")]
     [SerializeField]
     int veryLowCost;
     [SerializeField]
@@ -14,14 +16,16 @@ public class TimeBehaviour : MonoBehaviour
     int middleCost;
     [SerializeField]
     int highCost;
+
+    [Header("")]
     [SerializeField]
     float durationInSeconds;
+
+    public TimeCost timeCost = TimeCost.noCost;
 
     float count;
 
     Timer timer;
-
-    public TimeCost timeCost = TimeCost.noCost;
 
     void Start()
     {

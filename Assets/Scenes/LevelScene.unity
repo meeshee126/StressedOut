@@ -490,7 +490,7 @@ GameObject:
   - component: {fileID: 273723865}
   - component: {fileID: 273723864}
   m_Layer: 5
-  m_Name: Slider
+  m_Name: TimeSlider
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -658,7 +658,7 @@ GameObject:
   - component: {fileID: 374564963}
   - component: {fileID: 374564962}
   m_Layer: 5
-  m_Name: Timer
+  m_Name: PanicTimer
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1570,7 +1570,7 @@ MonoBehaviour:
   lowCost: 4000
   middleCost: 5000
   highCost: 6000
-  durationInSeconds: 3
+  durationInSeconds: 1
   timeCost: 0
 --- !u!1 &1043001240
 GameObject:

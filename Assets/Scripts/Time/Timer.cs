@@ -11,6 +11,8 @@ public class Timer : MonoBehaviour
     [Header("Set Timer")]
     public int minutes;
     public int seconds;
+
+    [Header("")]
     public DayTime currentDayTime = DayTime.Day;
 
     Text uiTimer;
@@ -20,7 +22,7 @@ public class Timer : MonoBehaviour
 
     void Start()
     {
-        uiTimer = GameObject.Find("Timer").GetComponent<Text>();
+        uiTimer = GameObject.Find("PanicTimer").GetComponent<Text>();
         time = new TimeSpan(0, minutes, seconds);
     }
 
