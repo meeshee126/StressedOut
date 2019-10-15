@@ -111,46 +111,46 @@ public class Ability : MonoBehaviour
     }
 
 
-    /// <summary>
-    /// Casual Block XY (with child ability)
-    /// </summary>
-    public void Initialize(bool hitAll, string abilityName, int abilityDamage, int abilityBursts,
-        float abilityCastingTime, float abilityDuration, float abilityBurstWait, float abilityChildCastWait,
-        float abilityRangeAxisX, float abilityRangeAxisY, GameObject childCast, LayerMask whatCanTheAbilityHit)
-    {
-        HitAllEntities = hitAll;
-        CastName = abilityName;
-        Damage = abilityDamage;
-        Bursts = abilityBursts;
-        CastingTime = abilityCastingTime;
-        Duration = abilityDuration;
-        BurstWait = abilityBurstWait;
-        StartBurstWait = abilityBurstWait;
-        ChildAbilityWait = abilityChildCastWait;
-        ColliderAreaAxisX = abilityRangeAxisX;
-        ColliderAreaAxisY = abilityRangeAxisY;
-        ChildAbility = childCast;
-        WhatCanItHit = whatCanTheAbilityHit;
-    }
+    ///// <summary>
+    ///// Casual Block XY (with child ability)
+    ///// </summary>
+    //public void Initialize(bool hitAll, string abilityName, int abilityDamage, int abilityBursts,
+    //    float abilityCastingTime, float abilityDuration, float abilityBurstWait, float abilityChildCastWait,
+    //    float abilityRangeAxisX, float abilityRangeAxisY, GameObject childCast, LayerMask whatCanTheAbilityHit)
+    //{
+    //    HitAllEntities = hitAll;
+    //    CastName = abilityName;
+    //    Damage = abilityDamage;
+    //    Bursts = abilityBursts;
+    //    CastingTime = abilityCastingTime;
+    //    Duration = abilityDuration;
+    //    BurstWait = abilityBurstWait;
+    //    StartBurstWait = abilityBurstWait;
+    //    ChildAbilityWait = abilityChildCastWait;
+    //    ColliderAreaAxisX = abilityRangeAxisX;
+    //    ColliderAreaAxisY = abilityRangeAxisY;
+    //    ChildAbility = childCast;
+    //    WhatCanItHit = whatCanTheAbilityHit;
+    //}
 
-    /// <summary>
-    /// Casual Block XY
-    /// </summary>
-    public void Initialize(bool hitAll, string abilityName, int abilityDamage, int abilityBursts,
-        float abilityCastingTime, float abilityDuration, float abilityBurstWait,
-        float abilityRangeAxisX, float abilityRangeAxisY, LayerMask whatCanTheAbilityHit)
-    {
-        HitAllEntities = hitAll;
-        CastName = abilityName;
-        Damage = abilityDamage;
-        Bursts = abilityBursts;
-        CastingTime = abilityCastingTime;
-        Duration = abilityDuration;
-        BurstWait = abilityBurstWait;
-        StartBurstWait = abilityBurstWait;
-        ColliderAreaAxisX = abilityRangeAxisX;
-        ColliderAreaAxisY = abilityRangeAxisY;
-        WhatCanItHit = whatCanTheAbilityHit;
-    }
+    ///// <summary>
+    ///// Casual Block XY
+    ///// </summary>
+    //public void Initialize(bool hitAll, string abilityName, int abilityDamage, int abilityBursts,
+    //    float abilityCastingTime, float abilityDuration, float abilityBurstWait,
+    //    float abilityRangeAxisX, float abilityRangeAxisY, LayerMask whatCanTheAbilityHit)
+    //{
+    //    HitAllEntities = hitAll;
+    //    CastName = abilityName;
+    //    Damage = abilityDamage;
+    //    Bursts = abilityBursts;
+    //    CastingTime = abilityCastingTime;
+    //    Duration = abilityDuration;
+    //    BurstWait = abilityBurstWait;
+    //    StartBurstWait = abilityBurstWait;
+    //    ColliderAreaAxisX = abilityRangeAxisX;
+    //    ColliderAreaAxisY = abilityRangeAxisY;
+    //    WhatCanItHit = whatCanTheAbilityHit;
+    //}
 }
 

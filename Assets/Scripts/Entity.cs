@@ -82,7 +82,6 @@ public class Entity : MonoBehaviour
 
     public void TakeDamage(int damageTaken)
     {
-        Instantiate(lowDamageBloodParticle, gameObject.transform.position, Quaternion.identity);
         stats.health -= damageTaken;
         Debug.Log("Damage DONE!!!  --  " + damageTaken);
     }
