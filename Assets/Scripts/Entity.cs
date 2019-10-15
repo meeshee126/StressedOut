@@ -43,6 +43,7 @@ public class Entity : MonoBehaviour
     {
         if (stats.health <= 0)
         {
+            //Death Animation... then = ?
             Destroy(gameObject);
         }
         if (characterRigidbody != null && characterCapsuleCollider != null && characterAnimator != null)

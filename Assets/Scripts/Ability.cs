@@ -25,8 +25,9 @@ public class Ability : MonoBehaviour
     [Header("Timers")]
     public float CastingTime;
     public float Duration;
-    public float Cooldown;
     public float BurstWait;
+    public float StartBurstWait;
+    public float ChildAbilityWait;
 
     [Header("Area Ranges")]
     public float ColliderAreaAxisX;
@@ -34,7 +35,7 @@ public class Ability : MonoBehaviour
     public float ColliderAreaRadius;
 
     [Header("Other Attributes")]
-    public GameObject CastEffect;
+    public GameObject ChildAbility;
     public LayerMask WhatCanItHit;
     // Addjust mask in code to change whenever it's about switch to hit everything and switch to hit only enemies
     public Transform attackDirection;
@@ -43,36 +44,26 @@ public class Ability : MonoBehaviour
     // Add param: bool lifesteal
     // Add param: bool shieldsteal
 
-    /// <summary>
-    /// Casual Block XY
-    /// </summary>
-    public void Initialize(bool hitAll, string abilityName, int abilityDamage,
-        float abilityCastingTime, float abilityDuration, float abilityCooldown, float abilityRangeAxisX,
-        float abilityRangeAxisY, GameObject abilityEffect, LayerMask whatCanTheAbilityHit)
-    {
-        HitAllEntities = hitAll;
-        CastName = abilityName;
-        Damage = abilityDamage;
-        CastingTime = abilityCastingTime;
-        Duration = abilityDuration;
-        Cooldown = abilityCooldown;
-        ColliderAreaAxisX = abilityRangeAxisX;
-        ColliderAreaAxisY = abilityRangeAxisY;
-        CastEffect = abilityEffect;
-        WhatCanItHit = whatCanTheAbilityHit;
-    }
 
     // MATH SECTION ~~ ~~ ~~ ~~ ~~ ~~ ~~ ~~ ~~ ~~ ~~ ~~ ~~ ~~ ~~ ~~ ~~ ~~ ~~ ~~ ~~ ~~ ~~ ~~ ~~ ~~ ~~ ~~ ~~ ~~ ~~ ~~ ~~ ~~ ~~ ~~ ~~ MATH SECTION
     private void Update()
     {
         if (Duration <= 0f) Destroy(gameObject);
 
+        // Animation: Ability-Casting
         CastingTime -= Time.deltaTime;
         if (CastingTime <= 0f)
         {
-            Cooldown -= Time.deltaTime;
             Duration -= Time.deltaTime;
-            CastAttack();
+            BurstWait -= Time.deltaTime;
+            ChildAbilityWait -= Time.deltaTime;
+            if (BurstWait <= 0f && Bursts > 0)
+            {
+                CastAttack();
+                Bursts--;
+                BurstWait = StartBurstWait;
+            }
+            if (ChildAbilityWait <= 0 && ChildAbility != null) Instantiate(ChildAbility);
         }
     }
 
@@ -84,40 +75,82 @@ public class Ability : MonoBehaviour
     /// <param name="abilitysStandards"></param>
     public void CastAttack()
     {
-        // Animation: Ability-Casting
-        if (CastingTime <= 0f)
+        Collider2D[] collisionsInCastArea = Physics2D.OverlapBoxAll(
+            transform.position, new Vector2(ColliderAreaAxisX, ColliderAreaAxisY),
+            Quaternion.identity.x, LayerMask.NameToLayer("Entity"));
+
+        for (int i = 0; i < collisionsInCastArea.Length; i++)
         {
-            do
+            // If the Entity.state == Neutral or Bad or Good & Entity.type  == Aggresive
+            if (((collisionsInCastArea[i].CompareTag("Enemy")) ||
+                (collisionsInCastArea[i].CompareTag("Neutral") &&
+
+                (collisionsInCastArea[i].GetComponent<Stats>().state == Stats.BehaviourState.Aggressive &&
+                (collisionsInCastArea[i].GetComponent<Stats>().type == Stats.BehaviourType.Neutral ||
+                collisionsInCastArea[i].GetComponent<Stats>().type == Stats.BehaviourType.Bad ||
+                collisionsInCastArea[i].GetComponent<Stats>().type == Stats.BehaviourType.Good)) ||
+
+                (collisionsInCastArea[i].GetComponent<Stats>().state == Stats.BehaviourState.Passive &&
+                (collisionsInCastArea[i].GetComponent<Stats>().type == Stats.BehaviourType.Bad ||
+                collisionsInCastArea[i].GetComponent<Stats>().type == Stats.BehaviourType.Neutral)))))
             {
-                Collider2D[] collisionsInCastArea = Physics2D.OverlapCircleAll(transform.forward, ColliderAreaRadius, WhatCanItHit);
-                //for (int i = 0; i < collisionsInCastArea.Length; i++)
-                //{
-                //    // If the Entity.state == Neutral or Bad or Good & Entity.type  == Aggresive
-                //    if (((collisionsInCastArea[i].GetComponent<Stats>().state == Stats.BehaviourState.Neutral ||
-                //        collisionsInCastArea[i].GetComponent<Stats>().state == Stats.BehaviourState.Bad ||
-                //        collisionsInCastArea[i].GetComponent<Stats>().state == Stats.BehaviourState.Good) &&
-                //        collisionsInCastArea[i].GetComponent<Stats>().type == Stats.BehaviourType.Aggressive) ||
-
-                //        // If the Entity.state == Bad & Entity.type == Passive
-                //        (collisionsInCastArea[i].GetComponent<Stats>().state == Stats.BehaviourState.Bad &&
-                //        collisionsInCastArea[i].GetComponent<Stats>().type == Stats.BehaviourType.Passive))
-                //    {
-                //        collisionsInCastArea[i].GetComponent<Entity>().TakeDamage(Damage);
-                //    }
-                //    else if (HitAllEntities)
-                //    {
-                //        collisionsInCastArea[i].GetComponent<Entity>().TakeDamage(Damage);
-                //    }
-                //}
-
-                //Instantiate(abilityToCast, gameObject.transform.position + new Vector3(1, 1, 0), Quaternion.identity);
-                // The instatiation has already happened...
-            } while (Duration >= 0);
-
-            //Duration = /*abilitysStandards.*/Duration;
-            //We don't really want it to reset do we ?... ya idk i will look at it
-
+                collisionsInCastArea[i].GetComponent<Entity>().TakeDamage(Damage);
+            }
+            else if (HitAllEntities)
+            {
+                collisionsInCastArea[i].GetComponent<Entity>().TakeDamage(Damage);
+            }
         }
+
+        //Instantiate(abilityToCast, gameObject.transform.position + new Vector3(1, 1, 0), Quaternion.identity);
+        // The instatiation has already happened...
+
+        //Duration = /*abilitysStandards.*/Duration;
+        //We don't really want it to reset do we ?... ya idk i will look at it
+
+    }
+
+
+    /// <summary>
+    /// Casual Block XY (with child ability)
+    /// </summary>
+    public void Initialize(bool hitAll, string abilityName, int abilityDamage, int abilityBursts,
+        float abilityCastingTime, float abilityDuration, float abilityBurstWait, float abilityChildCastWait,
+        float abilityRangeAxisX, float abilityRangeAxisY, GameObject childCast, LayerMask whatCanTheAbilityHit)
+    {
+        HitAllEntities = hitAll;
+        CastName = abilityName;
+        Damage = abilityDamage;
+        Bursts = abilityBursts;
+        CastingTime = abilityCastingTime;
+        Duration = abilityDuration;
+        BurstWait = abilityBurstWait;
+        StartBurstWait = abilityBurstWait;
+        ChildAbilityWait = abilityChildCastWait;
+        ColliderAreaAxisX = abilityRangeAxisX;
+        ColliderAreaAxisY = abilityRangeAxisY;
+        ChildAbility = childCast;
+        WhatCanItHit = whatCanTheAbilityHit;
+    }
+
+    /// <summary>
+    /// Casual Block XY
+    /// </summary>
+    public void Initialize(bool hitAll, string abilityName, int abilityDamage, int abilityBursts,
+        float abilityCastingTime, float abilityDuration, float abilityBurstWait,
+        float abilityRangeAxisX, float abilityRangeAxisY, LayerMask whatCanTheAbilityHit)
+    {
+        HitAllEntities = hitAll;
+        CastName = abilityName;
+        Damage = abilityDamage;
+        Bursts = abilityBursts;
+        CastingTime = abilityCastingTime;
+        Duration = abilityDuration;
+        BurstWait = abilityBurstWait;
+        StartBurstWait = abilityBurstWait;
+        ColliderAreaAxisX = abilityRangeAxisX;
+        ColliderAreaAxisY = abilityRangeAxisY;
+        WhatCanItHit = whatCanTheAbilityHit;
     }
 }
 

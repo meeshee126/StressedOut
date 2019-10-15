@@ -97,7 +97,6 @@ public class Player : MonoBehaviour
     //}
 
     //public GameObject[] castedAbilities = new GameObject[200];
-    //private AbilityList abiList = new AbilityList();
     //public GameObject CastPrefab;
 
     //private bool doesHitAll;
@@ -105,13 +104,7 @@ public class Player : MonoBehaviour
     //private float comboTimer;
 
 
-    //void AbilityFilterHandling()
-    //{
-
-    //    abiList.GetAbilityList(stats, int.Parse(GetCastID()), doesHitAll);
-    //    if (castedAbilities[199] == null) castedAbilities[199] = Instantiate(CastPrefab, transform.position, Quaternion.identity);
-    //    break;
-    //}
+    
 
 
     ////public void CooldownManager()
@@ -149,42 +142,42 @@ public class Player : MonoBehaviour
 
 
 
-#region This Ability Casting Works
-// selectedAbility = CastPrefab.GetComponent<Ability>();
-// selectedAbility.Initialize(113, Ability.CastType.casualCircle, "One-Hit-Circle", 2, 0.75f, 0.5f, 1f, 20f, null, LayerMask.NameToLayer("Enemy"));
-// lastCastedObject = Instantiate(CastPrefab, gameObject.transform.position, Quaternion.identity);
-#endregion
+    #region This Ability Casting Works
+    // selectedAbility = CastPrefab.GetComponent<Ability>();
+    // selectedAbility.Initialize(113, Ability.CastType.casualCircle, "One-Hit-Circle", 2, 0.75f, 0.5f, 1f, 20f, null, LayerMask.NameToLayer("Enemy"));
+    // lastCastedObject = Instantiate(CastPrefab, gameObject.transform.position, Quaternion.identity);
+    #endregion
 
-#region This works too, but isn't as flexible
-// lastCastedObject = Instantiate(CastPrefab, gameObject.transform.position, Quaternion.identity);
-// lastCastedObject.GetComponent<Ability>().Initialize(1, Ability.CastType.burstCircle, "Cool bCircle", 1, 1f, 1f, 1f, 3f, 5f, null, LayerMask.NameToLayer("Enemy"));
-#endregion
+    #region This works too, but isn't as flexible
+    // lastCastedObject = Instantiate(CastPrefab, gameObject.transform.position, Quaternion.identity);
+    // lastCastedObject.GetComponent<Ability>().Initialize(1, Ability.CastType.burstCircle, "Cool bCircle", 1, 1f, 1f, 1f, 3f, 5f, null, LayerMask.NameToLayer("Enemy"));
+    #endregion
 
-#region need a pausing timer?
-//IEnumerator WaitForThis(float timeToWait) { yield return new WaitForSeconds(timeToWait); }
-#endregion
+    #region need a pausing timer?
+    //IEnumerator WaitForThis(float timeToWait) { yield return new WaitForSeconds(timeToWait); }
+    #endregion
 
-#region some crap
-
-
-// public void LeftMethod()
-// {
-//     Skipping Obj Declaration due to prefab use
-
-//     abilities[0].Initialize(113, Ability.CastType.casualCircle, "One-Hit-Circle", 2, 0.75f, 0.5f, 1f, 20f, null, LayerMask.NameToLayer("Enemy"));
-//     lastCastedObject = Instantiate(CastPrefab, gameObject.transform.position, Quaternion.identity);
-//     ^add a values definer so this can hold variables for each thing.
-// }
+    #region some crap
 
 
-// public void RightMethod()
-// {
-//     Skipping Obj Declaration due to prefab use
+    // public void LeftMethod()
+    // {
+    //     Skipping Obj Declaration due to prefab use
+
+    //     abilities[0].Initialize(113, Ability.CastType.casualCircle, "One-Hit-Circle", 2, 0.75f, 0.5f, 1f, 20f, null, LayerMask.NameToLayer("Enemy"));
+    //     lastCastedObject = Instantiate(CastPrefab, gameObject.transform.position, Quaternion.identity);
+    //     ^add a values definer so this can hold variables for each thing.
+    // }
+
+
+    // public void RightMethod()
+    // {
+    //     Skipping Obj Declaration due to prefab use
 
 
 
-//     abilities[1].Initialize(1, Ability.CastType.burstCircle, "Burst Circle", 50, 0.2f, 0.5f, 90f, 3f, 5f, null, LayerMask.NameToLayer("Enemy"));
-//     lastCastedObject = Instantiate(CastPrefab, gameObject.transform.position, Quaternion.identity);
-// }
-#endregion
+    //     abilities[1].Initialize(1, Ability.CastType.burstCircle, "Burst Circle", 50, 0.2f, 0.5f, 90f, 3f, 5f, null, LayerMask.NameToLayer("Enemy"));
+    //     lastCastedObject = Instantiate(CastPrefab, gameObject.transform.position, Quaternion.identity);
+    // }
+    #endregion
 }
