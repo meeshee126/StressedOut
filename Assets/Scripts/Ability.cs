@@ -26,6 +26,7 @@ public class Ability : MonoBehaviour
     public float CastingTime;
     public float Duration;
     public float BurstWait;
+    public float Cooldown;
     public float StartBurstWait;
     public float ChildAbilityWait;
 
