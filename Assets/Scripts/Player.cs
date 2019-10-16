@@ -49,7 +49,7 @@ public class Player : MonoBehaviour
         ////CooldownManager();
     }
 
-
+    
     /// <summary>
     /// Translates  [User Input]
     /// into        [Player Movement].
@@ -95,8 +95,12 @@ public class Player : MonoBehaviour
         }
     }
 
-
-
+    // Input
+    // Read What the player is holding (Enum)
+    // READ:   It's attack and combos library
+    // Read weapon damage attributes and other attributes
+    // Instantiate the attack   AND     Start the read Cooldown
+    // Do the the casttimer and attackthing     AND     Play animations
 
 
 
@@ -108,7 +112,7 @@ public class Player : MonoBehaviour
     //    right = 3
     //}
 
-    //public GameObject[] castedAbilities = new GameObject[200];
+    public GameObject[] castedAbilities = new GameObject[200];
     //public GameObject CastPrefab;
 
     //private bool doesHitAll;
@@ -116,34 +120,31 @@ public class Player : MonoBehaviour
     //private float comboTimer;
 
 
-    
+    public void CooldownManager()
+    {
+        if (castedAbilities[199] != null)
+        {
+            for (int i = 0; i < castedAbilities.Length; i++)
+            {
+                if (castedAbilities[i] == null)
+                {
+                    castedAbilities[i] = castedAbilities[199];
+                    castedAbilities[199] = null;
+                }
+            }
+        }
 
-
-    ////public void CooldownManager()
-    ////{
-    ////    if (castedAbilities[199] != null)
-    ////    {
-    ////        for (int i = 0; i < castedAbilities.Length; i++)
-    ////        {
-    ////            if (castedAbilities[i] == null)
-    ////            {
-    ////                castedAbilities[i] = castedAbilities[199];
-    ////                castedAbilities[199] = null;
-    ////            }
-    ////        }
-    ////    }
-
-    ////    for (int i = 0; i < castedAbilities.Length; i++)
-    ////    {
-    ////        if (castedAbilities[i] != null)
-    ////        {
-    ////            if (castedAbilities[i].GetComponent<Ability>().Cooldown <= 0f)
-    ////            {
-    ////                castedAbilities[i] = null;
-    ////            }
-    ////        }
-    ////    }
-    ////}
+        for (int i = 0; i < castedAbilities.Length; i++)
+        {
+            if (castedAbilities[i] != null)
+            {
+                if (castedAbilities[i].GetComponent<Ability>().Cooldown <= 0f)
+                {
+                    castedAbilities[i] = null;
+                }
+            }
+        }
+    }
 
 
     //public void ComboManager()
