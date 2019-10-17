@@ -6,25 +6,27 @@ using UnityEngine;
 [RequireComponent(typeof(Animator))]
 [RequireComponent(typeof(Rigidbody2D))]
 [RequireComponent(typeof(CapsuleCollider2D))]
+[RequireComponent(typeof(Stats))]
 
 public class Player : MonoBehaviour
 {
-    [SerializeField]
-    private float movementSpeed;
-
+    private ItemsList itemList;
     private Stats stats;
     private Rigidbody2D characterRB;
     private Animator characterAnimator;
     private CapsuleCollider2D characterCollider;
+    
 
-    //for testing
     TimeBehaviour timeBehaviour;
-
+    GameObject gameManager;
+    //for testing
 
     private void Awake()
     {
         //for testing
-        timeBehaviour = GameObject.Find("GameManager").GetComponent<TimeBehaviour>();
+        gameManager = GameObject.Find("GameManager");
+        timeBehaviour = gameManager.GetComponent<TimeBehaviour>();
+        itemList = gameManager.GetComponentInChildren<ItemsList>();
 
         stats = GetComponent<Stats>();
         characterRB = GetComponent<Rigidbody2D>();
@@ -40,24 +42,25 @@ public class Player : MonoBehaviour
         {
             timeBehaviour.timeCost = TimeBehaviour.TimeCost.highCost;
         }
-
+        Debug.Log("Before");
+        if (stats.comboTimer > 0f) stats.comboTimer -= Time.deltaTime;
+        Debug.Log("Passby");
+        if (stats.comboTimer <= 0f) stats.comboAttack = 0;
         ApplyInput();
-        //comboTimer -= Time.deltaTime;
-        //if (comboTimer < 0f) lastCastID = "";
 
         //AbilityFilterHandling();
         ////CooldownManager();
     }
 
-    
+
     /// <summary>
     /// Translates  [User Input]
     /// into        [Player Movement].
     /// </summary>
     void ApplyInput()
     {
-        float moveHorizontal = Input.GetAxis("Horizontal") * movementSpeed;
-        float moveVertical = Input.GetAxis("Vertical") * movementSpeed;
+        float moveHorizontal = Input.GetAxis("Horizontal") * stats.movementSpeed;
+        float moveVertical = Input.GetAxis("Vertical") * stats.movementSpeed;
 
         //transform.Translate(new Vector2(moveHorizontal, moveVertical));
         //AnimationUpdate(moveHorizontal, moveVertical);
@@ -104,7 +107,9 @@ public class Player : MonoBehaviour
 
 
 
-    //public enum CastInput
+    //for (int i = 0; i < abilities.Length; i++) abilities[i].Cooldown -= Time.deltaTime;
+
+    //public enum Items
     //{
     //    none = 0,
     //    left = 1,
@@ -117,7 +122,6 @@ public class Player : MonoBehaviour
 
     //private bool doesHitAll;
     //private string lastCastID;
-    //private float comboTimer;
 
 
     public void CooldownManager()
