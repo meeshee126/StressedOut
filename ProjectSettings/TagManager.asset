@@ -12,6 +12,7 @@ TagManager:
   - EnterDown
   - Enemy
   - Neutral
+  - Equipable
   layers:
   - Default
   - TransparentFX
