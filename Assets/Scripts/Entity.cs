@@ -1,11 +1,12 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using UnityEditor.Animations;
 using UnityEngine;
 
-//Adds Components to the gameObject when script Component is inserted
+[RequireComponent(typeof(Animator))]
 [RequireComponent(typeof(Rigidbody2D))]
 [RequireComponent(typeof(CapsuleCollider2D))]
-[RequireComponent(typeof(Animator))]
+[RequireComponent(typeof(Stats))]
 
 public class Entity : MonoBehaviour
 {
@@ -34,9 +35,9 @@ public class Entity : MonoBehaviour
         characterRigidbody = GetComponent<Rigidbody2D>();
         characterAnimator = GetComponent<Animator>();
         characterCapsuleCollider = GetComponent<CapsuleCollider2D>();
+        stats = GetComponent<Stats>();
         randomSpot = Random.Range(0, moveSpots.Length);
         waitTime = startWaitTime;
-        stats = GetComponent<Stats>();
     }
 
     void FixedUpdate()
