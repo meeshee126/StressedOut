@@ -15,95 +15,93 @@ public class Player : MonoBehaviour
     private Rigidbody2D characterRB;
     private Animator characterAnimator;
     private CapsuleCollider2D characterCollider;
-    
 
-<<<<<<< HEAD
-    private void Awake()
-    {
-=======
-    TimeBehaviour timeBehaviour;
-    GameObject gameManager;
-    //for testing
+
 
     private void Awake()
     {
+
+        TimeBehaviour timeBehaviour;
+        GameObject gameManager;
         //for testing
-        gameManager = GameObject.Find("GameManager");
-        timeBehaviour = gameManager.GetComponent<TimeBehaviour>();
-        itemList = gameManager.GetComponentInChildren<ItemsList>();
 
->>>>>>> 20e5352bbe1b62c3fa447585bbcdeb64c9fb0976
-        stats = GetComponent<Stats>();
-        characterRB = GetComponent<Rigidbody2D>();
-        characterAnimator = GetComponent<Animator>();
-        characterCollider = GetComponent<CapsuleCollider2D>();
-    }
-
-
-    void Update()
-    {
-<<<<<<< HEAD
-
-=======
-        //for testing
-        if (Input.GetKeyDown(KeyCode.Space))
+        void Awake()
         {
-            timeBehaviour.timeCost = TimeBehaviour.TimeCost.highCost;
+            //for testing
+            gameManager = GameObject.Find("GameManager");
+            timeBehaviour = gameManager.GetComponent<TimeBehaviour>();
+            itemList = gameManager.GetComponentInChildren<ItemsList>();
+
+
+            stats = GetComponent<Stats>();
+            characterRB = GetComponent<Rigidbody2D>();
+            characterAnimator = GetComponent<Animator>();
+            characterCollider = GetComponent<CapsuleCollider2D>();
         }
-        Debug.Log("Before");
-        if (stats.comboTimer > 0f) stats.comboTimer -= Time.deltaTime;
-        Debug.Log("Passby");
-        if (stats.comboTimer <= 0f) stats.comboAttack = 0;
->>>>>>> 20e5352bbe1b62c3fa447585bbcdeb64c9fb0976
-        ApplyInput();
-
-        //AbilityFilterHandling();
-        ////CooldownManager();
-    }
 
 
-    /// <summary>
-    /// Translates  [User Input]
-    /// into        [Player Movement].
-    /// </summary>
-    void ApplyInput()
-    {
-        float moveHorizontal = Input.GetAxis("Horizontal") * stats.movementSpeed;
-        float moveVertical = Input.GetAxis("Vertical") * stats.movementSpeed;
-
-        //transform.Translate(new Vector2(moveHorizontal, moveVertical));
-        //AnimationUpdate(moveHorizontal, moveVertical);
-
-        characterRB.velocity = new Vector2(moveHorizontal, moveVertical);
-    }
-
-
-    /// <summary>
-    /// Updates the [Player's Animation]
-    /// based on    [Player's Movement].
-    /// </summary>
-    /// <param name="moveX"></param>
-    /// <param name="moveY"></param>
-    void AnimationUpdate(float moveX, float moveY)
-    {
-        //Changes Animation Based on direction facing.
-        characterAnimator.SetFloat("FaceX", moveX);
-        characterAnimator.SetFloat("FaceY", moveY);
-
-        if (moveX != 0 || moveY != 0)
+        void Update()
         {
-            characterAnimator.SetBool("isWalking", true);
-            if (moveX > 0) characterAnimator.SetFloat("LastMoveX", 1f);
-            else if (moveX < 0) characterAnimator.SetFloat("LastMoveX", -1f);
-            else characterAnimator.SetFloat("LastMoveX", 0f);
 
-            if (moveY > 0) characterAnimator.SetFloat("LastMoveY", 1f);
-            else if (moveY < 0) characterAnimator.SetFloat("LastMoveY", -1f);
-            else characterAnimator.SetFloat("LastMoveY", 0f);
+            //for testing
+            if (Input.GetKeyDown(KeyCode.Space))
+            {
+                timeBehaviour.timeCost = TimeBehaviour.TimeCost.highCost;
+            }
+            Debug.Log("Before");
+            if (stats.comboTimer > 0f) stats.comboTimer -= Time.deltaTime;
+            Debug.Log("Passby");
+            if (stats.comboTimer <= 0f) stats.comboAttack = 0;
+            ApplyInput();
+
+            //AbilityFilterHandling();
+            ////CooldownManager();
         }
-        else
+
+
+        /// <summary>
+        /// Translates  [User Input]
+        /// into        [Player Movement].
+        /// </summary>
+        void ApplyInput()
         {
-            characterAnimator.SetBool("isWalking", false);
+            float moveHorizontal = Input.GetAxis("Horizontal") * stats.movementSpeed;
+            float moveVertical = Input.GetAxis("Vertical") * stats.movementSpeed;
+
+            //transform.Translate(new Vector2(moveHorizontal, moveVertical));
+            //AnimationUpdate(moveHorizontal, moveVertical);
+
+            characterRB.velocity = new Vector2(moveHorizontal, moveVertical);
+        }
+
+
+        /// <summary>
+        /// Updates the [Player's Animation]
+        /// based on    [Player's Movement].
+        /// </summary>
+        /// <param name="moveX"></param>
+        /// <param name="moveY"></param>
+        void AnimationUpdate(float moveX, float moveY)
+        {
+            //Changes Animation Based on direction facing.
+            characterAnimator.SetFloat("FaceX", moveX);
+            characterAnimator.SetFloat("FaceY", moveY);
+
+            if (moveX != 0 || moveY != 0)
+            {
+                characterAnimator.SetBool("isWalking", true);
+                if (moveX > 0) characterAnimator.SetFloat("LastMoveX", 1f);
+                else if (moveX < 0) characterAnimator.SetFloat("LastMoveX", -1f);
+                else characterAnimator.SetFloat("LastMoveX", 0f);
+
+                if (moveY > 0) characterAnimator.SetFloat("LastMoveY", 1f);
+                else if (moveY < 0) characterAnimator.SetFloat("LastMoveY", -1f);
+                else characterAnimator.SetFloat("LastMoveY", 0f);
+            }
+            else
+            {
+                characterAnimator.SetBool("isWalking", false);
+            }
         }
     }
 
