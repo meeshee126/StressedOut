@@ -12,7 +12,8 @@ TagManager:
   - EnterDown
   - Enemy
   - Neutral
-  - Equipable
+  - Equippable
+  - Miscellaneous
   layers:
   - Default
   - TransparentFX
@@ -50,6 +51,6 @@ TagManager:
   - name: Default
     uniqueID: 0
     locked: 0
-  - name: DropedItem
+  - name: DroppedItem
     uniqueID: 4267789825
     locked: 0

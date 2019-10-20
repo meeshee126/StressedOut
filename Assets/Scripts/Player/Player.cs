@@ -20,7 +20,7 @@ public class Player : MonoBehaviour
     GameObject gameManager;
     //for testing
 
-    GameObject playerHand;
+    public GameObject playerHand;
 
     private void Awake()
     {
@@ -102,13 +102,13 @@ public class Player : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.Space))
         {
-            Debug.Log(itemList.ItemCollection.Length);
+            Debug.Log(itemList.itemCollection.Length);
 
-            for (int i = 0; i < itemList.ItemCollection.Length; i++)
+            for (int i = 0; i < itemList.itemCollection.Length; i++)
             {
-                if (playerHand.name == itemList.ItemCollection[i].name)
+                if (playerHand.name == itemList.itemCollection[i].name)
                 {
-                    playerHand = itemList.ItemCollection[i];
+                    playerHand = itemList.itemCollection[i];
                 }
             }
         }
