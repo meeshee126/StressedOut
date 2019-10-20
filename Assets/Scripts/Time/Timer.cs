@@ -12,11 +12,14 @@ public class Timer : MonoBehaviour
     public int minutes;
     public int seconds;
 
+    [Header("Set Panictimer (in percent)")]
+    public float panicTimer;
+
     [Header("")]
     public DayTime currentDayTime = DayTime.Day;
 
     Text uiTimer;
-    public TimeSpan time;
+    TimeSpan time;
     bool showTimer;
     bool dayOver;
 
@@ -38,16 +41,7 @@ public class Timer : MonoBehaviour
 
     void TimerCountdown()
     {
-
         time = time.Subtract(new TimeSpan(0, 0, 0, 0, (int)(Time.deltaTime * 1000)));
-
-        if (currentDayTime == DayTime.Day)
-        {      
-            if (time.Minutes <= 1 || (time.Minutes == 2 && time.Seconds == 0))
-            {
-                currentDayTime = DayTime.Panic;
-            }      
-        }
 
         if (currentDayTime == DayTime.Panic)
         {
@@ -72,13 +66,7 @@ public class Timer : MonoBehaviour
             }
         }
     }
-
-    public void SpeedTime(int timeCost)
-    {
-        time = time.Subtract(new TimeSpan(0, 0, 0, 0, (int)(Time.deltaTime * timeCost)));
-    }
-    
-
+  
     void NewDay()
     {
         currentDayTime = DayTime.Day;
@@ -92,12 +80,15 @@ public class Timer : MonoBehaviour
         return total;
     }
 
+    public void SpeedTime(int timeCost)
+    {
+        time = time.Subtract(new TimeSpan(0, 0, 0, 0, (int)(Time.deltaTime * timeCost)));
+    }
+
     public enum DayTime
     {
         Day,
         Panic,
         Night
     }
-
-
 }

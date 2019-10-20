@@ -7,13 +7,6 @@ using UnityEngine;
 /// </summary>
 public class Ability : MonoBehaviour
 {
-
-    // Add enum which handles attacking friendly units too
-    // Add enum Crowd control (stun, daze, knock)
-
-    //for (int i = 0; i < abilities.Length; i++) abilities[i].Cooldown -= Time.deltaTime;
-
-
     [Header("Identification")]
     public string CastName;
 
@@ -26,6 +19,7 @@ public class Ability : MonoBehaviour
     public float CastingTime;
     public float Duration;
     public float BurstWait;
+    public float Cooldown;
     public float StartBurstWait;
     public float ChildAbilityWait;
 
@@ -38,12 +32,7 @@ public class Ability : MonoBehaviour
     public GameObject ChildAbility;
     public LayerMask WhatCanItHit;
     // Addjust mask in code to change whenever it's about switch to hit everything and switch to hit only enemies
-    public Transform attackDirection;
-
-    // Add param: CrowdControl cc
-    // Add param: bool lifesteal
-    // Add param: bool shieldsteal
-
+    
 
     // MATH SECTION ~~ ~~ ~~ ~~ ~~ ~~ ~~ ~~ ~~ ~~ ~~ ~~ ~~ ~~ ~~ ~~ ~~ ~~ ~~ ~~ ~~ ~~ ~~ ~~ ~~ ~~ ~~ ~~ ~~ ~~ ~~ ~~ ~~ ~~ ~~ ~~ ~~ MATH SECTION
     private void Update()
@@ -82,7 +71,7 @@ public class Ability : MonoBehaviour
         for (int i = 0; i < collisionsInCastArea.Length; i++)
         {
             // If the Entity.state == Neutral or Bad or Good & Entity.type  == Aggresive
-            if (((collisionsInCastArea[i].CompareTag("Enemy")) ||
+            if (collisionsInCastArea[i].CompareTag("Enemy") ||
                 (collisionsInCastArea[i].CompareTag("Neutral") &&
 
                 (collisionsInCastArea[i].GetComponent<Stats>().state == Stats.BehaviourState.Aggressive &&
@@ -92,7 +81,10 @@ public class Ability : MonoBehaviour
 
                 (collisionsInCastArea[i].GetComponent<Stats>().state == Stats.BehaviourState.Passive &&
                 (collisionsInCastArea[i].GetComponent<Stats>().type == Stats.BehaviourType.Bad ||
-                collisionsInCastArea[i].GetComponent<Stats>().type == Stats.BehaviourType.Neutral)))))
+                collisionsInCastArea[i].GetComponent<Stats>().type == Stats.BehaviourType.Neutral))) ||
+
+                (collisionsInCastArea[i].CompareTag("Friendly") &&
+                collisionsInCastArea[i].GetComponent<Stats>().state == Stats.BehaviourState.Aggressive))
             {
                 collisionsInCastArea[i].GetComponent<Entity>().TakeDamage(Damage);
             }

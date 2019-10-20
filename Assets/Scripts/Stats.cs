@@ -18,7 +18,7 @@ public class Stats : MonoBehaviour
     [Range(0, 500)]
     public int armor = 0;
     [Range(-30, 30)]
-    public int movementspeed = 5;
+    public int movementSpeed = 5;
     // more to be added?
 
 
@@ -27,6 +27,11 @@ public class Stats : MonoBehaviour
     public BehaviourType type = BehaviourType.Neutral;
     public BehaviourState state = BehaviourState.Passive;
 
+    [Header("Miscelaneous Combat Stats")]
+    [Range(0, 15)]
+    public float comboTimer = 0;
+    [Range(0,100)]
+    public int comboAttack = 0;
 
     public enum BehaviourType
     {

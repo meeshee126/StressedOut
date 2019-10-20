@@ -6,25 +6,27 @@ using UnityEngine;
 [RequireComponent(typeof(Animator))]
 [RequireComponent(typeof(Rigidbody2D))]
 [RequireComponent(typeof(CapsuleCollider2D))]
+[RequireComponent(typeof(Stats))]
 
 public class Player : MonoBehaviour
 {
-    [SerializeField]
-    private float movementSpeed;
-
+    private ItemsList itemList;
     private Stats stats;
     private Rigidbody2D characterRB;
     private Animator characterAnimator;
     private CapsuleCollider2D characterCollider;
+    
 
-    //for testing
     TimeBehaviour timeBehaviour;
-
+    GameObject gameManager;
+    //for testing
 
     private void Awake()
     {
         //for testing
-        timeBehaviour = GameObject.Find("GameManager").GetComponent<TimeBehaviour>();
+        gameManager = GameObject.Find("GameManager");
+        timeBehaviour = gameManager.GetComponent<TimeBehaviour>();
+        itemList = gameManager.GetComponentInChildren<ItemsList>();
 
         stats = GetComponent<Stats>();
         characterRB = GetComponent<Rigidbody2D>();
@@ -40,10 +42,11 @@ public class Player : MonoBehaviour
         {
             timeBehaviour.timeCost = TimeBehaviour.TimeCost.highCost;
         }
-
+        Debug.Log("Before");
+        if (stats.comboTimer > 0f) stats.comboTimer -= Time.deltaTime;
+        Debug.Log("Passby");
+        if (stats.comboTimer <= 0f) stats.comboAttack = 0;
         ApplyInput();
-        //comboTimer -= Time.deltaTime;
-        //if (comboTimer < 0f) lastCastID = "";
 
         //AbilityFilterHandling();
         ////CooldownManager();
@@ -56,8 +59,8 @@ public class Player : MonoBehaviour
     /// </summary>
     void ApplyInput()
     {
-        float moveHorizontal = Input.GetAxis("Horizontal") * movementSpeed;
-        float moveVertical = Input.GetAxis("Vertical") * movementSpeed;
+        float moveHorizontal = Input.GetAxis("Horizontal") * stats.movementSpeed;
+        float moveVertical = Input.GetAxis("Vertical") * stats.movementSpeed;
 
         //transform.Translate(new Vector2(moveHorizontal, moveVertical));
         //AnimationUpdate(moveHorizontal, moveVertical);
@@ -95,12 +98,18 @@ public class Player : MonoBehaviour
         }
     }
 
+    // Input
+    // Read What the player is holding (Enum)
+    // READ:   It's attack and combos library
+    // Read weapon damage attributes and other attributes
+    // Instantiate the attack   AND     Start the read Cooldown
+    // Do the the casttimer and attackthing     AND     Play animations
 
 
 
+    //for (int i = 0; i < abilities.Length; i++) abilities[i].Cooldown -= Time.deltaTime;
 
-
-    //public enum CastInput
+    //public enum Items
     //{
     //    none = 0,
     //    left = 1,
@@ -108,42 +117,38 @@ public class Player : MonoBehaviour
     //    right = 3
     //}
 
-    //public GameObject[] castedAbilities = new GameObject[200];
+    public GameObject[] castedAbilities = new GameObject[200];
     //public GameObject CastPrefab;
 
     //private bool doesHitAll;
     //private string lastCastID;
-    //private float comboTimer;
 
 
-    
+    public void CooldownManager()
+    {
+        if (castedAbilities[199] != null)
+        {
+            for (int i = 0; i < castedAbilities.Length; i++)
+            {
+                if (castedAbilities[i] == null)
+                {
+                    castedAbilities[i] = castedAbilities[199];
+                    castedAbilities[199] = null;
+                }
+            }
+        }
 
-
-    ////public void CooldownManager()
-    ////{
-    ////    if (castedAbilities[199] != null)
-    ////    {
-    ////        for (int i = 0; i < castedAbilities.Length; i++)
-    ////        {
-    ////            if (castedAbilities[i] == null)
-    ////            {
-    ////                castedAbilities[i] = castedAbilities[199];
-    ////                castedAbilities[199] = null;
-    ////            }
-    ////        }
-    ////    }
-
-    ////    for (int i = 0; i < castedAbilities.Length; i++)
-    ////    {
-    ////        if (castedAbilities[i] != null)
-    ////        {
-    ////            if (castedAbilities[i].GetComponent<Ability>().Cooldown <= 0f)
-    ////            {
-    ////                castedAbilities[i] = null;
-    ////            }
-    ////        }
-    ////    }
-    ////}
+        for (int i = 0; i < castedAbilities.Length; i++)
+        {
+            if (castedAbilities[i] != null)
+            {
+                if (castedAbilities[i].GetComponent<Ability>().Cooldown <= 0f)
+                {
+                    castedAbilities[i] = null;
+                }
+            }
+        }
+    }
 
 
     //public void ComboManager()
