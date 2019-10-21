@@ -10,26 +10,34 @@ public class Item : MonoBehaviour
 {
     public enum ItemType
     {
-        Resource,
-        Weapon,
-        Armor,
-        Miscelaneous,
+        none,
+        resource,
+        consumable,
+        weapon,
+        armor,
+        miscelaneous,
     }
 
     [Header("Identification Info")]
+    public ItemType itemType;
     public string itemName;
     public int iD;
     public int itemHealth;
 
     public bool isPickedUp = false;
-    private bool isDead = false;
+    public bool isDead = false;
+
+    [Space(15)]
+    public int basedOnType;
+    [Space(15)]
 
     [Header("Other Info")]
+    [Space(10)]
     public SpriteRenderer spriteRenderer;
     public BoxCollider2D itemCollider;
     public Rigidbody2D itemRB;
     public PhysicsMaterial2D physicsMaterial;
-    GameObject gameManager;
+    public GameObject gameManager;
 
 
     private void Awake()

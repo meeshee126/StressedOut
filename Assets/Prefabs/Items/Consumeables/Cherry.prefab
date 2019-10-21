@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: -5025370577898405134}
   m_Layer: 0
   m_Name: Cherry
-  m_TagString: Consumeable
+  m_TagString: Consumable
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -146,6 +146,7 @@ MonoBehaviour:
   iD: 2002
   itemHealth: 0
   isPickedUp: 0
+  isDead: 0
   spriteRenderer: {fileID: 0}
   itemCollider: {fileID: 0}
   itemRB: {fileID: 0}

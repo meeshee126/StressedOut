@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 835768473172955883}
   - component: {fileID: 1294653142895875333}
   - component: {fileID: 5819478126233075864}
+  - component: {fileID: -3439230189597292486}
   m_Layer: 0
   m_Name: Wood_Sword
   m_TagString: Equippable
@@ -143,11 +144,32 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e29fcee8b6c573e4f95624b78d3b81b0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  itemType: 2
   itemName: Wood_Sword
   iD: 501
   itemHealth: 0
   isPickedUp: 0
+  isDead: 0
+  basedOnType: 2
   spriteRenderer: {fileID: 0}
   itemCollider: {fileID: 0}
   itemRB: {fileID: 0}
   physicsMaterial: {fileID: 0}
+--- !u!114 &-3439230189597292486
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4326623844123460706}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6294e335ea6406d4b8299b24369e5cfc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  type: 0
+  damage: 1
+  attackSpeed: 1
+  criticalChance: 5
+  criticalDamageMultiplier: 2
+  enchantment: 0

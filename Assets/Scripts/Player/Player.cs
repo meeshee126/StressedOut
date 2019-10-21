@@ -15,6 +15,7 @@ public class Player : MonoBehaviour
     private Rigidbody2D characterRB;
     private Animator characterAnimator;
     private CapsuleCollider2D characterCollider;
+    WeaponStats weaponStats;
 
     TimeBehaviour timeBehaviour;
     GameObject gameManager;
@@ -115,9 +116,41 @@ public class Player : MonoBehaviour
     }
 
 
+    private void OnCollisionStay2D(Collision2D collision)
+    {
+        if (collision.gameObject.CompareTag("Equippable"))
+        {
+            // Open up closest collision GUI
+            if (Input.GetKeyDown(KeyCode.F))
+            {
+                ItemPickUp(collision.gameObject);
+                collision.gameObject.GetComponent<Item>().isPickedUp = true;
+            }
+        }
+        if (collision.gameObject.CompareTag("Consumable"))
+        {
+            if (Input.GetKeyDown(KeyCode.F))
+            {
+                collision.gameObject.GetComponent<Item>().isPickedUp = true;
+            }
+        }
+        if (collision.gameObject.CompareTag("Resource"))
+        {
+
+        }
+    }
+
+
+    void ItemPickUp(GameObject pickedItem)
+    {
+        Instantiate(playerHand);
+        playerHand = pickedItem;
+    }
+
+
     void CombosLibrary()
     {
-
+        
     }
 
 
