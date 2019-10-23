@@ -28,7 +28,7 @@ public class Item : MonoBehaviour
     public bool isDead = false;
 
     [Space(15)]
-    public string ItemTypeAttribute;
+    public int ItemTypeAttribute;
     [Space(15)]
 
     [Header("Other Info")]

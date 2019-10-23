@@ -181,7 +181,7 @@ public class Player : MonoBehaviour
     {
         if (collision.GetComponent<Item>().itemType == Item.ItemType.consumable)
         {
-            stats.health += Int32.Parse(collision.GetComponent<Item>().ItemTypeAttribute);
+            stats.health += collision.GetComponent<Item>().ItemTypeAttribute;
             collision.GetComponent<Item>().isPickedUp = true;
         }
     }
