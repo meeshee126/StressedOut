@@ -30,12 +30,11 @@ public class TimeSlider : MonoBehaviour
 
     void Update()
     {
-        SliderManager();
-        SetColor();
+        SetSlider();
         PanicMode();
     }
 
-    void SliderManager()
+    void SetSlider()
     {
         if (!sliderSeted)
         {
@@ -44,10 +43,7 @@ public class TimeSlider : MonoBehaviour
         }
 
         slider.value = timer.TotalTimeInSeconds();
-    }
 
-    void SetColor()
-    {
         image.color = Color.Lerp(red, yellow, slider.normalizedValue >
                      (timer.panicTimer / 100) ? slider.normalizedValue : (timer.panicTimer / 100));
     }
