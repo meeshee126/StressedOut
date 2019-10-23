@@ -2,17 +2,19 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class IAttack : IState
+//Michael Schmidt
+
+public class IAttack : MonoBehaviour, IState
 {
     EntityBehaviour entity;
 
-    GameObject target => entity.gameObject;
+    GameObject target => entity.target;
 
-   /* public IAttack(EntityBehaviour entity)
+    public IAttack(EntityBehaviour entity)
     {
         this.entity = entity;
     }
-    */
+    
 
     public bool Condition()
     {
@@ -26,6 +28,6 @@ public class IAttack : IState
 
     public void Execute()
     {
-        Debug.Log("Attack");
+        Debug.Log("Attack" + entity.name + target.name);
     }
 }

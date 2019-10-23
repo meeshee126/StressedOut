@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
-using UnityEngine;
+
+//Michael Schmidt
 
 public interface IState
 {
@@ -11,7 +12,7 @@ public interface IState
     bool Condition();
 
     /// <summary>
-    /// Execute state from state which condition is true
+    /// Execute state which condition is true
     /// </summary>
     void Execute();
 }

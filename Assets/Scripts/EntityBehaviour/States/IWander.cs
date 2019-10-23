@@ -2,18 +2,19 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class IWander : IState
+//Michael Schmidt
+
+public class IWander : MonoBehaviour, IState
 {
     EntityBehaviour entity;
 
-    GameObject target => entity.gameObject;
+    GameObject target => entity.target;
 
-   /* public IWander(EntityBehaviour entity)
+    public IWander(EntityBehaviour entity)
     {
         this.entity = entity;
     }
-    */
-
+    
     public bool Condition()
     {
         if (Input.GetKey(KeyCode.K))
@@ -26,6 +27,6 @@ public class IWander : IState
 
     public void Execute()
     {
-        Debug.Log("Wander");
+        Debug.Log("Wander" + entity.name + target.name);
     }
 }

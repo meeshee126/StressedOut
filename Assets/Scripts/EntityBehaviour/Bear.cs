@@ -2,18 +2,21 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Bear : MonoBehaviour
+//Michael Schmidt
+
+public class Bear : EntityBehaviour
 {
     Machine brain = new Machine();
 
     void Start()
     {
-        brain.AddState(new IWarned());
-        brain.AddState(new IAttack());
+        //Add states to Bear
+        brain.AddState(new IAttack(this));
     }
 
     void Update()
     {
+        //Call functions 
         brain.Update();
     }
 }

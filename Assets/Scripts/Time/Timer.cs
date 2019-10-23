@@ -18,14 +18,17 @@ public class Timer : MonoBehaviour
     [Header("")]
     public DayTime currentDayTime = DayTime.Day;
 
-    public Text uiTimer;
-    public TimeSpan time;
-    bool showTimer;
+    [SerializeField]
+    GameObject sun;
+
+    public Text uiPanicTimer;
+
+    TimeSpan time;
+    bool showPanicTimer;
     bool dayOver;
 
     void Start()
     {
-        uiTimer = GameObject.Find("PanicTimer").GetComponent<Text>();
         time = new TimeSpan(0, minutes, seconds);
     }
 
@@ -43,14 +46,21 @@ public class Timer : MonoBehaviour
     void TimerCountdown()
     {
         time = time.Subtract(new TimeSpan(0, 0, 0, 0, (int)(Time.deltaTime * 1000)));
+        sun.transform.Rotate(0, 0, 0.2f);
     }
 
     void CheckDayTime()
     {
+        if (currentDayTime == DayTime.Day)
+        {
+            //disable UI Timer
+            uiPanicTimer.text = "";
+        }
+
         if (currentDayTime == DayTime.Panic)
         {
             //enable UI Timer
-            uiTimer.text = string.Format("{0:0}:{1:00}", time.Minutes, time.Seconds);
+            uiPanicTimer.text = string.Format("{0:0}:{1:00}", time.Minutes, time.Seconds);
 
             if (time.Seconds < 0)
             {
@@ -61,9 +71,9 @@ public class Timer : MonoBehaviour
         if (currentDayTime == DayTime.Night)
         {
             //disable UI Timer
-            uiTimer.text = "";
+            uiPanicTimer.text = "";
 
-            if (Input.GetKeyDown(KeyCode.Space))
+            if (Input.GetKeyDown(KeyCode.Alpha1))
             {
                 Debug.Log("Wave killed");
                 dayOver = true;
@@ -87,6 +97,7 @@ public class Timer : MonoBehaviour
     public void SpeedTime(int timeCost)
     {
         time = time.Subtract(new TimeSpan(0, 0, 0, 0, (int)(Time.deltaTime * timeCost)));
+        sun.transform.Rotate(0, 0, 100);
     }
 
     public enum DayTime

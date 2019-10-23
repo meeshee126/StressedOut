@@ -5,7 +5,7 @@ using UnityEngine.UI;
 
 //Michael Schmidt
 
-public class TimeSlider : MonoBehaviour
+public class Sun : MonoBehaviour
 {
     Timer timer;
     Slider slider;
@@ -16,7 +16,6 @@ public class TimeSlider : MonoBehaviour
     Color red;
     [SerializeField]
     Color yellow;
-
 
     bool sliderSeted = false;
 
@@ -45,6 +44,7 @@ public class TimeSlider : MonoBehaviour
 
         slider.value = timer.TotalTimeInSeconds();
     }
+
 
     void SetColor()
     {
