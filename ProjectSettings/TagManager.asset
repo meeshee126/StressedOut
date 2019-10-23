@@ -4,18 +4,10 @@
 TagManager:
   serializedVersion: 2
   tags:
+  - Equippable
   - Resource
-  - Consumeable
-  - EnterRight
-  - EnterLeft
-  - EnterUp
-  - EnterDown
-  - Enemy
-  - Neutral
-  - Wall
-  - Turret
-  - BuildRadius
-  - Projectile
+  - Miscellaneous
+  - Consumable
   layers:
   - Default
   - TransparentFX
@@ -25,7 +17,7 @@ TagManager:
   - UI
   - 
   - 
-  - Entity
+  - 
   - 
   - 
   - 
@@ -52,7 +44,4 @@ TagManager:
   m_SortingLayers:
   - name: Default
     uniqueID: 0
-    locked: 0
-  - name: DropedItem
-    uniqueID: 4267789825
     locked: 0

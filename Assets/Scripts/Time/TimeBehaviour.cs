@@ -7,7 +7,7 @@ using UnityEngine;
 public class TimeBehaviour : MonoBehaviour
 {
 
-    [Header("Timecosts multiplied in milliseconds")]
+    [Header("Timecosts (multiplied with milliseconds)")]
     [SerializeField]
     int veryLowCost;
     [SerializeField]
