@@ -4,23 +4,72 @@ using UnityEngine;
 
 public class GenerateBase : MonoBehaviour
 {
-    public bool yourVar;
+    public bool doBuild;
+    public bool isBuild;
+    public bool doUpgrade;
 
-    public GameObject Wall;
+    public GameObject Wood;
+    public GameObject Stone;
+
+    public int health = 100;
 
     void Update()
     {
-        if (yourVar == true && Input.GetKeyDown(KeyCode.F))
+        if (health == 0)
         {
-            Wall.gameObject.SetActive(false);
+            isBuild = false;
+
+            if (Wood.gameObject.activeSelf == true)
+            {
+                Wood.gameObject.SetActive(false);
+            }
+            else if (Stone.gameObject.activeSelf == true)
+            {
+                Stone.gameObject.SetActive(false);
+            }
+        }
+
+        BeginnBuild();
+        Repair();
+    }
+
+    void OnTriggerEnter2D(Collider2D buildRadius)
+    {
+        if (buildRadius.gameObject.tag == "BuildRadius")
+        {
+            doBuild = true;
         }
     }
 
-    void OnTriggerEnter2D(Collider2D wall)
+    void OnTriggerExit2D(Collider2D buildRadius)
     {
-        if (wall.gameObject.tag == "Wall")
+        if (buildRadius.gameObject.tag == "BuildRadius")
         {
-            yourVar = true;
+            doBuild = false;
+        }
+    }
+
+    void BeginnBuild()
+    {
+        if (doBuild == true && isBuild != true && Input.GetKeyDown(KeyCode.F))
+        {
+            Wood.gameObject.SetActive(true);
+            doUpgrade = true;
+            isBuild = true;
+        }
+
+        else if (doBuild == true && doUpgrade == true && Input.GetKeyDown(KeyCode.F))
+        {
+            Wood.gameObject.SetActive(false);
+            Stone.gameObject.SetActive(true);
+        }
+    }
+
+    void Repair()
+    {
+        if (health == 0 && Input.GetKeyDown(KeyCode.F))
+        {
+            health = 100;
         }
     }
 }
