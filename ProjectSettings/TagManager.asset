@@ -12,10 +12,6 @@ TagManager:
   - EnterDown
   - Enemy
   - Neutral
-  - Wall
-  - Turret
-  - BuildRadius
-  - Projectile
   layers:
   - Default
   - TransparentFX
