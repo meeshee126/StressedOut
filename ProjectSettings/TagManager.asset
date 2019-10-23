@@ -5,15 +5,13 @@ TagManager:
   serializedVersion: 2
   tags:
   - Resource
+  - Consumeable
   - EnterRight
   - EnterLeft
   - EnterUp
   - EnterDown
   - Enemy
   - Neutral
-  - Equippable
-  - Miscellaneous
-  - Consumable
   layers:
   - Default
   - TransparentFX
@@ -51,6 +49,6 @@ TagManager:
   - name: Default
     uniqueID: 0
     locked: 0
-  - name: DroppedItem
+  - name: DropedItem
     uniqueID: 4267789825
     locked: 0
