@@ -2,17 +2,18 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class IAttack : MonoBehaviour, IState
+public class IAttack : IState
 {
     EntityBehaviour entity;
 
-    GameObject target => entity.target;
+    GameObject target => entity.gameObject;
 
-    public IAttack(EntityBehaviour entity)
+   /* public IAttack(EntityBehaviour entity)
     {
         this.entity = entity;
     }
-    
+    */
+
     public bool Condition()
     {
         if (Input.GetKey(KeyCode.J))
