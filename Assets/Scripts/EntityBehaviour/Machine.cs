@@ -13,6 +13,7 @@ public class Machine
 
     public void Update()
     {
+
         foreach (IState state in states)
         {
             if(state.Condition())

@@ -18,8 +18,8 @@ public class Timer : MonoBehaviour
     [Header("")]
     public DayTime currentDayTime = DayTime.Day;
 
-    public Text uiTimer;
-    public TimeSpan time;
+    Text uiTimer;
+    TimeSpan time;
     bool showTimer;
     bool dayOver;
 

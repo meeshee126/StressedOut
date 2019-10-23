@@ -6,13 +6,10 @@ public class IAttack : IState
 {
     EntityBehaviour entity;
 
-    GameObject target => entity.gameObject;
-
-   /* public IAttack(EntityBehaviour entity)
+    public IAttack(EntityBehaviour entity)
     {
         this.entity = entity;
     }
-    */
 
     public bool Condition()
     {
@@ -26,6 +23,6 @@ public class IAttack : IState
 
     public void Execute()
     {
-        Debug.Log("Attack");
+        Debug.Log("J");
     }
 }

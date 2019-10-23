@@ -6,13 +6,10 @@ public class EntityBehaviour : MonoBehaviour
 {
     Machine brain = new Machine();
 
-    public GameObject target;
-   
-
     void Start()
     {
-        brain.AddState(new IAttack());
-        brain.AddState(new IWander());
+        brain.AddState(new IAttack(this));
+        brain.AddState(new IWander(this));
     }
 
     void Update()
