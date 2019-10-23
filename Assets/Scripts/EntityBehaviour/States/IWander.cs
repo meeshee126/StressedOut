@@ -6,10 +6,13 @@ public class IWander : IState
 {
     EntityBehaviour entity;
 
-    public IWander(EntityBehaviour entity)
+    GameObject target => entity.gameObject;
+
+   /* public IWander(EntityBehaviour entity)
     {
         this.entity = entity;
     }
+    */
 
     public bool Condition()
     {
@@ -23,6 +26,6 @@ public class IWander : IState
 
     public void Execute()
     {
-        Debug.Log("K");
+        Debug.Log("Wander");
     }
 }

@@ -2,17 +2,14 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class EntityBehaviour : MonoBehaviour
+public class Bear : MonoBehaviour
 {
     Machine brain = new Machine();
 
-    public GameObject target;
-   
-
     void Start()
     {
+        brain.AddState(new IWarned());
         brain.AddState(new IAttack());
-        brain.AddState(new IWander());
     }
 
     void Update()
