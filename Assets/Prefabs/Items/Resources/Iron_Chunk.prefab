@@ -142,11 +142,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e29fcee8b6c573e4f95624b78d3b81b0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  itemType: 1
   itemName: Iron_Chunk
   iD: 3
   itemHealth: 0
   isPickedUp: 0
+  isDead: 0
+  ItemTypeAttribute: 
   spriteRenderer: {fileID: 0}
   itemCollider: {fileID: 0}
   itemRB: {fileID: 0}
   physicsMaterial: {fileID: 0}
+  gameManager: {fileID: 0}

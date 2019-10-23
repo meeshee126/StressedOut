@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEditor.Animations;
 using UnityEngine;
@@ -19,7 +20,6 @@ public class Player : MonoBehaviour
 
     TimeBehaviour timeBehaviour;
     GameObject gameManager;
-    //for testing
 
     public GameObject playerHand;
     public GameObject[] QuickbarContent = new GameObject[5];
@@ -42,15 +42,10 @@ public class Player : MonoBehaviour
 
     void Update()
     {
-        //for testing
-        if (Input.GetKeyDown(KeyCode.Space))
-        {
-            timeBehaviour.timeCost = TimeBehaviour.TimeCost.highCost;
-        }
         if (stats.comboTimer > 0f) stats.comboTimer -= Time.deltaTime;
         if (stats.comboTimer <= 0f) stats.comboAttack = 0;
-        ApplyInput();
-        CastAttack();
+        ApplyMovementInput();
+        ApplyAttackInput();
         //AbilityFilterHandling();
         ////CooldownManager();
     }
@@ -60,15 +55,17 @@ public class Player : MonoBehaviour
     /// Translates  [User Input]
     /// into        [Player Movement].
     /// </summary>
-    void ApplyInput()
+    void ApplyMovementInput()
     {
         float moveHorizontal = Input.GetAxis("Horizontal") * stats.movementSpeed;
         float moveVertical = Input.GetAxis("Vertical") * stats.movementSpeed;
 
-        //transform.Translate(new Vector2(moveHorizontal, moveVertical));
         //AnimationUpdate(moveHorizontal, moveVertical);
 
         characterRB.velocity = new Vector2(moveHorizontal, moveVertical);
+        #region old
+        //transform.Translate(new Vector2(moveHorizontal, moveVertical));
+        #endregion
     }
 
 
@@ -80,7 +77,7 @@ public class Player : MonoBehaviour
     /// <param name="moveY"></param>
     void AnimationUpdate(float moveX, float moveY)
     {
-        //Changes Animation Based on direction facing.
+        // Changes Animation Based on direction facing.
         characterAnimator.SetFloat("FaceX", moveX);
         characterAnimator.SetFloat("FaceY", moveY);
 
@@ -102,7 +99,7 @@ public class Player : MonoBehaviour
     }
 
 
-    void CastAttack()
+    void ApplyAttackInput()
     {
         if (Input.GetKeyDown(KeyCode.Space))
         {
@@ -121,58 +118,108 @@ public class Player : MonoBehaviour
 
     private void OnTriggerStay2D(Collider2D collision)
     {
-        if (collision.GetComponent<Item>().itemType == Item.ItemType.armor)
-        {
-            if (Input.GetKeyDown(KeyCode.F))
-            {
-                if (collision.GetComponent<Item>().itemName.Contains("Helmet"))
-                {
-                    Debug.Log("Yes the item contains Helmet");
-                }
-                else if (collision.GetComponent<Item>().itemName.Contains("Suite")) Debug.Log("No it contains Suite Instead");
-                else if (collision.GetComponent<Item>().itemName.Contains("Boots")) Debug.Log("Just boots...");
-                else Debug.Log("Idk what this item is");
-                ItemPickUp(collision.gameObject);
-                collision.GetComponent<Item>().isPickedUp = true;
-            }
-        }
-        if (collision.GetComponent<Item>().itemType == Item.ItemType.weapon)
+        if (collision.GetComponent<Item>())
         {
             // Open up closest collision GUI
+
             if (Input.GetKeyDown(KeyCode.F))
             {
-                ItemPickUp(collision.gameObject);
-                collision.gameObject.GetComponent<Item>().isPickedUp = true;
+                IfNoneItem(collision);
+                IfResourceItem(collision);
+                IfConsumableItem(collision);
+                IfWeaponItem(collision);
+                IfArmorItem(collision);
+                IfMiscellaneousItem(collision);
             }
-        }
-        if (collision.GetComponent<Item>().itemType == Item.ItemType.consumable)
-        {
-            if (Input.GetKeyDown(KeyCode.F))
-            {
-                collision.GetComponent<Item>().isPickedUp = true;
-            }
-        }
-        if (collision.GetComponent<Item>().itemType == Item.ItemType.resource)
-        {
-
-        }
-        if (collision.gameObject.GetComponent<Item>().itemType == Item.ItemType.miscelaneous)
-        {
-
         }
     }
 
-
+    // Picks up the reffering item and drops already picked up item
     void ItemPickUp(GameObject pickedItem)
     {
-        Instantiate(playerHand, transform.position, Quaternion.identity);
+        if (playerHand != null) for (int i = 0; i < itemList.itemCollection.Length; i++)
+            {
+                if (playerHand.GetComponent<Item>().iD == itemList.itemCollection[i].GetComponent<Item>().iD)
+                {
+                    Instantiate(itemList.itemCollection[i], transform.position, Quaternion.identity);
+                    continue;
+                }
+            }
         playerHand = pickedItem;
     }
 
 
+    // Holds a library of all the available combos with each weapon
     void CombosLibrary()
     {
         
+    }
+
+
+    // Item handler if the Item the player just interacted with is type of      None
+    void IfNoneItem(Collider2D collision)
+    {
+        if (collision.GetComponent<Item>().itemType == Item.ItemType.none)
+        {
+
+        }
+    }
+
+
+    // Item handler if the Item the player just interacted with is type of      Resource
+    void IfResourceItem(Collider2D collision)
+    {
+        if (collision.GetComponent<Item>().itemType == Item.ItemType.resource)
+        {
+
+        }
+    }
+
+
+    // Item handler if the Item the player just interacted with is type of      Consumable
+    void IfConsumableItem(Collider2D collision)
+    {
+        if (collision.GetComponent<Item>().itemType == Item.ItemType.consumable)
+        {
+            stats.health += Int32.Parse(collision.GetComponent<Item>().ItemTypeAttribute);
+            collision.GetComponent<Item>().isPickedUp = true;
+        }
+    }
+
+
+    // Item handler if the Item the player just interacted with is type of      Weapon
+    void IfWeaponItem(Collider2D collision)
+    {
+        if (collision.GetComponent<Item>().itemType == Item.ItemType.weapon)
+        {
+            ItemPickUp(collision.gameObject);
+            collision.gameObject.GetComponent<Item>().isPickedUp = true;
+        }
+    }
+
+
+    // Item handler if the Item the player just interacted with is type of      Armor
+    void IfArmorItem(Collider2D collision)
+    {
+        if (collision.GetComponent<Item>().itemType == Item.ItemType.armor)
+        {
+            if (collision.GetComponent<Item>().itemName.Contains("Helmet")) Debug.Log("Yes the item contains Helmet");
+            else if (collision.GetComponent<Item>().itemName.Contains("Suite")) Debug.Log("No it contains Suite Instead");
+            else if (collision.GetComponent<Item>().itemName.Contains("Boots")) Debug.Log("Just boots...");
+            else Debug.Log("Idk what this item is");
+            ItemPickUp(collision.gameObject);
+            collision.GetComponent<Item>().isPickedUp = true;
+        }
+    }
+
+
+    // Item handler if the Item the player just interacted with is type of      Miscellaneous
+    void IfMiscellaneousItem(Collider2D collision)
+    {
+        if (collision.gameObject.GetComponent<Item>().itemType == Item.ItemType.miscelaneous)
+        {
+
+        }
     }
 
 

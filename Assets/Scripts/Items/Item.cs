@@ -28,7 +28,7 @@ public class Item : MonoBehaviour
     public bool isDead = false;
 
     [Space(15)]
-    public int basedOnType;
+    public string ItemTypeAttribute;
     [Space(15)]
 
     [Header("Other Info")]
@@ -72,7 +72,7 @@ public class Item : MonoBehaviour
         if (itemName == "") itemName = name;
         name = itemName;
         itemHealth = 50;
-        itemCollider.size = new Vector2(0.5f, 0.5f);
+        itemCollider.size = new Vector2(1.5f, 1.5f);
         itemCollider.offset = new Vector2(0f, 0f);
         itemCollider.isTrigger = true;
         itemRB.collisionDetectionMode = CollisionDetectionMode2D.Continuous;
