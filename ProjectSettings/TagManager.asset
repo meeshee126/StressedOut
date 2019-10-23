@@ -4,14 +4,8 @@
 TagManager:
   serializedVersion: 2
   tags:
-  - Resource
-  - EnterRight
-  - EnterLeft
-  - EnterUp
-  - EnterDown
-  - Enemy
-  - Neutral
   - Equippable
+  - Resource
   - Miscellaneous
   - Consumable
   layers:
@@ -23,7 +17,7 @@ TagManager:
   - UI
   - 
   - 
-  - Entity
+  - 
   - 
   - 
   - 
@@ -50,7 +44,4 @@ TagManager:
   m_SortingLayers:
   - name: Default
     uniqueID: 0
-    locked: 0
-  - name: DroppedItem
-    uniqueID: 4267789825
     locked: 0
