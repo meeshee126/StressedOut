@@ -123,13 +123,11 @@ public class Player : MonoBehaviour
         if (collision.GetComponent<Item>())
         {
             // Open up closest collision GUI
-           
+
 
             if (Input.GetKeyDown(KeyCode.F))
             {
-
-                IfResourceItem(collision);
-                IfNoneItem(collision);                
+                IfNoneItem(collision);
                 IfConsumableItem(collision);
                 IfWeaponItem(collision);
                 IfArmorItem(collision);
@@ -137,6 +135,13 @@ public class Player : MonoBehaviour
             }
         }
     }
+
+
+    //private void OnTriggerEnter2D(Collider2D collision)
+    //{
+    //    if (collision.GetComponent<Item>()) IfResourceItem(collision);
+    //}
+
 
     // Picks up the reffering item and drops already picked up item
     void ItemPickUp(GameObject pickedItem)
@@ -176,7 +181,6 @@ public class Player : MonoBehaviour
         if (collision.GetComponent<Item>().itemType == Item.ItemType.resource)
         {
             resourceUI.AddMaterial(collision.GetComponent<Item>().name, collision.GetComponent<Item>().amount);
-            collision.GetComponent<Item>().isPickedUp = true;
         }
     }
 

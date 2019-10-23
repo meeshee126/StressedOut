@@ -39,6 +39,7 @@ public class Item : MonoBehaviour
     public Rigidbody2D itemRB;
     public PhysicsMaterial2D physicsMaterial;
     public GameObject gameManager;
+    public GameObject targetPlayer;
 
 
 
@@ -84,5 +85,22 @@ public class Item : MonoBehaviour
         itemRB.drag = 10f;
         spriteRenderer.sortingLayerName = "DroppedItem";
         spriteRenderer.sortingOrder = 5;
+    }
+
+
+    private void FixedUpdate()
+    {
+        if (Vector2.Distance(transform.position, targetPlayer.transform.position) < 1.5f &&
+            itemType == ItemType.resource)
+        {
+            PlayerFound();
+            if (Vector2.Distance(transform.position, targetPlayer.transform.position) < 0.1f &&
+                itemType == ItemType.resource) isPickedUp = true;
+        }
+    }
+
+    void PlayerFound()
+    {
+        transform.position = Vector2.MoveTowards(transform.position, targetPlayer.transform.position, 15f * Time.fixedDeltaTime);
     }
 }
