@@ -15,11 +15,16 @@ public class Player : MonoBehaviour
     private Rigidbody2D characterRB;
     private Animator characterAnimator;
     private CapsuleCollider2D characterCollider;
-    
+    WeaponStats weaponStats;
 
     TimeBehaviour timeBehaviour;
     GameObject gameManager;
     //for testing
+
+    public GameObject playerHand;
+    public GameObject[] QuickbarContent = new GameObject[5];
+    public GameObject Helmet, Suite, Boots;
+
 
     private void Awake()
     {
@@ -42,12 +47,10 @@ public class Player : MonoBehaviour
         {
             timeBehaviour.timeCost = TimeBehaviour.TimeCost.highCost;
         }
-        Debug.Log("Before");
         if (stats.comboTimer > 0f) stats.comboTimer -= Time.deltaTime;
-        Debug.Log("Passby");
         if (stats.comboTimer <= 0f) stats.comboAttack = 0;
         ApplyInput();
-
+        CastAttack();
         //AbilityFilterHandling();
         ////CooldownManager();
     }
@@ -98,13 +101,87 @@ public class Player : MonoBehaviour
         }
     }
 
-    // Input
-    // Read What the player is holding (Enum)
+
+    void CastAttack()
+    {
+        if (Input.GetKeyDown(KeyCode.Space))
+        {
+            Debug.Log(itemList.itemCollection.Length);
+
+            for (int i = 0; i < itemList.itemCollection.Length; i++)
+            {
+                if (playerHand.name == itemList.itemCollection[i].name)
+                {
+                    playerHand = itemList.itemCollection[i];
+                }
+            }
+        }
+    }
+
+
+    private void OnTriggerStay2D(Collider2D collision)
+    {
+        if (collision.GetComponent<Item>().itemType == Item.ItemType.armor)
+        {
+            if (Input.GetKeyDown(KeyCode.F))
+            {
+                if (collision.GetComponent<Item>().itemName.Contains("Helmet"))
+                {
+                    Debug.Log("Yes the item contains Helmet");
+                }
+                else if (collision.GetComponent<Item>().itemName.Contains("Suite")) Debug.Log("No it contains Suite Instead");
+                else if (collision.GetComponent<Item>().itemName.Contains("Boots")) Debug.Log("Just boots...");
+                else Debug.Log("Idk what this item is");
+                ItemPickUp(collision.gameObject);
+                collision.GetComponent<Item>().isPickedUp = true;
+            }
+        }
+        if (collision.GetComponent<Item>().itemType == Item.ItemType.weapon)
+        {
+            // Open up closest collision GUI
+            if (Input.GetKeyDown(KeyCode.F))
+            {
+                ItemPickUp(collision.gameObject);
+                collision.gameObject.GetComponent<Item>().isPickedUp = true;
+            }
+        }
+        if (collision.GetComponent<Item>().itemType == Item.ItemType.consumable)
+        {
+            if (Input.GetKeyDown(KeyCode.F))
+            {
+                collision.GetComponent<Item>().isPickedUp = true;
+            }
+        }
+        if (collision.GetComponent<Item>().itemType == Item.ItemType.resource)
+        {
+
+        }
+        if (collision.gameObject.GetComponent<Item>().itemType == Item.ItemType.miscelaneous)
+        {
+
+        }
+    }
+
+
+    void ItemPickUp(GameObject pickedItem)
+    {
+        Instantiate(playerHand, transform.position, Quaternion.identity);
+        playerHand = pickedItem;
+    }
+
+
+    void CombosLibrary()
+    {
+        
+    }
+
+
+    // Input                                                                                    CHECK
+    // Read What the player is holding (Enum)                                                   CHECK
     // READ:   It's attack and combos library
     // Read weapon damage attributes and other attributes
     // Instantiate the attack   AND     Start the read Cooldown
     // Do the the casttimer and attackthing     AND     Play animations
-
 
 
     //for (int i = 0; i < abilities.Length; i++) abilities[i].Cooldown -= Time.deltaTime;
@@ -117,11 +194,11 @@ public class Player : MonoBehaviour
     //    right = 3
     //}
 
-    public GameObject[] castedAbilities = new GameObject[200];
     //public GameObject CastPrefab;
 
     //private bool doesHitAll;
     //private string lastCastID;
+    public GameObject[] castedAbilities = new GameObject[200];
 
 
     public void CooldownManager()
@@ -156,7 +233,25 @@ public class Player : MonoBehaviour
 
     //}
 
+    //public void GetAbilityList(Stats stats, int inputedID, bool hitAll)
+    //{
+    //    selectedAbility = stats.gameObject.GetComponent<CombatHandler>().CastPrefab.GetComponent<Ability>();
+    //    hitAllEntities = hitAll;
+    //    //stats.gameObject.GetComponent<CombatHandler>().castedAbilities[]
+    //    switch (stats.EntityName)
+    //    {
+    //        #region players
+    //        case "Roger": RedPlayer(inputedID); break;
+    //        case "Jake": GreenPlayer(inputedID); break;
+    //        case "Hera": BluePlayer(inputedID); break;
+    //        #endregion
 
+    //        case "BehemothChick": CrawlingChickens(inputedID); break;
+    //        case "BigChick": CrawlingChickens(inputedID); break;
+    //        case "SmolChick": CrawlingChickens(inputedID); break;
+    //        default: break;
+    //    }
+    //}
 
 
     #region This Ability Casting Works
@@ -196,5 +291,36 @@ public class Player : MonoBehaviour
     //     abilities[1].Initialize(1, Ability.CastType.burstCircle, "Burst Circle", 50, 0.2f, 0.5f, 90f, 3f, 5f, null, LayerMask.NameToLayer("Enemy"));
     //     lastCastedObject = Instantiate(CastPrefab, gameObject.transform.position, Quaternion.identity);
     // }
+
+
+    //-------------------------------
+
+    //public void getaValue()
+    //{
+        //for (int i = 0; i < ItemsList.FindObjectsOfType<GameObject>().Length; i++)
+        //{
+        //}
+        //Debug.Log(ItemsList.FindObjectsOfType<GameObject>().Length);
+        //return ItemsList.FindObjectsOfType<GameObject>().Length;
+        //.GetProperty(name).GetValue(this, null);
+        //return this.GetType().GetProperty(name).GetValue(this, null);
+    //}
+    #endregion
+
+    #region Cool code actually
+    //Debug.Log(System.Enum.GetNames(typeof(ItemsList.Items)).Length);
+    //for (int i = 0; i < System.Enum.GetNames(typeof(ItemsList.Items)).Length; i++)
+    //{
+    //    if (playerHands.ToString() == System.Enum.GetNames(typeof(ItemsList.Items)).GetValue(i).ToString())
+    //    {
+    //        for (int j = 0; j < itemList.ItemCollection.Length; j++)
+    //        {
+    //            if (playerHands.ToString() == itemList.ItemCollection[j].name)
+    //            {
+    //                playerHand = itemList.ItemCollection[j];
+    //            }
+    //        }
+    //    }
+    //}
     #endregion
 }
