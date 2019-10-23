@@ -2,18 +2,17 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class IWander : IState
+public class IWander : MonoBehaviour, IState
 {
     EntityBehaviour entity;
 
-    GameObject target => entity.gameObject;
+    GameObject target => entity.target;
 
-   /* public IWander(EntityBehaviour entity)
+    public IWander(EntityBehaviour entity)
     {
         this.entity = entity;
     }
-    */
-
+    
     public bool Condition()
     {
         if (Input.GetKey(KeyCode.K))

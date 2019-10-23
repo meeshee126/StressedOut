@@ -2,18 +2,20 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Bandit : MonoBehaviour
+public class Bandit : EntityBehaviour
 {
     Machine brain = new Machine();
 
     void Start()
     {
-        brain.AddState(new IWander());
-        brain.AddState(new IAttack());
+        brain.AddState(new IAttack(this));
+        brain.AddState(new IWarned(this));
+        
     }
 
-    void Update()
+    private void Update()
     {
         brain.Update();
     }
+
 }

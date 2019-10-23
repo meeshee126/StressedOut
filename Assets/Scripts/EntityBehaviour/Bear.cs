@@ -2,14 +2,16 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Bear : MonoBehaviour
+public class Bear : EntityBehaviour
 {
     Machine brain = new Machine();
 
+    public List<ScriptableObject> state = new List<ScriptableObject>();
+
     void Start()
     {
-        brain.AddState(new IWarned());
-        brain.AddState(new IAttack());
+        
+        
     }
 
     void Update()

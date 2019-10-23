@@ -2,8 +2,16 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class IWarned : IState
+public class IWarned : MonoBehaviour, IState
 {
+    EntityBehaviour entity;
+
+    GameObject target => entity.target;
+
+    public IWarned(EntityBehaviour entity)
+    {
+        this.entity = entity;
+    }
   
     public bool Condition()
     {
@@ -11,11 +19,12 @@ public class IWarned : IState
         {
             return true;
         }
+
         return false;
     }
 
     public void Execute()
     {
-        Debug.Log("Warned");
+        Debug.Log("Warned" + target.name + this.entity.name);
     }
 }
