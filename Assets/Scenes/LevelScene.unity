@@ -30795,6 +30795,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 2409482830276436419, guid: 963f7399ec26d4144aba53c7cc9828fa,
+        type: 3}
+      propertyPath: m_TagString
+      value: BuildRadius
+      objectReference: {fileID: 0}
     - target: {fileID: 0}
       propertyPath: MainCamera
       value: 

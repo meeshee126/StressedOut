@@ -12,6 +12,10 @@ TagManager:
   - EnterDown
   - Enemy
   - Neutral
+  - Equippable
+  - Miscellaneous
+  - Consumable
+  - BuildRadius
   layers:
   - Default
   - TransparentFX
