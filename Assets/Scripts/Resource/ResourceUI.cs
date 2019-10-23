@@ -1,18 +1,28 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class ResourceUI : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
+    [SerializeField]
+    Text uiWood, uiStone, uiIron, uiGold, uiDiamond;
 
-    // Update is called once per frame
+
     void Update()
     {
-        
+       
+ 
+    }
+
+    public void AddMaterial(string itenname, int amount)
+    {
+        switch(itenname)
+        {
+            case "Wood":
+                uiWood.text += amount.ToString();
+                Debug.Log("test");
+                break;
+        }
     }
 }

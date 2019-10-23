@@ -22,6 +22,7 @@ public class Item : MonoBehaviour
     public ItemType itemType;
     public string itemName;
     public int iD;
+    public int amount;
     public int itemHealth;
 
     public bool isPickedUp = false;
@@ -38,6 +39,7 @@ public class Item : MonoBehaviour
     public Rigidbody2D itemRB;
     public PhysicsMaterial2D physicsMaterial;
     public GameObject gameManager;
+
 
 
     private void Awake()

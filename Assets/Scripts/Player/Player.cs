@@ -17,6 +17,7 @@ public class Player : MonoBehaviour
     private Animator characterAnimator;
     private CapsuleCollider2D characterCollider;
     WeaponStats weaponStats;
+    ResourceUI resourceUI;
 
     TimeBehaviour timeBehaviour;
     GameObject gameManager;
@@ -30,6 +31,7 @@ public class Player : MonoBehaviour
     {
         //for testing
         gameManager = GameObject.Find("GameManager");
+        resourceUI = GameObject.Find("Resources").GetComponent<ResourceUI>();
         timeBehaviour = gameManager.GetComponent<TimeBehaviour>();
         itemList = gameManager.GetComponentInChildren<ItemsList>();
 
@@ -121,11 +123,13 @@ public class Player : MonoBehaviour
         if (collision.GetComponent<Item>())
         {
             // Open up closest collision GUI
+           
 
             if (Input.GetKeyDown(KeyCode.F))
             {
-                IfNoneItem(collision);
+
                 IfResourceItem(collision);
+                IfNoneItem(collision);                
                 IfConsumableItem(collision);
                 IfWeaponItem(collision);
                 IfArmorItem(collision);
@@ -171,7 +175,8 @@ public class Player : MonoBehaviour
     {
         if (collision.GetComponent<Item>().itemType == Item.ItemType.resource)
         {
-
+            resourceUI.AddMaterial(collision.GetComponent<Item>().name, collision.GetComponent<Item>().amount);
+            collision.GetComponent<Item>().isPickedUp = true;
         }
     }
 

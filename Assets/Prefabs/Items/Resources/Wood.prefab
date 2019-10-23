@@ -13,7 +13,6 @@ GameObject:
   - component: {fileID: 6659558342305155666}
   - component: {fileID: -6352844600378122287}
   - component: {fileID: 1220241616196532048}
-  - component: {fileID: 6286219276202779539}
   m_Layer: 8
   m_Name: Wood
   m_TagString: Resource
@@ -144,8 +143,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   itemType: 1
-  itemName: 
+  itemName: Wood
   iD: 1
+  amount: 3
   itemHealth: 0
   isPickedUp: 0
   isDead: 0
@@ -155,24 +155,3 @@ MonoBehaviour:
   itemRB: {fileID: 0}
   physicsMaterial: {fileID: 0}
   gameManager: {fileID: 0}
---- !u!114 &6286219276202779539
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7941317824819057169}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ad868c53ffa44ce40b009ab345f2dd01, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  EntityName: Entity Sample
-  health: 4
-  armor: 0
-  movementSpeed: 5
-  entityID: 0
-  type: 0
-  state: 1
-  comboTimer: 0
-  comboAttack: 0
