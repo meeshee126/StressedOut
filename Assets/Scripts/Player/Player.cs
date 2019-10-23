@@ -22,6 +22,9 @@ public class Player : MonoBehaviour
     //for testing
 
     public GameObject playerHand;
+    public GameObject[] QuickbarContent = new GameObject[5];
+    public GameObject Helmet, Suite, Boots;
+
 
     private void Awake()
     {
@@ -116,9 +119,24 @@ public class Player : MonoBehaviour
     }
 
 
-    private void OnCollisionStay2D(Collision2D collision)
+    private void OnTriggerStay2D(Collider2D collision)
     {
-        if (collision.gameObject.CompareTag("Equippable"))
+        if (collision.GetComponent<Item>().itemType == Item.ItemType.armor)
+        {
+            if (Input.GetKeyDown(KeyCode.F))
+            {
+                if (collision.GetComponent<Item>().itemName.Contains("Helmet"))
+                {
+                    Debug.Log("Yes the item contains Helmet");
+                }
+                else if (collision.GetComponent<Item>().itemName.Contains("Suite")) Debug.Log("No it contains Suite Instead");
+                else if (collision.GetComponent<Item>().itemName.Contains("Boots")) Debug.Log("Just boots...");
+                else Debug.Log("Idk what this item is");
+                ItemPickUp(collision.gameObject);
+                collision.GetComponent<Item>().isPickedUp = true;
+            }
+        }
+        if (collision.GetComponent<Item>().itemType == Item.ItemType.weapon)
         {
             // Open up closest collision GUI
             if (Input.GetKeyDown(KeyCode.F))
@@ -127,14 +145,18 @@ public class Player : MonoBehaviour
                 collision.gameObject.GetComponent<Item>().isPickedUp = true;
             }
         }
-        if (collision.gameObject.CompareTag("Consumable"))
+        if (collision.GetComponent<Item>().itemType == Item.ItemType.consumable)
         {
             if (Input.GetKeyDown(KeyCode.F))
             {
-                collision.gameObject.GetComponent<Item>().isPickedUp = true;
+                collision.GetComponent<Item>().isPickedUp = true;
             }
         }
-        if (collision.gameObject.CompareTag("Resource"))
+        if (collision.GetComponent<Item>().itemType == Item.ItemType.resource)
+        {
+
+        }
+        if (collision.gameObject.GetComponent<Item>().itemType == Item.ItemType.miscelaneous)
         {
 
         }
@@ -143,7 +165,7 @@ public class Player : MonoBehaviour
 
     void ItemPickUp(GameObject pickedItem)
     {
-        Instantiate(playerHand);
+        Instantiate(playerHand, transform.position, Quaternion.identity);
         playerHand = pickedItem;
     }
 
