@@ -17,7 +17,7 @@ public class Player : MonoBehaviour
     private Animator characterAnimator;
     private CapsuleCollider2D characterCollider;
     WeaponStats weaponStats;
-    ResourceUI resourceUI;
+    ResourceManager resourceManager;
 
     TimeBehaviour timeBehaviour;
     GameObject gameManager;
@@ -31,7 +31,7 @@ public class Player : MonoBehaviour
     {
         //for testing
         gameManager = GameObject.Find("GameManager");
-        resourceUI = GameObject.Find("Resources").GetComponent<ResourceUI>();
+        resourceManager = GameObject.Find("GameManager").GetComponent<ResourceManager>();
         timeBehaviour = gameManager.GetComponent<TimeBehaviour>();
         itemList = gameManager.GetComponentInChildren<ItemsList>();
 
@@ -124,6 +124,7 @@ public class Player : MonoBehaviour
         {
             // Open up closest collision GUI
 
+         
 
             if (Input.GetKeyDown(KeyCode.F))
             {
@@ -137,10 +138,10 @@ public class Player : MonoBehaviour
     }
 
 
-    //private void OnTriggerEnter2D(Collider2D collision)
-    //{
-    //    if (collision.GetComponent<Item>()) IfResourceItem(collision);
-    //}
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.GetComponent<Item>()) IfResourceItem(collision);
+    }
 
 
     // Picks up the reffering item and drops already picked up item
@@ -180,7 +181,10 @@ public class Player : MonoBehaviour
     {
         if (collision.GetComponent<Item>().itemType == Item.ItemType.resource)
         {
-            resourceUI.AddMaterial(collision.GetComponent<Item>().name, collision.GetComponent<Item>().amount);
+            resourceManager.AddResource(collision.GetComponent<Item>().itemName, collision.GetComponent<Item>().amount);
+
+            collision.GetComponent<Item>().isPickedUp = true;
+            
         }
     }
 

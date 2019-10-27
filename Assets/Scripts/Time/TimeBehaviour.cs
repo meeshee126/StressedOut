@@ -34,6 +34,9 @@ public class TimeBehaviour : MonoBehaviour
 
     void Update()
     {
+        if (timer.currentDayTime == Timer.DayTime.Panic)
+            return;
+
         TimeCosts();
     }
 
