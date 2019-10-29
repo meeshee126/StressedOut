@@ -17,7 +17,7 @@ public class Player : MonoBehaviour
     private Animator characterAnimator;
     private CapsuleCollider2D characterCollider;
     WeaponStats weaponStats;
-    ResourceUI resourceUI;
+    ResourceManager resourceManager;
 
     TimeBehaviour timeBehaviour;
     GameObject gameManager;
@@ -29,9 +29,8 @@ public class Player : MonoBehaviour
 
     private void Awake()
     {
-        //for testing
         gameManager = GameObject.Find("GameManager");
-        resourceUI = GameObject.Find("Resources").GetComponent<ResourceUI>();
+        resourceManager = GameObject.Find("GameManager").GetComponent<ResourceManager>();
         timeBehaviour = gameManager.GetComponent<TimeBehaviour>();
         itemList = gameManager.GetComponentInChildren<ItemsList>();
 
@@ -46,6 +45,7 @@ public class Player : MonoBehaviour
     {
         if (stats.comboTimer > 0f) stats.comboTimer -= Time.deltaTime;
         if (stats.comboTimer <= 0f) stats.comboAttack = 0;
+        ItemPickingHandler();
         ApplyMovementInput();
         ApplyAttackInput();
         //AbilityFilterHandling();
@@ -118,50 +118,90 @@ public class Player : MonoBehaviour
     }
 
 
-    private void OnTriggerStay2D(Collider2D collision)
+    // Holds a library of all the available combos with each weapon
+    void CombosLibrary()
     {
-        if (collision.GetComponent<Item>())
+
+    }
+
+
+    //Collider2D GetClosestItem(Collider2D[] itemsFound)
+    //{
+    //    Collider2D bestTarget = null;
+    //    float closestDistanceSqr = 1f;
+    //    for (int i = 0; i < itemsFound.Length; i++)
+    //    {
+    //        if (Vector2.Distance(transform.position, itemsFound[i].transform.position) < closestDistanceSqr)
+    //        {
+    //            closestDistanceSqr = Vector2.Distance(transform.position, itemsFound[i].transform.position);
+    //            bestTarget = itemsFound[i];
+    //        }
+    //    }
+    //    return bestTarget;
+    //}
+
+
+    public void ItemPickingHandler()
+    {
+        Collider2D[] collisionsInCastArea = Physics2D.OverlapCircleAll(transform.position, 1f);
+
+        for (int i = 0; i < collisionsInCastArea.Length; i++)
         {
-            // Open up closest collision GUI
-
-
-            if (Input.GetKeyDown(KeyCode.F))
+            if (collisionsInCastArea[i].GetComponent<Item>() && Input.GetKeyDown(KeyCode.F))
             {
-                IfNoneItem(collision);
-                IfConsumableItem(collision);
-                IfWeaponItem(collision);
-                IfArmorItem(collision);
-                IfMiscellaneousItem(collision);
+                //if (collisionsInCastArea[i] == GetClosestItem(collisionsInCastArea))
+                //{
+                    // Is It an Item and Did Player PRESS <"F">
+
+                    // Which Item Type
+                    switch (collisionsInCastArea[i].GetComponent<Item>().itemType)
+                    {
+                        case Item.ItemType.none:
+                            Debug.Log("Called none");
+                            IfNoneItem(collisionsInCastArea[i]);
+                            break;
+                        case Item.ItemType.consumable:
+                            Debug.Log("Called consumable");
+                            IfConsumableItem(collisionsInCastArea[i]);
+                            break;
+                        case Item.ItemType.weapon:
+                            Debug.Log("Called Weapon");
+                            IfWeaponItem(collisionsInCastArea[i]);
+                            break;
+                        case Item.ItemType.armor:
+                            Debug.Log("Called armor");
+                            IfArmorItem(collisionsInCastArea[i]);
+                            break;
+                        case Item.ItemType.miscelaneous:
+                            Debug.Log("Called miscelaneous");
+                            IfMiscellaneousItem(collisionsInCastArea[i]);
+                            break;
+                    }
+                //}
             }
         }
     }
 
 
-    //private void OnTriggerEnter2D(Collider2D collision)
-    //{
-    //    if (collision.GetComponent<Item>()) IfResourceItem(collision);
-    //}
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.GetComponent<Item>()) IfResourceItem(collision);
+    }
 
 
     // Picks up the reffering item and drops already picked up item
     void ItemPickUp(GameObject pickedItem)
     {
-        if (playerHand != null) for (int i = 0; i < itemList.itemCollection.Length; i++)
+        // Go thru item Collection
+        for (int i = 0; i < itemList.itemCollection.Length; i++)
+        {
+            if (pickedItem.GetComponent<Item>().iD == itemList.itemCollection[i].GetComponent<Item>().iD)
             {
-                if (playerHand.GetComponent<Item>().iD == itemList.itemCollection[i].GetComponent<Item>().iD)
-                {
-                    Instantiate(itemList.itemCollection[i], transform.position, Quaternion.identity);
-                    continue;
-                }
+                Instantiate(playerHand, transform.position, Quaternion.identity);
+                playerHand = itemList.itemCollection[i];
+                pickedItem.GetComponent<Item>().isPickedUp = true;
             }
-        playerHand = pickedItem;
-    }
-
-
-    // Holds a library of all the available combos with each weapon
-    void CombosLibrary()
-    {
-        
+        }
     }
 
 
@@ -180,7 +220,10 @@ public class Player : MonoBehaviour
     {
         if (collision.GetComponent<Item>().itemType == Item.ItemType.resource)
         {
-            resourceUI.AddMaterial(collision.GetComponent<Item>().name, collision.GetComponent<Item>().amount);
+            resourceManager.AddResource(collision.GetComponent<Item>().itemName, collision.GetComponent<Item>().amount);
+
+            collision.GetComponent<Item>().isPickedUp = true;
+
         }
     }
 
@@ -199,11 +242,7 @@ public class Player : MonoBehaviour
     // Item handler if the Item the player just interacted with is type of      Weapon
     void IfWeaponItem(Collider2D collision)
     {
-        if (collision.GetComponent<Item>().itemType == Item.ItemType.weapon)
-        {
-            ItemPickUp(collision.gameObject);
-            collision.gameObject.GetComponent<Item>().isPickedUp = true;
-        }
+        ItemPickUp(collision.gameObject);
     }
 
 
@@ -353,13 +392,13 @@ public class Player : MonoBehaviour
 
     //public void getaValue()
     //{
-        //for (int i = 0; i < ItemsList.FindObjectsOfType<GameObject>().Length; i++)
-        //{
-        //}
-        //Debug.Log(ItemsList.FindObjectsOfType<GameObject>().Length);
-        //return ItemsList.FindObjectsOfType<GameObject>().Length;
-        //.GetProperty(name).GetValue(this, null);
-        //return this.GetType().GetProperty(name).GetValue(this, null);
+    //for (int i = 0; i < ItemsList.FindObjectsOfType<GameObject>().Length; i++)
+    //{
+    //}
+    //Debug.Log(ItemsList.FindObjectsOfType<GameObject>().Length);
+    //return ItemsList.FindObjectsOfType<GameObject>().Length;
+    //.GetProperty(name).GetValue(this, null);
+    //return this.GetType().GetProperty(name).GetValue(this, null);
     //}
     #endregion
 

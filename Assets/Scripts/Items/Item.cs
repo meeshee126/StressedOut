@@ -50,6 +50,7 @@ public class Item : MonoBehaviour
         spriteRenderer = GetComponent<SpriteRenderer>();
         itemCollider = GetComponent<BoxCollider2D>();
         itemRB = GetComponent<Rigidbody2D>();
+        targetPlayer = GameObject.Find("Player");
         SetItemSettings();
     }
 
@@ -87,15 +88,15 @@ public class Item : MonoBehaviour
         spriteRenderer.sortingOrder = 5;
     }
 
-
     private void FixedUpdate()
     {
         if (Vector2.Distance(transform.position, targetPlayer.transform.position) < 1.5f &&
             itemType == ItemType.resource)
         {
+            //Changed "is picked up" to Player class
             PlayerFound();
             if (Vector2.Distance(transform.position, targetPlayer.transform.position) < 0.1f &&
-                itemType == ItemType.resource) isPickedUp = true;
+                itemType == ItemType.resource); 
         }
     }
 

@@ -34,73 +34,71 @@ public class TimeBehaviour : MonoBehaviour
 
     void Update()
     {
-        VeryLowTimeCost(veryLowCost, durationInSeconds);
-        LowTimeCost(lowCost, durationInSeconds);
-        MiddleTimeCost(middleCost, durationInSeconds);
-        HighTimeCost(highCost, durationInSeconds);
+        if (timer.currentDayTime == Timer.DayTime.Panic)
+            return;
+
+        TimeCosts();
     }
 
-    void VeryLowTimeCost(int veryLowCost,float duration)
+    void TimeCosts()
     {
-        if(timeCost == TimeCost.veryLowCost)
+        switch(timeCost)
         {
-            count += Time.deltaTime;
+            case TimeCost.veryLowCost:
 
-            if (count <= duration) { timer.SpeedTime(veryLowCost); }
+                count += Time.deltaTime;
 
-            else
-            {
-                count = 0;
-                timeCost = TimeCost.noCost;
-            }
-        }
-    }
+                if (count <= durationInSeconds) { timer.SpeedTime(veryLowCost); }
 
-    void LowTimeCost(int lowCost, float duration)
-    {
-        if (timeCost == TimeCost.lowCost)
-        {
-            count += Time.deltaTime;
+                else
+                {
+                    count = 0;
+                    timeCost = TimeCost.noCost;
+                }
 
-            if (count <= duration) { timer.SpeedTime(lowCost); }
+                break;
 
-            else
-            {
-                count = 0;
-                timeCost = TimeCost.noCost;
-            }
-        }
-    }
+            case TimeCost.lowCost:
 
-    void MiddleTimeCost(int middleCost, float duration)
-    {
-        if (timeCost == TimeCost.middleCost)
-        {
-            count += Time.deltaTime;
+                count += Time.deltaTime;
 
-            if (count <= duration) { timer.SpeedTime(middleCost); }
+                if (count <= durationInSeconds) { timer.SpeedTime(lowCost); }
 
-            else
-            {
-                count = 0;
-                timeCost = TimeCost.noCost;
-            }
-        }
-    }
+                else
+                {
+                    count = 0;
+                    timeCost = TimeCost.noCost;
+                }
 
-    void HighTimeCost(int highCost, float duration)
-    {
-        if (timeCost == TimeCost.highCost)
-        {
-            count += Time.deltaTime;
+                break;
 
-            if (count <= duration) { timer.SpeedTime(highCost); }
+            case TimeCost.middleCost:
 
-            else
-            {
-                count = 0;
-                timeCost = TimeCost.noCost;
-            }
+                count += Time.deltaTime;
+
+                if (count <= durationInSeconds) { timer.SpeedTime(middleCost); }
+
+                else
+                {
+                    count = 0;
+                    timeCost = TimeCost.noCost;
+                }
+
+                break;
+
+            case TimeCost.highCost:
+
+                count += Time.deltaTime;
+
+                if (count <= durationInSeconds) { timer.SpeedTime(highCost); }
+
+                else
+                {
+                    count = 0;
+                    timeCost = TimeCost.noCost;
+                }
+
+                break;
         }
     }
 
