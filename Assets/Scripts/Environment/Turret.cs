@@ -11,6 +11,10 @@ public class Turret : MonoBehaviour
 
     private Transform enemy;
 
+    //Vector3 PlayerDistance = transform.position;
+    //Vector3 EnemyDistance = GameObject.FindWithTag("Enemy").transform.position;
+
+
     // Start is called before the first frame update
     void Start()
     {
@@ -22,6 +26,12 @@ public class Turret : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        /*float distance = Vector3.Distance(PlayerDistance, EnemyDistance);
+
+       if (distance <= 0.3)
+        {
+
+        }*/
         if (timeBtwShots <= 0 && enemy != null)
         {
             Instantiate(projectile, transform.position, Quaternion.identity);

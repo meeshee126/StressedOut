@@ -17,6 +17,11 @@ public class AreaChange : MonoBehaviour
         newPosition = mainCamera.transform.position;
     }
 
+    /// <summary>
+    /// Look for an entrance that the player collides with and checks what entrance it is to move the player and the camera. 
+    /// For this, the existing position of the player and the camera is controlled and then moved.
+    /// </summary>
+    /// <param name="enter"></param>
     void OnTriggerEnter2D(Collider2D enter)
     {
         if (enter.gameObject.tag == "EnterRight" && mainCamera.transform.position.x == posX)
@@ -55,6 +60,7 @@ public class AreaChange : MonoBehaviour
 
     private void Update()
     {
+        // Moves the camera and making it glide
         if (Vector3.Distance(mainCamera.transform.position, newPosition) > 0.03f)
         {
             mainCamera.transform.position += (newPosition - mainCamera.transform.position) * 0.15f;
