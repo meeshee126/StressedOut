@@ -4,14 +4,16 @@ using UnityEngine;
 
 public class AreaChange : MonoBehaviour
 {
-    public Camera mainCamera;
+	public Camera mainCamera;
     Vector3 newPosition;
     TimeBehaviour timeBehaviour;
 
     public int posX = 0;
     public int posY = 0;
 
-    private void Start()
+	public bool isTrigger;
+
+	private void Start()
     {
         timeBehaviour = GameObject.Find("GameManager").GetComponent<TimeBehaviour>();
         newPosition = mainCamera.transform.position;

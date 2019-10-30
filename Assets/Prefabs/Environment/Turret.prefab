@@ -121,7 +121,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: daa58c085e400764491f6ca687bdca49, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  startTimeBtwShots: 0
   projectile: {fileID: 1765985032368114802, guid: b3292ec0777233144be9fad98ef57b27,
     type: 3}
 --- !u!1 &95034656383531187
@@ -245,7 +244,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: daa58c085e400764491f6ca687bdca49, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  startTimeBtwShots: 0
   projectile: {fileID: 1765985032368114802, guid: b3292ec0777233144be9fad98ef57b27,
     type: 3}
 --- !u!1 &95034657382472155
@@ -307,7 +305,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 1, y: 1}
+  m_Size: {x: 2, y: 2}
   m_EdgeRadius: 0
 --- !u!114 &95034657382472156
 MonoBehaviour:
@@ -323,6 +321,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Wood: {fileID: 95034656383531187}
   Stone: {fileID: 95034655831807091}
+  MessagePanel: {fileID: 0}
   health: 100
   mySprite: {fileID: 5640010576981606939}
 --- !u!212 &5640010576981606939

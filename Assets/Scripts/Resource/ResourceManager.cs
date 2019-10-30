@@ -9,9 +9,9 @@ public class ResourceManager : MonoBehaviour
     Text uiWood, uiStone, uiIron, uiGold, uiDiamond;
 
     [SerializeField]
-    int wood, stone, iron, gold, diamond;
+    public int wood, stone, iron, gold, diamond;
 
-    private void Start()
+	private void Start()
     {
         uiWood = GameObject.Find("WoodCount").GetComponent<Text>();
         uiStone = GameObject.Find("StoneCount").GetComponent<Text>();
@@ -24,7 +24,7 @@ public class ResourceManager : MonoBehaviour
         SetUI(uiIron);
         SetUI(uiGold);
         SetUI(uiDiamond);
-    }
+	}
 
     void SetUI(Text resource)
     {

@@ -59,7 +59,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 1, y: 1}
+  m_Size: {x: 2, y: 2}
   m_EdgeRadius: 0
 --- !u!114 &3317899606695121983
 MonoBehaviour:
@@ -75,6 +75,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Wood: {fileID: 3317899607075758395}
   Stone: {fileID: 3317899606923338431}
+  MessagePanel: {fileID: 0}
   health: 100
   mySprite: {fileID: 4121657893406843368}
 --- !u!212 &4121657893406843368

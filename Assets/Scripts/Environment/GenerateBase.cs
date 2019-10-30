@@ -19,9 +19,17 @@ public class GenerateBase : MonoBehaviour
 
     public SpriteRenderer mySprite;
 
-    private void Start()
+	ResourceManager resourceManager;
+
+	AreaChange area;
+
+	private void Start()
     {
-        mySprite.enabled = false;
+		resourceManager = GameObject.Find("GameManager").GetComponent<ResourceManager>();
+
+		area = GameObject.Find("Player").GetComponent<AreaChange>();
+
+		mySprite.enabled = false;
     }
 
     void Update()
@@ -44,16 +52,17 @@ public class GenerateBase : MonoBehaviour
         {
             BeginnBuild();
         }
-    }
+	}
 
     /// <summary>
     /// Find the radius of the player and check if the radius is in contact with the building
     /// </summary>
-    /// <param name="buildRadius"></param>
-    void OnTriggerEnter2D(Collider2D buildRadius)
+    /// <param name="player"></param>
+    void OnTriggerEnter2D(Collider2D player)
     {
-        if (buildRadius.gameObject.tag == "BuildRadius")
+        if (player.gameObject.tag == "Player" && area.isTrigger == false)
         {
+			area.isTrigger = true;
             MessagePanel.gameObject.SetActive(true);
             doBuild = true;
         }
@@ -63,7 +72,7 @@ public class GenerateBase : MonoBehaviour
     {
         if (isBuild == false)
         {
-            mySprite.enabled = true;
+			mySprite.enabled = true;
             mySprite.color = new Color(1f, 1f, 1f, .5f);
         }
         else if (isBuild == true)
@@ -72,10 +81,12 @@ public class GenerateBase : MonoBehaviour
         }
     }
 
-    void OnTriggerExit2D(Collider2D buildRadius)
+    void OnTriggerExit2D(Collider2D player)
     {
-        if (buildRadius.gameObject.tag == "BuildRadius")
+        if (player.gameObject.tag == "Player")
         {
+			area.isTrigger = false;
+
             doBuild = false;
 
             MessagePanel.gameObject.SetActive(false);
@@ -87,17 +98,21 @@ public class GenerateBase : MonoBehaviour
     //Build and upgrade buildings when the requirements are met in order to activate the respective gameobject.
     void BeginnBuild()
     {
-        if (doBuild == true && isBuild != true && Input.GetKeyDown(KeyCode.F))
+        if (doBuild == true && isBuild != true && Input.GetKeyDown(KeyCode.F) && resourceManager.wood >= 10)
         {
-            Wood.gameObject.SetActive(true);
+			resourceManager.AddResource("Wood", -10);
+
+			Wood.gameObject.SetActive(true);
             isBuild = true;
 
             buildPhase = "Wood";
         }
 
-        else if (doBuild == true && isBuild == true && Input.GetKeyDown(KeyCode.F))
+        else if (doBuild == true && isBuild == true && Input.GetKeyDown(KeyCode.F) && resourceManager.stone >= 10)
         {
-            Wood.gameObject.SetActive(false);
+			resourceManager.AddResource("Stone_Chunk", -10);
+
+			Wood.gameObject.SetActive(false);
             Stone.gameObject.SetActive(true);
 
             buildPhase = "Stone";
@@ -111,14 +126,18 @@ public class GenerateBase : MonoBehaviour
         {
             health = 100;
 
-            if (buildPhase == "Wood")
+            if (buildPhase == "Wood" && resourceManager.wood >= 10)
             {
-                Wood.gameObject.SetActive(true);
+				resourceManager.AddResource("Wood", -10);
+
+				Wood.gameObject.SetActive(true);
                 doRepair = false;
             }
-            else if (buildPhase == "Stone")
+            else if (buildPhase == "Stone" && resourceManager.stone >= 10)
             {
-                Stone.gameObject.SetActive(true);
+				resourceManager.AddResource("Stone_Chunk", -10);
+
+				Stone.gameObject.SetActive(true);
                 doRepair = false;
             }
         }
