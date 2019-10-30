@@ -20,11 +20,14 @@ public class Projectile : MonoBehaviour
     {
         transform.position = Vector2.MoveTowards(transform.position, target, speed * Time.deltaTime);
 
-        RotateTowards(enemy.position);
-
         if (transform.position.x == target.x && transform.position.y == target.y)
         {
             Destroy(gameObject);
+        }
+
+        if (GameObject.FindWithTag("Enemy") != null)
+        {
+            RotateTowards(enemy.position);
         }
     }
 

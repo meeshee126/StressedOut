@@ -324,7 +324,7 @@ MonoBehaviour:
   Wood: {fileID: 95034656383531187}
   Stone: {fileID: 95034655831807091}
   health: 100
-  mySprite: {fileID: 0}
+  mySprite: {fileID: 5640010576981606939}
 --- !u!212 &5640010576981606939
 SpriteRenderer:
   m_ObjectHideFlags: 0

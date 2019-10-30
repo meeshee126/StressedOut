@@ -13,6 +13,8 @@ public class GenerateBase : MonoBehaviour
     public GameObject Wood;
     public GameObject Stone;
 
+    public GameObject MessagePanel;
+
     public int health = 100;
 
     public SpriteRenderer mySprite;
@@ -52,6 +54,7 @@ public class GenerateBase : MonoBehaviour
     {
         if (buildRadius.gameObject.tag == "BuildRadius")
         {
+            MessagePanel.gameObject.SetActive(true);
             doBuild = true;
         }
     }
@@ -74,6 +77,8 @@ public class GenerateBase : MonoBehaviour
         if (buildRadius.gameObject.tag == "BuildRadius")
         {
             doBuild = false;
+
+            MessagePanel.gameObject.SetActive(false);
 
             mySprite.enabled = false;
         }

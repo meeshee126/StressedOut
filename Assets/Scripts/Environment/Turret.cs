@@ -5,17 +5,15 @@ using UnityEngine;
 public class Turret : MonoBehaviour
 {
     private float timeBtwShots;
-    public float startTimeBtwShots;
+    float startTimeBtwShots = 0.5f;
+    float distance;
 
     public GameObject projectile;
 
     private Transform enemy;
 
-    //Vector3 PlayerDistance = transform.position;
-    //Vector3 EnemyDistance = GameObject.FindWithTag("Enemy").transform.position;
+    Vector3 EnemyDistance;
 
-
-    // Start is called before the first frame update
     void Start()
     {
         enemy = GameObject.FindGameObjectWithTag("Enemy").transform;
@@ -23,28 +21,39 @@ public class Turret : MonoBehaviour
         timeBtwShots = startTimeBtwShots;
     }
 
-    // Update is called once per frame
     void Update()
     {
-        /*float distance = Vector3.Distance(PlayerDistance, EnemyDistance);
-
-       if (distance <= 0.3)
+        if (GameObject.FindWithTag("Enemy") != null)
         {
+            EnemyDistance = GameObject.FindWithTag("Enemy").transform.position;
+            distance = Vector3.Distance(transform.position, EnemyDistance);
 
-        }*/
-        if (timeBtwShots <= 0 && enemy != null)
-        {
-            Instantiate(projectile, transform.position, Quaternion.identity);
-            timeBtwShots = startTimeBtwShots;
+            //Check the distance to the nearest enemy and start shooting at him
+            if (distance <= 4)
+            {
+                if (timeBtwShots <= 0)
+                {
+                    Instantiate(projectile, transform.position, Quaternion.identity);
+                    timeBtwShots = startTimeBtwShots;
+                }
+                else
+                {
+                    timeBtwShots -= Time.deltaTime;
+                }
+
+                RotateTowards(enemy.position);
+            }
+            else
+            {
+                transform.rotation = Quaternion.Euler(0, 0, 0);
+            }
         }
-        else
-        {
-            timeBtwShots -= Time.deltaTime;
-        }
-
-        RotateTowards(enemy.position);
     }
 
+    /// <summary>
+    /// Select the enemys position to rotate the Turret to the enemy
+    /// </summary>
+    /// <param name="target"></param>
     private void RotateTowards(Vector2 target)
     {
         Vector2 direction = target - (Vector2)transform.position;
