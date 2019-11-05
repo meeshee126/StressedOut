@@ -70,19 +70,19 @@ public class GenerateBase : MonoBehaviour
         }
     }
 
-    private void OnTriggerStay2D(Collider2D collision)
+    private void OnTriggerStay2D(Collider2D player)
     {
-        if (isBuild == false)
+        if (isBuild == false && player.gameObject.tag == "Player")
         {
 			mySprite.enabled = true;
             mySprite.color = new Color(1f, 1f, 1f, .5f);
         }
-        else if (isBuild == true)
+        else if (isBuild == true && player.gameObject.tag == "Player")
         {
             mySprite.enabled = false;
         }
 
-        if (Wood.gameObject.activeSelf == false)
+        if (Wood.gameObject.activeSelf == false && player.gameObject.tag == "Player")
         {
             resourceManager.ResourceCosts("Wood_Chunk", "-10");
         }
