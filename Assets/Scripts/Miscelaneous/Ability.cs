@@ -11,7 +11,6 @@ public class Ability : MonoBehaviour
     public string CastName;
 
     [Header("Main Attributes")]
-    public bool isCircle;
     public bool HitAllEntities;
     public int Damage;
     public int Bursts;
@@ -25,10 +24,9 @@ public class Ability : MonoBehaviour
     public float ChildAbilityWait;
 
     [Header("Area Ranges")]
-    public bool isBoxDirectionalExpanding;
-    public float Position_X;
-    public float Position_Y;
-    public float boxColliderX, boxColliderY, circleColliderRadius;
+    public float ColliderAreaAxisX;
+    public float ColliderAreaAxisY;
+    public float ColliderAreaRadius;
 
     [Header("Other Attributes")]
     public GameObject ChildAbility;
@@ -36,9 +34,10 @@ public class Ability : MonoBehaviour
     // Addjust mask in code to change whenever it's about switch to hit everything and switch to hit only enemies
     
 
+    // MATH SECTION ~~ ~~ ~~ ~~ ~~ ~~ ~~ ~~ ~~ ~~ ~~ ~~ ~~ ~~ ~~ ~~ ~~ ~~ ~~ ~~ ~~ ~~ ~~ ~~ ~~ ~~ ~~ ~~ ~~ ~~ ~~ ~~ ~~ ~~ ~~ ~~ ~~ MATH SECTION
     private void Update()
     {
-        if (Duration <= 0f && Bursts <= 0) gameObject.SetActive(false);
+        if (Duration <= 0f) Destroy(gameObject);
 
         // Animation: Ability-Casting
         CastingTime -= Time.deltaTime;
@@ -66,7 +65,7 @@ public class Ability : MonoBehaviour
     public void CastAttack()
     {
         Collider2D[] collisionsInCastArea = Physics2D.OverlapBoxAll(
-            new Vector3(Position_X, Position_Y), new Vector2(boxColliderX, boxColliderY),
+            transform.position, new Vector2(ColliderAreaAxisX, ColliderAreaAxisY),
             Quaternion.identity.x, LayerMask.NameToLayer("Entity"));
 
         for (int i = 0; i < collisionsInCastArea.Length; i++)
@@ -104,63 +103,6 @@ public class Ability : MonoBehaviour
     }
 
 
-    private void OnDrawGizmosSelected()
-    {
-        Position_X = transform.position.x;
-        Position_Y = transform.position.y;
-        Gizmos.color = Color.blue;
-
-        if (isBoxDirectionalExpanding)
-        {
-            BoxDirectionalExpanding();
-        }
-
-        if (!isCircle)
-        {
-            Gizmos.DrawWireCube(
-                new Vector3(Position_X, Position_Y),
-                new Vector3(boxColliderX, boxColliderY));
-        }
-
-        if (isCircle)
-        {
-            Gizmos.DrawWireSphere(
-                new Vector3(Position_X, Position_Y),
-                circleColliderRadius);
-        }
-    }
-    
-    
-    /// <summary>
-    /// ...UNDER CONSTRUCTION
-    /// Handles the ability's - collider's size in the directional expansion
-    /// </summary>
-    void BoxDirectionalExpanding ()
-    {
-        Debug.LogWarning("This is currently under Construction and hereby NOT FUNCTIONING yet");
-        //if (boxColliderX > 1f && boxColliderY > 1f)
-        //{
-
-        //}
-        //if (boxColliderY > 1f)
-        //{
-
-        //}
-        //if (boxColliderX < -1f)
-        //{
-
-        //}
-        //if (boxColliderY < -1f)
-        //{
-
-        //}
-        //Gizmos.DrawWireCube(
-        //       new Vector3(transform.position.x + ((boxColliderX / 2f) - 0.5f),
-        //       transform.position.y + ((boxColliderY / 2f) - 0.5f)),
-        //       new Vector3(boxColliderX, boxColliderY));
-    }
-
-
     ///// <summary>
     ///// Casual Block XY (with child ability)
     ///// </summary>
@@ -183,7 +125,6 @@ public class Ability : MonoBehaviour
     //    WhatCanItHit = whatCanTheAbilityHit;
     //}
 
-
     ///// <summary>
     ///// Casual Block XY
     ///// </summary>
@@ -204,3 +145,4 @@ public class Ability : MonoBehaviour
     //    WhatCanItHit = whatCanTheAbilityHit;
     //}
 }
+

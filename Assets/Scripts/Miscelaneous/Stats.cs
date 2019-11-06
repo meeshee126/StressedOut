@@ -28,10 +28,10 @@ public class Stats : MonoBehaviour
     public BehaviourState state = BehaviourState.Passive;
 
     [Header("Miscelaneous Combat Stats")]
-    [Range(0f, 15f)]
-    public float comboResetTimer = 0f;
+    [Range(0, 15)]
+    public float comboTimer = 0;
     [Range(0,100)]
-    public int currentCombo = 0;
+    public int comboAttack = 0;
 
     public enum BehaviourType
     {

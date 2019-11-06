@@ -7,20 +7,17 @@ using UnityEngine.UI;
 public class ResourceManager : MonoBehaviour
 {
     Text uiWood, uiStone, uiIron, uiGold, uiDiamond;
-    Text uiWoodCosts, uiStoneCosts, uiIronCosts, uiGoldCosts, uiDiamondCosts;
 
     [SerializeField]
     public int wood, stone, iron, gold, diamond;
 
-    private void Start()
+	private void Start()
     {
         uiWood = GameObject.Find("WoodCount").GetComponent<Text>();
         uiStone = GameObject.Find("StoneCount").GetComponent<Text>();
         uiIron = GameObject.Find("IronCount").GetComponent<Text>();
         uiGold = GameObject.Find("GoldCount").GetComponent<Text>();
         uiDiamond = GameObject.Find("DiamondCount").GetComponent<Text>();
-
-        uiWoodCosts = GameObject.Find("WoodCosts").GetComponent<Text>();
 
         SetUI(uiWood);
         SetUI(uiStone);
@@ -79,28 +76,6 @@ public class ResourceManager : MonoBehaviour
             case "Diamond_Chunk":
                 diamond += amount;
                 if (diamond < 0) { diamond = 0; }
-                break;
-        }
-    }
-
-    public void ResourceCosts(string costsname, string costs)
-    {
-        switch (costsname)
-        {
-            case "Wood_Chunk":
-                uiWoodCosts.text = costs; 
-                break;
-
-            case "Stone_Chunk":
-                break;
-
-            case "Iron_Chunk":
-                break;
-
-            case "Gold_Chunk":
-                break;
-
-            case "Diamond_Chunk":
                 break;
         }
     }
