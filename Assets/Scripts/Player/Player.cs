@@ -108,9 +108,23 @@ public class Player : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.Space))
         {
-
             // CHECK WETHER THIS ABILITY IS ON COOLDOWN OR NOT
-            Instantiate(AbilityFiltering(), transform.position, Quaternion.identity);
+            for (int i = 0; i < castedAbilities.Length; i++)
+            {
+                if (castedAbilities[i] != AbilityFiltering())
+                {
+                    Debug.Log("Sorry This ability is still on cooldown");
+                    continue;
+                }
+                else if (castedAbilities[i] == null)
+                {
+                    Debug.Log("Empty_Slot");
+                }
+                else if (castedAbilities[i].)
+                {
+                    castedAbilities[199] = Instantiate(AbilityFiltering(), transform.position, Quaternion.identity);
+                }
+            }
 
             //abiList.GetAbilityList(stats, int.Parse(GetCastID()), doesHitAll);
             //if (castedAbilities[199] == null && GetCastID() != "") castedAbilities[199] =
@@ -151,7 +165,6 @@ public class Player : MonoBehaviour
 
     public GameObject AbilitySelector(string selectedAbilityName)
     {
-        Debug.Log(abilityLists.playerAbilities.Length);
         for (int i = 0; i < abilityLists.playerAbilities.Length; i++)
         {
             if (abilityLists.playerAbilities[i].GetComponent<Ability>().CastName == selectedAbilityName)
@@ -211,7 +224,6 @@ public class Player : MonoBehaviour
                 }
             }
         }
-        Debug.Log("END  " + closestTarget.name);
         return closestTarget;
     }
 
