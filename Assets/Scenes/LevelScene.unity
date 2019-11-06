@@ -1292,9 +1292,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 386454281}
-  - component: {fileID: 386454283}
   - component: {fileID: 386454282}
   - component: {fileID: 386454284}
+  - component: {fileID: 386454283}
   m_Layer: 0
   m_Name: Lists
   m_TagString: Untagged
@@ -1361,9 +1361,14 @@ MonoBehaviour:
   m_GameObject: {fileID: 386454280}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 71674796699921d45aaf03fa94e1e4b7, type: 3}
+  m_Script: {fileID: 11500000, guid: 6eacf1af25e0bd742a71c1124eb2fa26, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  playerAbilities: []
+  slimeAbilities: []
+  banditAbilities: []
+  bearAbilities: []
+  boarAbilities: []
 --- !u!114 &386454284
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2600,6 +2605,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   CastName: 
+  isCircle: 0
   HitAllEntities: 0
   Damage: 0
   Bursts: 0
@@ -2609,9 +2615,12 @@ MonoBehaviour:
   Cooldown: 0
   StartBurstWait: 0
   ChildAbilityWait: 0
-  ColliderAreaAxisX: 0
-  ColliderAreaAxisY: 0
-  ColliderAreaRadius: 0
+  isBoxDirectionalExpanding: 0
+  Position_X: 0
+  Position_Y: 0
+  boxColliderX: 0
+  boxColliderY: 0
+  circleColliderRadius: 0
   ChildAbility: {fileID: 0}
   WhatCanItHit:
     serializedVersion: 2
@@ -2693,6 +2702,7 @@ MonoBehaviour:
   lostRadius: 10
   movementSpeed: 1
   attack: 0
+  idle: 0
 --- !u!212 &1033297049
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -30950,8 +30960,8 @@ MonoBehaviour:
   entityID: 0
   type: 0
   state: 1
-  comboTimer: 0
-  comboAttack: 0
+  comboResetTimer: 0
+  currentCombo: 0
 --- !u!1 &1630294978
 GameObject:
   m_ObjectHideFlags: 0

@@ -11,7 +11,6 @@ using UnityEngine;
 
 public class Player : MonoBehaviour
 {
-    private ItemsList itemList;
     private Stats stats;
     private Rigidbody2D characterRB;
     private Animator characterAnimator;
@@ -21,11 +20,15 @@ public class Player : MonoBehaviour
 
     TimeBehaviour timeBehaviour;
     GameObject gameManager;
+    private ItemsList itemList;
+    private AbilityLists abilityLists;
 
+    public GameObject selectedAbility;
     public GameObject playerHand;
-    public GameObject[] QuickbarContent = new GameObject[5];
-    public int health;
     public GameObject Helmet, Suite, Boots;
+    public GameObject[] QuickbarContent = new GameObject[5];
+    public GameObject[] libraryAbilityList;
+    public GameObject[] castedAbilities = new GameObject[200];
 
 
     private void Awake()
@@ -34,6 +37,7 @@ public class Player : MonoBehaviour
         resourceManager = GameObject.Find("GameManager").GetComponent<ResourceManager>();
         timeBehaviour = gameManager.GetComponent<TimeBehaviour>();
         itemList = gameManager.GetComponentInChildren<ItemsList>();
+        abilityLists = gameManager.GetComponent<AbilityLists>();
 
         stats = GetComponent<Stats>();
         characterRB = GetComponent<Rigidbody2D>();
@@ -44,13 +48,11 @@ public class Player : MonoBehaviour
 
     void Update()
     {
-        if (stats.comboTimer > 0f) stats.comboTimer -= Time.deltaTime;
-        if (stats.comboTimer <= 0f) stats.comboAttack = 0;
+        if (stats.comboResetTimer > 0f) stats.comboResetTimer -= Time.deltaTime;
+        if (stats.comboResetTimer <= 0f) stats.currentCombo = 0;
         ItemPickingHandler();
         ApplyMovementInput();
         ApplyAttackInput();
-        //AbilityFilterHandling();
-        ////CooldownManager();
     }
 
 
@@ -106,79 +108,167 @@ public class Player : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.Space))
         {
-            Debug.Log(itemList.itemCollection.Length);
+                // CHECK WETHER THIS ABILITY IS ON COOLDOWN OR NOT
+                    //castedAbilities[199] = Instantiate(selectedAbility, transform.position, Quaternion.identity);
 
-            for (int i = 0; i < itemList.itemCollection.Length; i++)
+            //abiList.GetAbilityList(stats, int.Parse(GetCastID()), doesHitAll);
+            //if (castedAbilities[199] == null && GetCastID() != "") castedAbilities[199] =
+            //        Instantiate(CastPrefab, transform.position, Quaternion.identity);
+        }
+        CooldownManager();
+    }
+
+
+    // Holds a library of all the available combos with each weapon
+    void AbilityFiltering()
+    {
+        Item item = playerHand.GetComponent<Item>();
+        if (item.itemType == Item.ItemType.weapon)
+        {
+            WeaponStats weaponStats = playerHand.GetComponent<WeaponStats>(); // Use to adjust Ability's attributes
+            if (item.itemName.Contains("Sword"))
             {
-                if (playerHand.name == itemList.itemCollection[i].name)
+                switch(stats.currentCombo)
                 {
-                    playerHand = itemList.itemCollection[i];
+                    case 0: AbilitySelector("Basic Attack"); break;
+                    case 1: AbilitySelector(""); break;
+                    case 2: AbilitySelector(""); break;
+                    case 3: AbilitySelector(""); break;
+                    case 4: AbilitySelector(""); break;
+                    case 5: AbilitySelector(""); break;
+                }
+                // Go thru the Sword Ability Selection
+            }
+            if (item.itemName.Contains("Bow"))
+            {
+                // Insert Bow Mechanics
+            }
+        }
+
+        // Read from Combo manager
+        // Filter thru the abilities available for the currently holding item
+    }
+
+
+    //public void ComboManager()
+    //{
+
+    //}
+
+
+    public void AbilitySelector(string name)
+    {
+        for (int i = 0; i < abilityLists.playerAbilities.Length; i++)
+        {
+            if (abilityLists.playerAbilities[i].GetComponent<Ability>().CastName == name)
+            {
+                selectedAbility = abilityLists.playerAbilities[i];
+            }
+        }
+    }
+
+
+    public void CooldownManager()
+    {
+        if (castedAbilities[199] != null)
+        {
+            for (int i = 0; i < castedAbilities.Length; i++)
+            {
+                if (castedAbilities[i] == null)
+                {
+                    castedAbilities[i] = castedAbilities[199];
+                    castedAbilities[199] = null;
+                }
+            }
+        }
+
+        for (int i = 0; i < castedAbilities.Length; i++)
+        {
+            if (castedAbilities[i] != null)
+            {
+                if (castedAbilities[i].GetComponent<Ability>().Cooldown <= 0f)
+                {
+                    Destroy(castedAbilities[i].gameObject);
+                    castedAbilities[i] = null;
                 }
             }
         }
     }
 
 
-    // Holds a library of all the available combos with each weapon
-    void CombosLibrary()
+    Collider2D GetClosest(Collider2D[] list)
     {
-
+        Collider2D closestTarget = null;
+        float closestDistance = 2f;
+        foreach (Collider2D target in list)
+        {
+            float distance = Vector2.Distance(transform.position, target.transform.position);
+            if (target.name != this.name)
+            {
+                if (distance < closestDistance)
+                {
+                    closestDistance = distance;
+                    closestTarget = target;
+                    Debug.Log("Closest " + closestTarget.name);
+                    //Debug.Log("... " + closestDistance);
+                }
+            }
+        }
+        Debug.Log("END  " + closestTarget.name);
+        return closestTarget;
     }
 
 
-    //Collider2D GetClosestItem(Collider2D[] itemsFound)
-    //{
-    //    Collider2D bestTarget = null;
-    //    float closestDistanceSqr = 1f;
-    //    for (int i = 0; i < itemsFound.Length; i++)
-    //    {
-    //        if (Vector2.Distance(transform.position, itemsFound[i].transform.position) < closestDistanceSqr)
-    //        {
-    //            closestDistanceSqr = Vector2.Distance(transform.position, itemsFound[i].transform.position);
-    //            bestTarget = itemsFound[i];
-    //        }
-    //    }
-    //    return bestTarget;
-    //}
-
-
+    /// <summary>
+    /// Filters
+    /// Selects
+    /// Sorts 
+    /// ... the process of item pick-up
+    /// </summary>
     public void ItemPickingHandler()
     {
         Collider2D[] collisionsInCastArea = Physics2D.OverlapCircleAll(transform.position, 1f);
 
         for (int i = 0; i < collisionsInCastArea.Length; i++)
         {
-            if (collisionsInCastArea[i].GetComponent<Item>() && Input.GetKeyDown(KeyCode.F))
+            if (collisionsInCastArea[i].gameObject.GetComponent<Item>())
             {
-                //if (collisionsInCastArea[i] == GetClosestItem(collisionsInCastArea))
-                //{
-                    // Is It an Item and Did Player PRESS <"F">
-
-                    // Which Item Type
-                    switch (collisionsInCastArea[i].GetComponent<Item>().itemType)
+                if (collisionsInCastArea[i] == GetClosest(collisionsInCastArea))
+                {
+                    if (collisionsInCastArea[i] == GetClosest(collisionsInCastArea))
                     {
-                        case Item.ItemType.none:
-                            Debug.Log("Called none");
-                            IfNoneItem(collisionsInCastArea[i]);
-                            break;
-                        case Item.ItemType.consumable:
-                            Debug.Log("Called consumable");
-                            IfConsumableItem(collisionsInCastArea[i]);
-                            break;
-                        case Item.ItemType.weapon:
-                            Debug.Log("Called Weapon");
-                            IfWeaponItem(collisionsInCastArea[i]);
-                            break;
-                        case Item.ItemType.armor:
-                            Debug.Log("Called armor");
-                            IfArmorItem(collisionsInCastArea[i]);
-                            break;
-                        case Item.ItemType.miscelaneous:
-                            Debug.Log("Called miscelaneous");
-                            IfMiscellaneousItem(collisionsInCastArea[i]);
-                            break;
+                        Debug.Log("Closest Target is " + collisionsInCastArea[i].name);
+                        // Is It an Item and Did Player PRESS <"F">
+                        if (Input.GetKeyDown(KeyCode.F))
+                        {
+
+                            // Which Item Type
+                            switch (collisionsInCastArea[i].GetComponent<Item>().itemType)
+                            {
+                                case Item.ItemType.none:
+                                    Debug.Log("Called none");
+                                    IfNoneItem(collisionsInCastArea[i]);
+                                    break;
+                                case Item.ItemType.consumable:
+                                    Debug.Log("Called consumable");
+                                    IfConsumableItem(collisionsInCastArea[i]);
+                                    break;
+                                case Item.ItemType.weapon:
+                                    Debug.Log("Called Weapon");
+                                    IfWeaponItem(collisionsInCastArea[i]);
+                                    break;
+                                case Item.ItemType.armor:
+                                    Debug.Log("Called armor");
+                                    IfArmorItem(collisionsInCastArea[i]);
+                                    break;
+                                case Item.ItemType.miscelaneous:
+                                    Debug.Log("Called miscelaneous");
+                                    IfMiscellaneousItem(collisionsInCastArea[i]);
+                                    break;
+                            }
+                        }
                     }
-                //}
+                }
             }
         }
     }
@@ -206,6 +296,7 @@ public class Player : MonoBehaviour
     }
 
 
+    #region Item Types
     // Item handler if the Item the player just interacted with is type of      None
     void IfNoneItem(Collider2D collision)
     {
@@ -270,11 +361,12 @@ public class Player : MonoBehaviour
 
         }
     }
+    #endregion
 
 
     // Input                                                                                    CHECK
     // Read What the player is holding (Enum)                                                   CHECK
-    // READ:   It's attack and combos library
+    // READ:   It's attack and combos library                                                   WIP
     // Read weapon damage attributes and other attributes
     // Instantiate the attack   AND     Start the read Cooldown
     // Do the the casttimer and attackthing     AND     Play animations
@@ -294,40 +386,8 @@ public class Player : MonoBehaviour
 
     //private bool doesHitAll;
     //private string lastCastID;
-    public GameObject[] castedAbilities = new GameObject[200];
 
 
-    public void CooldownManager()
-    {
-        if (castedAbilities[199] != null)
-        {
-            for (int i = 0; i < castedAbilities.Length; i++)
-            {
-                if (castedAbilities[i] == null)
-                {
-                    castedAbilities[i] = castedAbilities[199];
-                    castedAbilities[199] = null;
-                }
-            }
-        }
-
-        for (int i = 0; i < castedAbilities.Length; i++)
-        {
-            if (castedAbilities[i] != null)
-            {
-                if (castedAbilities[i].GetComponent<Ability>().Cooldown <= 0f)
-                {
-                    castedAbilities[i] = null;
-                }
-            }
-        }
-    }
-
-
-    //public void ComboManager()
-    //{
-
-    //}
 
     //public void GetAbilityList(Stats stats, int inputedID, bool hitAll)
     //{
