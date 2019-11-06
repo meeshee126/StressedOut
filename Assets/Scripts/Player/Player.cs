@@ -24,6 +24,7 @@ public class Player : MonoBehaviour
 
     public GameObject playerHand;
     public GameObject[] QuickbarContent = new GameObject[5];
+    public int health;
     public GameObject Helmet, Suite, Boots;
 
 

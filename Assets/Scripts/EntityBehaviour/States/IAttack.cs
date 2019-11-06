@@ -28,7 +28,8 @@ public class IAttack : MonoBehaviour, IState
 
     public void Execute()
     {
-        Debug.Log("Attack" + target.name);
+        Debug.Log("Attack " + target.name);
+
         entity.idle = false;
         
         Chase();

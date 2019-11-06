@@ -32,7 +32,7 @@ public class IWander : MonoBehaviour, IState
 
     public void Execute()
     {
-        SetRotation();
+        SetIdle();
         Move();
 
         if (!Walkable())
@@ -63,7 +63,7 @@ public class IWander : MonoBehaviour, IState
         return true;  
     }
 
-    void SetRotation()
+    void SetIdle()
     {
         if(!entity.idle)
         {

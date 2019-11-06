@@ -46,7 +46,7 @@ public class Timer : MonoBehaviour
     void TimerCountdown()
     {
         time = time.Subtract(new TimeSpan(0, 0, 0, 0, (int)(Time.deltaTime * 1000)));
-        sun.transform.Rotate(0, 0, 0.2f);
+        sun.transform.Rotate(0, 0, -0.2f);
     }
 
     void CheckDayTime()
@@ -97,7 +97,7 @@ public class Timer : MonoBehaviour
     public void SpeedTime(int timeCost)
     {
         time = time.Subtract(new TimeSpan(0, 0, 0, 0, (int)(Time.deltaTime * timeCost)));
-        sun.transform.Rotate(0, 0, 100);
+        sun.transform.Rotate(0, 0, -100);
     }
 
     public enum DayTime

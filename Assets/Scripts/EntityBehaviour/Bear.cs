@@ -12,6 +12,8 @@ public class Bear : EntityBehaviour
     {
         //Add states to Bear
         brain.AddState(new IAttack(this));
+        brain.AddState(new IWarning(this));
+        brain.AddState(new IWander(this));
     }
 
     void Update()

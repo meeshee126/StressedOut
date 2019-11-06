@@ -49,9 +49,9 @@ public class ResourceManager : MonoBehaviour
     }
 
 
-    public void AddResource(string itenname, int amount)
+    public void AddResource(string itemName, int amount)
     {
-        switch (itenname)
+        switch (itemName)
         {
             case "Wood":
                 wood += amount;
@@ -60,18 +60,22 @@ public class ResourceManager : MonoBehaviour
 
             case "Stone_Chunk":
                 stone += amount;
+                if (stone < 0) { stone = 0; }
                 break;
 
             case "Iron_Chunk":
                 iron += amount;
+                if (iron < 0) { iron = 0; }
                 break;
 
             case "Gold_Chunk":
                 gold += amount;
+                if (gold < 0) { gold = 0; }
                 break;
 
             case "Diamond_Chunk":
                 diamond += amount;
+                if (diamond < 0) { diamond = 0; }
                 break;
         }
     }
