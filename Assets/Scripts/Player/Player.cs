@@ -28,7 +28,7 @@ public class Player : MonoBehaviour
     public GameObject Helmet, Suite, Boots;
     public GameObject[] QuickbarContent = new GameObject[5];
     public GameObject[] libraryAbilityList;
-    public GameObject[] castedAbilities = new GameObject[200];
+    public GameObject[] LocalAbilityList;
 
 
     private void Awake()
@@ -108,27 +108,31 @@ public class Player : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.Space))
         {
+            selectedAbility = AbilityFiltering();
             // CHECK WETHER THIS ABILITY IS ON COOLDOWN OR NOT
-            for (int i = 0; i < castedAbilities.Length; i++)
+            for (int i = 0; i < LocalAbilityList.Length; i++)
             {
-                if (castedAbilities[i] != AbilityFiltering())
+                if (selectedAbility.GetComponent<Ability>().name == LocalAbilityList[i].GetComponent<Ability>().name)
                 {
-                    Debug.Log("Sorry This ability is still on cooldown");
-                    continue;
-                }
-                else if (castedAbilities[i] == null)
-                {
-                    Debug.Log("Empty_Slot");
-                }
-                else if (castedAbilities[i].)
-                {
-                    castedAbilities[199] = Instantiate(AbilityFiltering(), transform.position, Quaternion.identity);
+                    if (LocalAbilityList[i].GetComponent<Ability>().Cooldown > 0f)
+                    {
+                        Debug.Log(LocalAbilityList[i].GetComponent<Ability>().name + " . . . is Still on cooldown . . .");
+                    }
+                    if (LocalAbilityList[i].GetComponent<Ability>().Cooldown <= 0f)
+                    {
+                        Instantiate(selectedAbility, transform.position, Quaternion.identity);
+                        for (int j = 0; j < abilityLists.playerAbilities.Length; j++)
+                        {
+                            if (LocalAbilityList[i].GetComponent<Ability>().name ==
+                                abilityLists.playerAbilities[j].GetComponent<Ability>().name)
+                            {
+                                LocalAbilityList[i].GetComponent<Ability>().Cooldown =
+                                    abilityLists.playerAbilities[j].GetComponent<Ability>().Cooldown;
+                            }
+                        }
+                    }
                 }
             }
-
-            //abiList.GetAbilityList(stats, int.Parse(GetCastID()), doesHitAll);
-            //if (castedAbilities[199] == null && GetCastID() != "") castedAbilities[199] =
-            //        Instantiate(CastPrefab, transform.position, Quaternion.identity);
         }
         CooldownManager();
     }
@@ -172,6 +176,7 @@ public class Player : MonoBehaviour
                 stats.currentCombo++;
                 stats.comboResetTimer = 1.5f;
                 if (stats.currentCombo >= 3) stats.currentCombo = 0;
+                selectedAbility = abilityLists.playerAbilities[i];
                 return abilityLists.playerAbilities[i];
             }
         }
@@ -181,27 +186,11 @@ public class Player : MonoBehaviour
 
     public void CooldownManager()
     {
-        if (castedAbilities[199] != null)
+        for (int i = 0; i < LocalAbilityList.Length; i++)
         {
-            for (int i = 0; i < castedAbilities.Length; i++)
+            if (LocalAbilityList[i].GetComponent<Ability>().Cooldown > 0f)
             {
-                if (castedAbilities[i] == null)
-                {
-                    castedAbilities[i] = castedAbilities[199];
-                    castedAbilities[199] = null;
-                }
-            }
-        }
-
-        for (int i = 0; i < castedAbilities.Length; i++)
-        {
-            if (castedAbilities[i] != null)
-            {
-                if (castedAbilities[i].GetComponent<Ability>().Cooldown <= 0f)
-                {
-                    Destroy(castedAbilities[i].gameObject);
-                    castedAbilities[i] = null;
-                }
+                    LocalAbilityList[i].GetComponent<Ability>().Cooldown -= Time.deltaTime;
             }
         }
     }

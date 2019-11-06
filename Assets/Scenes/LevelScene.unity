@@ -1364,7 +1364,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6eacf1af25e0bd742a71c1124eb2fa26, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerAbilities: []
+  playerAbilities:
+  - {fileID: 4820931933535877642, guid: a8a618f9b7e625c4993ffdeb6ba258e5, type: 3}
+  - {fileID: 2842167562594449786, guid: e9b2edbd5df7d654299bb94b976449d7, type: 3}
+  - {fileID: 1425586208782750296, guid: 96915ec930796f746ac589e3f8453cc8, type: 3}
   slimeAbilities: []
   banditAbilities: []
   bearAbilities: []
@@ -2657,7 +2660,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!61 &1033297047
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -31771,9 +31774,32 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8642264823993486120, guid: 963f7399ec26d4144aba53c7cc9828fa,
         type: 3}
+      propertyPath: LocalAbilityList.Array.size
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 8642264823993486120, guid: 963f7399ec26d4144aba53c7cc9828fa,
+        type: 3}
       propertyPath: playerHand
       value: 
       objectReference: {fileID: 8024129868866328510, guid: 27f2e3e2ef6cd1445808ec006659d3ea,
+        type: 3}
+    - target: {fileID: 8642264823993486120, guid: 963f7399ec26d4144aba53c7cc9828fa,
+        type: 3}
+      propertyPath: LocalAbilityList.Array.data[0]
+      value: 
+      objectReference: {fileID: 196494608660013701, guid: 8022b6e959e760645a5b15e8438e211f,
+        type: 3}
+    - target: {fileID: 8642264823993486120, guid: 963f7399ec26d4144aba53c7cc9828fa,
+        type: 3}
+      propertyPath: LocalAbilityList.Array.data[1]
+      value: 
+      objectReference: {fileID: 3610789626614590222, guid: a7af2edf50f040a4da63dac3a531ba1f,
+        type: 3}
+    - target: {fileID: 8642264823993486120, guid: 963f7399ec26d4144aba53c7cc9828fa,
+        type: 3}
+      propertyPath: LocalAbilityList.Array.data[2]
+      value: 
+      objectReference: {fileID: 9194768853379159511, guid: c78d6bd27ec045c40a44a97cc08f5111,
         type: 3}
     - target: {fileID: 2409482830276436419, guid: 963f7399ec26d4144aba53c7cc9828fa,
         type: 3}
