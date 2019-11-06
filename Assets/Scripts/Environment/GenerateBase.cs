@@ -12,6 +12,7 @@ public class GenerateBase : MonoBehaviour
 
     public GameObject Wood;
     public GameObject Stone;
+    public GameObject Ruin;
 
     public GameObject MessagePanel;
 
@@ -39,6 +40,7 @@ public class GenerateBase : MonoBehaviour
         {
             doRepair = true;
 
+            Ruin.gameObject.SetActive(true);
             Wood.gameObject.SetActive(false);
             Stone.gameObject.SetActive(false);
         }
@@ -68,16 +70,21 @@ public class GenerateBase : MonoBehaviour
         }
     }
 
-    private void OnTriggerStay2D(Collider2D collision)
+    private void OnTriggerStay2D(Collider2D player)
     {
-        if (isBuild == false)
+        if (isBuild == false && player.gameObject.tag == "Player")
         {
 			mySprite.enabled = true;
             mySprite.color = new Color(1f, 1f, 1f, .5f);
         }
-        else if (isBuild == true)
+        else if (isBuild == true && player.gameObject.tag == "Player")
         {
             mySprite.enabled = false;
+        }
+
+        if (Wood.gameObject.activeSelf == false && player.gameObject.tag == "Player")
+        {
+            resourceManager.ResourceCosts("Wood_Chunk", "-10");
         }
     }
 
@@ -92,6 +99,8 @@ public class GenerateBase : MonoBehaviour
             MessagePanel.gameObject.SetActive(false);
 
             mySprite.enabled = false;
+
+            resourceManager.ResourceCosts("Wood_Chunk", "");
         }
     }
 
@@ -125,6 +134,8 @@ public class GenerateBase : MonoBehaviour
         if (health == 0 && Input.GetKeyDown(KeyCode.F))
         {
             health = 100;
+
+            Ruin.gameObject.SetActive(false);
 
             if (buildPhase == "Wood" && resourceManager.wood >= 10)
             {
