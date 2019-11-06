@@ -37,7 +37,7 @@ public class Player : MonoBehaviour
         resourceManager = GameObject.Find("GameManager").GetComponent<ResourceManager>();
         timeBehaviour = gameManager.GetComponent<TimeBehaviour>();
         itemList = gameManager.GetComponentInChildren<ItemsList>();
-        abilityLists = gameManager.GetComponent<AbilityLists>();
+        abilityLists = gameManager.GetComponentInChildren<AbilityLists>();
 
         stats = GetComponent<Stats>();
         characterRB = GetComponent<Rigidbody2D>();
@@ -108,8 +108,9 @@ public class Player : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.Space))
         {
-                // CHECK WETHER THIS ABILITY IS ON COOLDOWN OR NOT
-                    //castedAbilities[199] = Instantiate(selectedAbility, transform.position, Quaternion.identity);
+
+            // CHECK WETHER THIS ABILITY IS ON COOLDOWN OR NOT
+            Instantiate(AbilityFiltering(), transform.position, Quaternion.identity);
 
             //abiList.GetAbilityList(stats, int.Parse(GetCastID()), doesHitAll);
             //if (castedAbilities[199] == null && GetCastID() != "") castedAbilities[199] =
@@ -120,7 +121,7 @@ public class Player : MonoBehaviour
 
 
     // Holds a library of all the available combos with each weapon
-    void AbilityFiltering()
+    GameObject AbilityFiltering()
     {
         Item item = playerHand.GetComponent<Item>();
         if (item.itemType == Item.ItemType.weapon)
@@ -130,12 +131,9 @@ public class Player : MonoBehaviour
             {
                 switch(stats.currentCombo)
                 {
-                    case 0: AbilitySelector("Basic Attack"); break;
-                    case 1: AbilitySelector(""); break;
-                    case 2: AbilitySelector(""); break;
-                    case 3: AbilitySelector(""); break;
-                    case 4: AbilitySelector(""); break;
-                    case 5: AbilitySelector(""); break;
+                    case 0: return AbilitySelector("Entry-Attack");
+                    case 1: return AbilitySelector("First-MainAttack");
+                    case 2: return AbilitySelector("Second-MainAttack");
                 }
                 // Go thru the Sword Ability Selection
             }
@@ -147,24 +145,24 @@ public class Player : MonoBehaviour
 
         // Read from Combo manager
         // Filter thru the abilities available for the currently holding item
+        return null;
     }
 
 
-    //public void ComboManager()
-    //{
-
-    //}
-
-
-    public void AbilitySelector(string name)
+    public GameObject AbilitySelector(string selectedAbilityName)
     {
+        Debug.Log(abilityLists.playerAbilities.Length);
         for (int i = 0; i < abilityLists.playerAbilities.Length; i++)
         {
-            if (abilityLists.playerAbilities[i].GetComponent<Ability>().CastName == name)
+            if (abilityLists.playerAbilities[i].GetComponent<Ability>().CastName == selectedAbilityName)
             {
-                selectedAbility = abilityLists.playerAbilities[i];
+                stats.currentCombo++;
+                stats.comboResetTimer = 1.5f;
+                if (stats.currentCombo >= 3) stats.currentCombo = 0;
+                return abilityLists.playerAbilities[i];
             }
         }
+        return null;
     }
 
 
@@ -209,7 +207,6 @@ public class Player : MonoBehaviour
                 {
                     closestDistance = distance;
                     closestTarget = target;
-                    Debug.Log("Closest " + closestTarget.name);
                     //Debug.Log("... " + closestDistance);
                 }
             }
@@ -237,7 +234,6 @@ public class Player : MonoBehaviour
                 {
                     if (collisionsInCastArea[i] == GetClosest(collisionsInCastArea))
                     {
-                        Debug.Log("Closest Target is " + collisionsInCastArea[i].name);
                         // Is It an Item and Did Player PRESS <"F">
                         if (Input.GetKeyDown(KeyCode.F))
                         {
@@ -335,6 +331,7 @@ public class Player : MonoBehaviour
     void IfWeaponItem(Collider2D collision)
     {
         ItemPickUp(collision.gameObject);
+        stats.currentCombo = 0;
     }
 
 

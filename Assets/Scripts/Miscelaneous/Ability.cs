@@ -38,7 +38,7 @@ public class Ability : MonoBehaviour
 
     private void Update()
     {
-        if (Duration <= 0f && Bursts <= 0) gameObject.SetActive(false);
+        if (Duration <= 0f && Bursts <= 0) Destroy(gameObject);
 
         // Animation: Ability-Casting
         CastingTime -= Time.deltaTime;
