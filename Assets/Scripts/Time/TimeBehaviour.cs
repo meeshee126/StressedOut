@@ -2,11 +2,10 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-// Michael Shcmidt
+// Michael Schmidt
 
 public class TimeBehaviour : MonoBehaviour
 {
-
     [Header("Timecosts (multiplied with milliseconds)")]
     [SerializeField]
     int veryLowCost;
@@ -19,13 +18,14 @@ public class TimeBehaviour : MonoBehaviour
 
     [Header("")]
     [SerializeField]
+    //how long the multiplication should run
     float durationInSeconds;
 
-    public TimeCost timeCost = TimeCost.noCost;
+    Timer timer;
+
+    public TimeCost timeCost = TimeCost.NoCost;
 
     float count;
-
-    Timer timer;
 
     void Start()
     {
@@ -34,31 +34,37 @@ public class TimeBehaviour : MonoBehaviour
 
     void Update()
     {
+        //no timecost anymore when in panic mode
         if (timer.currentDayTime == Timer.DayTime.Panic)
             return;
 
         TimeCosts();
     }
 
+    /// <summary>
+    /// Time behaviour after interacting with gameobjects and areas
+    /// </summary>
     void TimeCosts()
     {
+        //Check which cost is choosed
         switch(timeCost)
         {
-            case TimeCost.veryLowCost:
+            case TimeCost.VeryLowCost:
 
                 count += Time.deltaTime;
 
+                //multiplicate current time with choosed timecost for a certain amount of time
                 if (count <= durationInSeconds) { timer.SpeedTime(veryLowCost); }
 
                 else
                 {
                     count = 0;
-                    timeCost = TimeCost.noCost;
+                    timeCost = TimeCost.NoCost;
                 }
 
                 break;
 
-            case TimeCost.lowCost:
+            case TimeCost.LowCost:
 
                 count += Time.deltaTime;
 
@@ -67,12 +73,12 @@ public class TimeBehaviour : MonoBehaviour
                 else
                 {
                     count = 0;
-                    timeCost = TimeCost.noCost;
+                    timeCost = TimeCost.NoCost;
                 }
 
                 break;
 
-            case TimeCost.middleCost:
+            case TimeCost.MiddleCost:
 
                 count += Time.deltaTime;
 
@@ -81,12 +87,12 @@ public class TimeBehaviour : MonoBehaviour
                 else
                 {
                     count = 0;
-                    timeCost = TimeCost.noCost;
+                    timeCost = TimeCost.NoCost;
                 }
 
                 break;
 
-            case TimeCost.highCost:
+            case TimeCost.HighCost:
 
                 count += Time.deltaTime;
 
@@ -95,19 +101,22 @@ public class TimeBehaviour : MonoBehaviour
                 else
                 {
                     count = 0;
-                    timeCost = TimeCost.noCost;
+                    timeCost = TimeCost.NoCost;
                 }
 
                 break;
         }
     }
 
+    /// <summary>
+    /// List of all cost variations
+    /// </summary>
     public enum TimeCost
     {
-        noCost,
-        veryLowCost,
-        lowCost,
-        middleCost,
-        highCost
+        NoCost,
+        VeryLowCost,
+        LowCost,
+        MiddleCost,
+        HighCost
     }
 }

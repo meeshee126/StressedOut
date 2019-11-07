@@ -4,6 +4,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
+//Michael Schmidt
+
 public class ResourceManager : MonoBehaviour
 {
     Text uiWood, uiStone, uiIron, uiGold, uiDiamond;
@@ -22,6 +24,7 @@ public class ResourceManager : MonoBehaviour
 
         uiWoodCosts = GameObject.Find("WoodCosts").GetComponent<Text>();
 
+        //Set all resource display to 0
         SetUI(uiWood);
         SetUI(uiStone);
         SetUI(uiIron);
@@ -29,6 +32,10 @@ public class ResourceManager : MonoBehaviour
         SetUI(uiDiamond);
 	}
 
+    /// <summary>
+    /// function for setting UI resource count
+    /// </summary>
+    /// <param name="resource"></param>
     void SetUI(Text resource)
     {
         if(resource.text == null)
@@ -42,6 +49,9 @@ public class ResourceManager : MonoBehaviour
         ShowUI();
     }
 
+    /// <summary>
+    /// function for displays all current resource amount
+    /// </summary>
     void ShowUI()
     {
         uiWood.text = wood.ToString();
@@ -51,9 +61,15 @@ public class ResourceManager : MonoBehaviour
         uiDiamond.text = diamond.ToString();
     }
 
-
+    /// <summary>
+    /// Adding collected resources
+    /// </summary>
+    /// <param name="itemName"></param>
+    /// <param name="amount"></param>
     public void AddResource(string itemName, int amount)
     {
+        //Check which kind of resource is collected and add it to the assigned variable
+        //resources can not be less then 0
         switch (itemName)
         {
             case "Wood":

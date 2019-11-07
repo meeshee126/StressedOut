@@ -7,15 +7,17 @@ using UnityEngine.UI;
 
 public class Sun : MonoBehaviour
 {
-    Timer timer;
-    Slider slider;
-    Image image;
-
     [Header("Sun Color")]
     [SerializeField]
     Color red;
     [SerializeField]
     Color yellow;
+
+    [HideInInspector]
+    public Slider slider;
+
+    Timer timer;
+    Image image;
 
     bool sliderSeted = false;
 
@@ -31,13 +33,16 @@ public class Sun : MonoBehaviour
     {
         SliderManager();
         SetColor();
-        PanicMode();
     }
 
+    /// <summary>
+    /// Set slider with correct values from timer
+    /// </summary>
     void SliderManager()
     {
         if (!sliderSeted)
         {
+            //set slider max value with with total ingame time
             slider.maxValue = timer.TotalTimeInSeconds();
             sliderSeted = true;
         }
@@ -45,19 +50,14 @@ public class Sun : MonoBehaviour
         slider.value = timer.TotalTimeInSeconds();
     }
 
-
+    /// <summary>
+    /// Set Sun color
+    /// </summary>
     void SetColor()
     {
+        //changes sun color while sunset
         image.color = Color.Lerp(red, yellow, slider.normalizedValue >
                      (timer.panicTimer / 100) ? slider.normalizedValue : (timer.panicTimer / 100));
-    }
-
-    void PanicMode()
-    {
-        if(slider.normalizedValue <= (timer.panicTimer / 100))
-        {
-            timer.currentDayTime = Timer.DayTime.Panic;
-        }
     }
 }
 

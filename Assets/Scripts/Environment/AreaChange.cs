@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+
 public class AreaChange : MonoBehaviour
 {
 	public Camera mainCamera;
@@ -26,13 +27,17 @@ public class AreaChange : MonoBehaviour
     /// <param name="enter"></param>
     void OnTriggerEnter2D(Collider2D enter)
     {
+        /* Michael Schmidt:
+         * Timecosts will call when player entering a new area */
+     
         if (enter.gameObject.tag == "EnterRight" && mainCamera.transform.position.x == posX)
         {
             newPosition = mainCamera.transform.position + new Vector3(25, 0, 0);
             transform.position = transform.position + new Vector3(5,0,0);
             posX += 25;
 
-            timeBehaviour.timeCost = TimeBehaviour.TimeCost.highCost;  
+            //Michael Schmidt
+            timeBehaviour.timeCost = TimeBehaviour.TimeCost.HighCost;  
         }
         if (enter.gameObject.tag == "EnterLeft" && mainCamera.transform.position.x == posX)
         {
@@ -40,7 +45,8 @@ public class AreaChange : MonoBehaviour
             transform.position = transform.position + new Vector3(-5, 0, 0);
             posX -= 25;
 
-            timeBehaviour.timeCost = TimeBehaviour.TimeCost.highCost;
+            //Michael Schmidt
+            timeBehaviour.timeCost = TimeBehaviour.TimeCost.HighCost;
         }
         if (enter.gameObject.tag == "EnterUp" && mainCamera.transform.position.y == posY)
         {
@@ -48,7 +54,8 @@ public class AreaChange : MonoBehaviour
             transform.position = transform.position + new Vector3(0, 5.5f, 0);
             posY += 15;
 
-            timeBehaviour.timeCost = TimeBehaviour.TimeCost.highCost;
+            //Michael Schmidt
+            timeBehaviour.timeCost = TimeBehaviour.TimeCost.HighCost;
         }
         if (enter.gameObject.tag == "EnterDown" && mainCamera.transform.position.y == posY)
         {
@@ -56,7 +63,8 @@ public class AreaChange : MonoBehaviour
             transform.position = transform.position + new Vector3(0, -5.5f, 0);
             posY -= 15;
 
-            timeBehaviour.timeCost = TimeBehaviour.TimeCost.highCost;
+            //Michael Schmidt
+            timeBehaviour.timeCost = TimeBehaviour.TimeCost.HighCost;
         }
     }
 

@@ -17,7 +17,7 @@ public class Player : MonoBehaviour
     private CapsuleCollider2D characterCollider;
     WeaponStats weaponStats;
     ResourceManager resourceManager;
-    QuickTimeEvent quickTimeEvent;
+    LetterEvent quickTimeEvent;
 
     TimeBehaviour timeBehaviour;
     GameObject gameManager;
@@ -36,7 +36,7 @@ public class Player : MonoBehaviour
     {
         gameManager = GameObject.Find("GameManager");
         resourceManager = GameObject.Find("GameManager").GetComponent<ResourceManager>();
-        quickTimeEvent = GameObject.Find("QuickTimeEvent").GetComponent<QuickTimeEvent>();
+        quickTimeEvent = GameObject.Find("QuickTimeEvent").GetComponent<LetterEvent>();
         timeBehaviour = gameManager.GetComponent<TimeBehaviour>();
         itemList = gameManager.GetComponentInChildren<ItemsList>();
         abilityLists = gameManager.GetComponentInChildren<AbilityLists>();
@@ -139,13 +139,21 @@ public class Player : MonoBehaviour
         }
         CooldownManager();
     }
-
+    //Michael Schmidt
+    /// <summary>
+    /// Call QuickTimeEvent when start gathering
+    /// </summary>
     void StartQuickTimeEvent()
     {
         if(Input.GetKeyDown(KeyCode.Q))
         {
+            //enable QuickTimeEvent script
             quickTimeEvent.enabled = true;
+
+            //disable player velocity 
             characterRB.velocity = Vector2.zero;
+
+            //disable player script
             this.enabled = false;
         }
     }
@@ -322,6 +330,8 @@ public class Player : MonoBehaviour
     {
         if (collision.GetComponent<Item>().itemType == Item.ItemType.resource)
         {
+            //Michael Schmidt
+            //adding resource to resourceManager class
             resourceManager.AddResource(collision.GetComponent<Item>().itemName, collision.GetComponent<Item>().amount);
 
             collision.GetComponent<Item>().isPickedUp = true;
