@@ -63,18 +63,22 @@ public class ResourceManager : MonoBehaviour
 
             case "Stone_Chunk":
                 stone += amount;
+                if (stone < 0) { stone = 0; }
                 break;
 
             case "Iron_Chunk":
                 iron += amount;
+                if (iron < 0) { iron = 0; }
                 break;
 
             case "Gold_Chunk":
                 gold += amount;
+                if (gold < 0) { gold = 0; }
                 break;
 
             case "Diamond_Chunk":
                 diamond += amount;
+                if (diamond < 0) { diamond = 0; }
                 break;
         }
     }

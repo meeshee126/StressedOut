@@ -17,6 +17,7 @@ public class Player : MonoBehaviour
     private CapsuleCollider2D characterCollider;
     WeaponStats weaponStats;
     ResourceManager resourceManager;
+    QuickTimeEvent quickTimeEvent;
 
     TimeBehaviour timeBehaviour;
     GameObject gameManager;
@@ -35,6 +36,7 @@ public class Player : MonoBehaviour
     {
         gameManager = GameObject.Find("GameManager");
         resourceManager = GameObject.Find("GameManager").GetComponent<ResourceManager>();
+        quickTimeEvent = GameObject.Find("QuickTimeEvent").GetComponent<QuickTimeEvent>();
         timeBehaviour = gameManager.GetComponent<TimeBehaviour>();
         itemList = gameManager.GetComponentInChildren<ItemsList>();
         abilityLists = gameManager.GetComponent<AbilityLists>();
@@ -53,6 +55,7 @@ public class Player : MonoBehaviour
         ItemPickingHandler();
         ApplyMovementInput();
         ApplyAttackInput();
+        StartQuickTimeEvent();
     }
 
 
@@ -116,6 +119,16 @@ public class Player : MonoBehaviour
             //        Instantiate(CastPrefab, transform.position, Quaternion.identity);
         }
         CooldownManager();
+    }
+
+    void StartQuickTimeEvent()
+    {
+        if(Input.GetKeyDown(KeyCode.Q))
+        {
+            quickTimeEvent.enabled = true;
+            characterRB.velocity = Vector2.zero;
+            this.enabled = false;
+        }
     }
 
 

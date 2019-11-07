@@ -1915,6 +1915,65 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 27f2e3e2ef6cd1445808ec006659d3ea, type: 3}
+--- !u!1 &500409600
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 500409601}
+  - component: {fileID: 500409602}
+  m_Layer: 0
+  m_Name: QuickTimeEvent
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &500409601
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 500409600}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 1034122285}
+  m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &500409602
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 500409600}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b138226b7209b6c48ac6bf85758cfe94, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  player: {fileID: 1628602502}
+  offset: {x: 2.15, y: 0, z: 0}
+  spawnTimer: 0.3
+  lettersLenght: 10
+  letters:
+  - {fileID: 5673344627685998683, guid: 017e9d9802913d940aac04f688130c9c, type: 3}
+  - {fileID: 4837937408785641483, guid: 2e0475205c3f824409dd47a812fc35ae, type: 3}
+  - {fileID: 548213295491236407, guid: e76582a7f0d965540a05d56eda359fdd, type: 3}
+  - {fileID: 8038528044285894718, guid: f45ee81b1023d0f4997dbfe8088ecc08, type: 3}
+  - {fileID: 749560941836858585, guid: 3c40c156785ad8843961485d5144f80f, type: 3}
+  - {fileID: 2304368170041422453, guid: bd1fe2a32083fc74993ecf20543b73e5, type: 3}
+  - {fileID: 4329393044889034637, guid: c1a8284abf3f582479f0e8635a081786, type: 3}
+  - {fileID: 1171209919127736273, guid: 2a7e2c26b9524ca4a9dd914509395d7b, type: 3}
+  - {fileID: 3657128356330270093, guid: 48cb4ffcd9da342499a9bdeeb49a006d, type: 3}
+  - {fileID: 2924810481230324697, guid: 635c88612cbda1e47998b32ef5cf83b2, type: 3}
+  - {fileID: 6195772544572288024, guid: fe3837d044977ff4da0e94c407f140e5, type: 3}
 --- !u!4 &509846981 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 6358046047950125150, guid: 972e8b1a3bac80c42be9cf0ef9efd63f,
@@ -2815,6 +2874,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 386454281}
+  - {fileID: 500409601}
   m_Father: {fileID: 0}
   m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
