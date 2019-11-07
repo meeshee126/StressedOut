@@ -57,6 +57,7 @@ public class Stats : MonoBehaviour
         Slime = 1,
         Bandit = 2,
         Bear = 3,
-        Boar = 4
+        Boar = 4,
+        Player = 100
     }
 }
