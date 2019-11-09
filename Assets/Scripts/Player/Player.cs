@@ -9,29 +9,44 @@ using UnityEngine;
 [RequireComponent(typeof(CapsuleCollider2D))]
 [RequireComponent(typeof(Stats))]
 
+
+/// <summary>
+/// Defines and handles the player himself.
+/// Still quite incomplete
+/// Sorry for the inconvenience of +450 Lines. code will be split, . . .
+/// . . . each action section will turn into a class for better readability.
+/// Example: ItemPickUpHandler.cs, PlayerMovement.cs, PlayerCombat.cs, etc.
+/// </summary>
 public class Player : MonoBehaviour
 {
-    private Stats stats;
-    private Rigidbody2D characterRB;
-    private Animator characterAnimator;
     private CapsuleCollider2D characterCollider;
-    WeaponStats weaponStats;
+    private Animator characterAnimator;
+    private Rigidbody2D characterRB;
+    private Stats stats;
+
     ResourceManager resourceManager;
     LetterEvent quickTimeEvent;
+    WeaponStats weaponStats;
 
-    TimeBehaviour timeBehaviour;
-    GameObject gameManager;
-    private ItemsList itemList;
+    [HideInInspector]
+    public TimeBehaviour timeBehaviour;
     private AbilityLists abilityLists;
+    private GameObject gameManager;
+    private ItemsList itemList;
 
+    public GameObject Helmet, Suite, Boots;
     public GameObject selectedAbility;
     public GameObject playerHand;
-    public GameObject Helmet, Suite, Boots;
+
     public GameObject[] QuickbarContent = new GameObject[5];
     public GameObject[] libraryAbilityList;
     public GameObject[] LocalAbilityList;
 
 
+    // Unity
+    /// <summary>
+    /// Finds and sets all the components used in this script
+    /// </summary>
     private void Awake()
     {
         gameManager = GameObject.Find("GameManager");
@@ -48,6 +63,11 @@ public class Player : MonoBehaviour
     }
 
 
+    // Unity
+    /// <summary>
+    /// Contributes in the current combo status handling
+    /// Allows every other action to run thru based on player's input
+    /// </summary>
     void Update()
     {
         if (stats.comboResetTimer > 0f) stats.comboResetTimer -= Time.deltaTime;
@@ -59,6 +79,7 @@ public class Player : MonoBehaviour
     }
 
 
+    // Dimitrios Kitsikidis
     /// <summary>
     /// Translates  [User Input]
     /// into        [Player Movement].
@@ -77,6 +98,7 @@ public class Player : MonoBehaviour
     }
 
 
+    // Dimitrios Kitsikidis
     /// <summary>
     /// Updates the [Player's Animation]
     /// based on    [Player's Movement].
@@ -107,11 +129,17 @@ public class Player : MonoBehaviour
     }
 
 
+    // Dimitrios Kitsikidis
+    /// <summary>
+    /// Uppon Input gets the selectedAttack..
+    /// .. filters it to check wether it's still on cooldown..
+    /// .. and finally instantiates it
+    /// </summary>
     void ApplyAttackInput()
     {
         if (Input.GetKeyDown(KeyCode.Space))
         {
-            selectedAbility = AbilityFiltering();
+            selectedAbility = GetAbilityList();
             // CHECK WETHER THIS ABILITY IS ON COOLDOWN OR NOT
             for (int i = 0; i < LocalAbilityList.Length; i++)
             {
@@ -139,6 +167,8 @@ public class Player : MonoBehaviour
         }
         CooldownManager();
     }
+
+
     //Michael Schmidt
     /// <summary>
     /// Call QuickTimeEvent when start gathering
@@ -159,8 +189,14 @@ public class Player : MonoBehaviour
     }
 
 
-    // Holds a library of all the available combos with each weapon
-    GameObject AbilityFiltering()
+    // Dimitrios Kitsikidis
+    /// <summary>
+    /// Filters thru what item the player is holding..
+    /// .., what player's current combo status is..
+    /// .. and casts the correct attack based on that
+    /// </summary>
+    /// <returns> the obtained gameobject from the selected ability </returns>
+    GameObject GetAbilityList()
     {
         Item item = playerHand.GetComponent<Item>();
         if (item.itemType == Item.ItemType.weapon)
@@ -188,6 +224,13 @@ public class Player : MonoBehaviour
     }
 
 
+    // Dimitrios Kitsikidis
+    /// <summary>
+    /// Filters thru player's abilities
+    /// Also handles player's combo status
+    /// </summary>
+    /// <param name="selectedAbilityName"></param>
+    /// <returns> the ability that matches the inputed name when the method got called </returns>
     public GameObject AbilitySelector(string selectedAbilityName)
     {
         for (int i = 0; i < abilityLists.playerAbilities.Length; i++)
@@ -205,6 +248,10 @@ public class Player : MonoBehaviour
     }
 
 
+    // Dimitrios Kitsikidis
+    /// <summary>
+    /// Simply allows all abilities that are on cooldown to run through the cooldown
+    /// </summary>
     public void CooldownManager()
     {
         for (int i = 0; i < LocalAbilityList.Length; i++)
@@ -217,6 +264,13 @@ public class Player : MonoBehaviour
     }
 
 
+    // Dimitrios Kitsikidis
+    /// <summary>
+    /// Filters through all the collisions within inputed Collider2D array..
+    /// .. until the closest collision to this.gameobject has been found
+    /// </summary>
+    /// <param name="list"></param>
+    /// <returns> returns the closest collision found to this.gameobject </returns>
     Collider2D GetClosest(Collider2D[] list)
     {
         Collider2D closestTarget = null;
@@ -230,7 +284,6 @@ public class Player : MonoBehaviour
                 {
                     closestDistance = distance;
                     closestTarget = target;
-                    //Debug.Log("... " + closestDistance);
                 }
             }
         }
@@ -238,11 +291,13 @@ public class Player : MonoBehaviour
     }
 
 
+    // Dimitrios Kitsikidis
     /// <summary>
     /// Filters
     /// Selects
     /// Sorts 
     /// ... the process of item pick-up
+    /// <para>WARNING: Some components are incomplete</para>
     /// </summary>
     public void ItemPickingHandler()
     {
@@ -292,13 +347,24 @@ public class Player : MonoBehaviour
     }
 
 
+    // Dimitrios Kitsikidis
+    /// <summary>
+    /// Used for the resource pick up.
+    /// </summary>
+    /// <param name="collision"></param>
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.GetComponent<Item>()) IfResourceItem(collision);
     }
 
 
-    // Picks up the reffering item and drops already picked up item
+    // Dimitrios Kitsikidis
+    /// <summary>
+    /// Handles the item pickup process
+    /// ..drops the held weapon and picks up the weapon on the ground
+    /// <para>WARNING: It currently only works with weapons</para>
+    /// </summary>
+    /// <param name="pickedItem"></param>
     void ItemPickUp(GameObject pickedItem)
     {
         // Go thru item Collection
@@ -314,8 +380,13 @@ public class Player : MonoBehaviour
     }
 
 
+    // Dimitrios Kitsikidis
     #region Item Types
-    // Item handler if the Item the player just interacted with is type of      None
+    /// <summary>
+    /// Item handler if the Item the player just interacted with is type of      None
+    /// <para>WARNING: method incomplete</para>
+    /// </summary>
+    /// <param name="collision"></param>
     void IfNoneItem(Collider2D collision)
     {
         if (collision.GetComponent<Item>().itemType == Item.ItemType.none)
@@ -325,7 +396,10 @@ public class Player : MonoBehaviour
     }
 
 
-    // Item handler if the Item the player just interacted with is type of      Resource
+    /// <summary>
+    /// Item handler if the Item the player just interacted with is type of      Resource
+    /// </summary>
+    /// <param name="collision"></param>
     void IfResourceItem(Collider2D collision)
     {
         if (collision.GetComponent<Item>().itemType == Item.ItemType.resource)
@@ -340,7 +414,11 @@ public class Player : MonoBehaviour
     }
 
 
-    // Item handler if the Item the player just interacted with is type of      Consumable
+    /// <summary>
+    /// Item handler if the Item the player just interacted with is type of      Consumable
+    /// <para>WARNING: Method might be incomplete</para>
+    /// </summary>
+    /// <param name="collision"></param>
     void IfConsumableItem(Collider2D collision)
     {
         if (collision.GetComponent<Item>().itemType == Item.ItemType.consumable)
@@ -351,7 +429,10 @@ public class Player : MonoBehaviour
     }
 
 
-    // Item handler if the Item the player just interacted with is type of      Weapon
+    /// <summary>
+    /// Item handler if the Item the player just interacted with is type of      Weapon
+    /// </summary>
+    /// <param name="collision"></param>
     void IfWeaponItem(Collider2D collision)
     {
         ItemPickUp(collision.gameObject);
@@ -359,7 +440,11 @@ public class Player : MonoBehaviour
     }
 
 
-    // Item handler if the Item the player just interacted with is type of      Armor
+    /// <summary>
+    /// Item handler if the Item the player just interacted with is type of      Armor
+    /// <para>WARNING: Method incomplete (Still under construction)</para>
+    /// </summary>
+    /// <param name="collision"></param>
     void IfArmorItem(Collider2D collision)
     {
         if (collision.GetComponent<Item>().itemType == Item.ItemType.armor)
@@ -374,7 +459,11 @@ public class Player : MonoBehaviour
     }
 
 
-    // Item handler if the Item the player just interacted with is type of      Miscellaneous
+    /// <summary>
+    /// Item handler if the Item the player just interacted with is type of      Miscellaneous
+    /// <para>WARNING: method incomplete</para>
+    /// </summary>
+    /// <param name="collision"></param>
     void IfMiscellaneousItem(Collider2D collision)
     {
         if (collision.gameObject.GetComponent<Item>().itemType == Item.ItemType.miscelaneous)
@@ -384,120 +473,5 @@ public class Player : MonoBehaviour
     }
     #endregion
 
-
-    // Input                                                                                    CHECK
-    // Read What the player is holding (Enum)                                                   CHECK
-    // READ:   It's attack and combos library                                                   WIP
-    // Read weapon damage attributes and other attributes
-    // Instantiate the attack   AND     Start the read Cooldown
-    // Do the the casttimer and attackthing     AND     Play animations
-
-
-    //for (int i = 0; i < abilities.Length; i++) abilities[i].Cooldown -= Time.deltaTime;
-
-    //public enum Items
-    //{
-    //    none = 0,
-    //    left = 1,
-    //    up = 2,
-    //    right = 3
-    //}
-
-    //public GameObject CastPrefab;
-
-    //private bool doesHitAll;
-    //private string lastCastID;
-
-
-
-    //public void GetAbilityList(Stats stats, int inputedID, bool hitAll)
-    //{
-    //    selectedAbility = stats.gameObject.GetComponent<CombatHandler>().CastPrefab.GetComponent<Ability>();
-    //    hitAllEntities = hitAll;
-    //    //stats.gameObject.GetComponent<CombatHandler>().castedAbilities[]
-    //    switch (stats.EntityName)
-    //    {
-    //        #region players
-    //        case "Roger": RedPlayer(inputedID); break;
-    //        case "Jake": GreenPlayer(inputedID); break;
-    //        case "Hera": BluePlayer(inputedID); break;
-    //        #endregion
-
-    //        case "BehemothChick": CrawlingChickens(inputedID); break;
-    //        case "BigChick": CrawlingChickens(inputedID); break;
-    //        case "SmolChick": CrawlingChickens(inputedID); break;
-    //        default: break;
-    //    }
-    //}
-
-
-    #region This Ability Casting Works
-    // selectedAbility = CastPrefab.GetComponent<Ability>();
-    // selectedAbility.Initialize(113, Ability.CastType.casualCircle, "One-Hit-Circle", 2, 0.75f, 0.5f, 1f, 20f, null, LayerMask.NameToLayer("Enemy"));
-    // lastCastedObject = Instantiate(CastPrefab, gameObject.transform.position, Quaternion.identity);
-    #endregion
-
-    #region This works too, but isn't as flexible
-    // lastCastedObject = Instantiate(CastPrefab, gameObject.transform.position, Quaternion.identity);
-    // lastCastedObject.GetComponent<Ability>().Initialize(1, Ability.CastType.burstCircle, "Cool bCircle", 1, 1f, 1f, 1f, 3f, 5f, null, LayerMask.NameToLayer("Enemy"));
-    #endregion
-
-    #region need a pausing timer?
-    //IEnumerator WaitForThis(float timeToWait) { yield return new WaitForSeconds(timeToWait); }
-    #endregion
-
-    #region some crap
-
-
-    // public void LeftMethod()
-    // {
-    //     Skipping Obj Declaration due to prefab use
-
-    //     abilities[0].Initialize(113, Ability.CastType.casualCircle, "One-Hit-Circle", 2, 0.75f, 0.5f, 1f, 20f, null, LayerMask.NameToLayer("Enemy"));
-    //     lastCastedObject = Instantiate(CastPrefab, gameObject.transform.position, Quaternion.identity);
-    //     ^add a values definer so this can hold variables for each thing.
-    // }
-
-
-    // public void RightMethod()
-    // {
-    //     Skipping Obj Declaration due to prefab use
-
-
-
-    //     abilities[1].Initialize(1, Ability.CastType.burstCircle, "Burst Circle", 50, 0.2f, 0.5f, 90f, 3f, 5f, null, LayerMask.NameToLayer("Enemy"));
-    //     lastCastedObject = Instantiate(CastPrefab, gameObject.transform.position, Quaternion.identity);
-    // }
-
-
-    //-------------------------------
-
-    //public void getaValue()
-    //{
-    //for (int i = 0; i < ItemsList.FindObjectsOfType<GameObject>().Length; i++)
-    //{
-    //}
-    //Debug.Log(ItemsList.FindObjectsOfType<GameObject>().Length);
-    //return ItemsList.FindObjectsOfType<GameObject>().Length;
-    //.GetProperty(name).GetValue(this, null);
-    //return this.GetType().GetProperty(name).GetValue(this, null);
-    //}
-    #endregion
-
-    #region Cool code actually
-    //Debug.Log(System.Enum.GetNames(typeof(ItemsList.Items)).Length);
-    //for (int i = 0; i < System.Enum.GetNames(typeof(ItemsList.Items)).Length; i++)
-    //{
-    //    if (playerHands.ToString() == System.Enum.GetNames(typeof(ItemsList.Items)).GetValue(i).ToString())
-    //    {
-    //        for (int j = 0; j < itemList.ItemCollection.Length; j++)
-    //        {
-    //            if (playerHands.ToString() == itemList.ItemCollection[j].name)
-    //            {
-    //                playerHand = itemList.ItemCollection[j];
-    //            }
-    //        }
-    //    }
-    //}
-    #endregion
+    // * To-Do - implement properly the casttimer     AND     Play animations code
 }

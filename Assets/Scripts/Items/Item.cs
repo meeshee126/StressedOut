@@ -6,6 +6,14 @@ using UnityEngine;
 [RequireComponent(typeof(BoxCollider2D))]
 [RequireComponent(typeof(Rigidbody2D))]
 
+
+// Dimitrios Kitsikidis
+/// <summary>
+/// Holds all values that define an item
+/// Adds all the item required components to the gameobject
+/// Sets all item default settings to all the gameobject components
+/// Handles the resource pick up task (for now (will be moved to player in future gen))
+/// </summary>
 public class Item : MonoBehaviour
 {
     public enum ItemType
@@ -42,7 +50,10 @@ public class Item : MonoBehaviour
     public GameObject targetPlayer;
 
 
-
+    /// <summary>
+    /// Finds and sets all the components used in this script
+    /// Calls all default settings to the item to be set
+    /// </summary>
     private void Awake()
     {
         gameManager = GameObject.Find("GameManager");
@@ -55,6 +66,10 @@ public class Item : MonoBehaviour
     }
 
 
+    /// <summary>
+    /// Checks wether the item is picked up or destroyed..
+    /// .. and regarding on the situation handles the item behaviour
+    /// </summary>
     private void Update()
     {
         if (isDead) Destroy(gameObject);
@@ -71,6 +86,26 @@ public class Item : MonoBehaviour
     }
 
 
+    /// <summary>
+    /// Checks for the distance between player..
+    /// ..and triggers the movement toward player uppon a certain distance.
+    /// </summary>
+    private void FixedUpdate()
+    {
+        if (Vector2.Distance(transform.position, targetPlayer.transform.position) < 1.5f &&
+            itemType == ItemType.resource)
+        {
+            //Changed "is picked up" to Player class
+            PlayerFound();
+            if (Vector2.Distance(transform.position, targetPlayer.transform.position) < 0.1f &&
+                itemType == ItemType.resource); 
+        }
+    }
+
+
+    /// <summary>
+    /// Sets all the default item settings uppon call.
+    /// </summary>
     void SetItemSettings()
     {
         if (itemName == "") itemName = name;
@@ -88,18 +123,9 @@ public class Item : MonoBehaviour
         spriteRenderer.sortingOrder = 5;
     }
 
-    private void FixedUpdate()
-    {
-        if (Vector2.Distance(transform.position, targetPlayer.transform.position) < 1.5f &&
-            itemType == ItemType.resource)
-        {
-            //Changed "is picked up" to Player class
-            PlayerFound();
-            if (Vector2.Distance(transform.position, targetPlayer.transform.position) < 0.1f &&
-                itemType == ItemType.resource); 
-        }
-    }
-
+    /// <summary>
+    /// Transforms position towards player.
+    /// </summary>
     void PlayerFound()
     {
         transform.position = Vector2.MoveTowards(transform.position, targetPlayer.transform.position, 15f * Time.fixedDeltaTime);

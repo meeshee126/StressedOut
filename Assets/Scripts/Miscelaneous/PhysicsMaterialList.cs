@@ -2,6 +2,12 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+
+// Dimitrios Kitsikidis
+/// <summary>
+/// Just a small list of all the physicsmaterials used, ..
+/// .. so we don't have to codewise look into the project files.
+/// </summary>
 public class PhysicsMaterialList : MonoBehaviour
 {
     public PhysicsMaterial2D itemsMaterial;
