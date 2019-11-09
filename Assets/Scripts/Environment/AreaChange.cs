@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-
+//Henrik Hafner
 public class AreaChange : MonoBehaviour
 {
 	public Camera mainCamera;

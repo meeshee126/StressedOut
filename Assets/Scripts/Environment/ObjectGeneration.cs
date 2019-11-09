@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+//Henrik Hafner
 public class ObjectGeneration : MonoBehaviour
 {
     public int spawnCount = 10;
@@ -9,10 +10,11 @@ public class ObjectGeneration : MonoBehaviour
 
     private void Start()
     {
-        spawnGrenades();
+        spawnObjects();
     }
 
-    void spawnGrenades()
+	// Randomly generates objects in a specific area
+	void spawnObjects()
     {
         for (int i = 0; i < spawnCount; i++)
         {

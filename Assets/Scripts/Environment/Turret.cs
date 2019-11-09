@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+//Henrik Hafner
 public class Turret : MonoBehaviour
 {
     private float timeBtwShots;
@@ -23,6 +24,7 @@ public class Turret : MonoBehaviour
 
     void Update()
     {
+		//Finds the Enemy and start to instantiate projectiles
         if (GameObject.FindWithTag("Enemy") != null)
         {
             EnemyDistance = GameObject.FindWithTag("Enemy").transform.position;

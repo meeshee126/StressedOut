@@ -99,7 +99,13 @@ public class ResourceManager : MonoBehaviour
         }
     }
 
-    public void ResourceCosts(string costsname, string costs)
+	//Henrik Hafner
+	/// <summary>
+	/// Checks which building is to be built and gives the resource cost in the UI
+	/// </summary>
+	/// <param name="costsname"></param>
+	/// <param name="costs"></param>
+	public void ResourceCosts(string costsname, string costs)
     {
         switch (costsname)
         {

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+//Henrik Hafner
 public class Projectile : MonoBehaviour
 {
     float speed = 20;
@@ -18,6 +19,7 @@ public class Projectile : MonoBehaviour
 
     private void Update()
     {
+		//The projectile move himself to the target
         transform.position = Vector2.MoveTowards(transform.position, target, speed * Time.deltaTime);
 
         if (transform.position.x == target.x && transform.position.y == target.y)
@@ -31,7 +33,11 @@ public class Projectile : MonoBehaviour
         }
     }
 
-    private void RotateTowards(Vector2 target)
+	/// <summary>
+	/// Select the enemys position to rotate the projectile to the enemy, so face the projectile always at the target
+	/// </summary>
+	/// <param name="target"></param>
+	private void RotateTowards(Vector2 target)
     {
         Vector2 direction = target - (Vector2)transform.position;
         float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;

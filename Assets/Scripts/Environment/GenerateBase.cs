@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+//Henrik Hafner
 public class GenerateBase : MonoBehaviour
 {
     bool doBuild;
@@ -57,7 +58,7 @@ public class GenerateBase : MonoBehaviour
 	}
 
     /// <summary>
-    /// Find the radius of the player and check if the radius is in contact with the building
+    /// The Triggers find the radius of the player and check if the radius is in contact with the building. 
     /// </summary>
     /// <param name="player"></param>
     void OnTriggerEnter2D(Collider2D player)
@@ -70,7 +71,11 @@ public class GenerateBase : MonoBehaviour
         }
     }
 
-    private void OnTriggerStay2D(Collider2D player)
+	/// <summary>
+	/// The trigger also makes sure that you see the building you want to build and the resources you need to build
+	/// </summary>
+	/// <param name="player"></param>
+	private void OnTriggerStay2D(Collider2D player)
     {
         if (isBuild == false && player.gameObject.tag == "Player")
         {
