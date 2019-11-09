@@ -2,6 +2,13 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+
+// Dimitrios Kitsikidis
+/// <summary>
+/// Holds all the stats of a weapon type item
+/// (aka the stats which each weapon type item uses for identifications of various elements, ..
+/// .. such as type of weapon, damage, critical chance, etc.)
+/// </summary>
 public class WeaponStats : MonoBehaviour
 {
     [Header("Attributes")]

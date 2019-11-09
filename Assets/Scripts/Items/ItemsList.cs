@@ -2,11 +2,17 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+
+// Dimtirios Kitsikidis
+/// <summary>
+/// Represents the Items Collection
+/// SOON: set's and organizes the Item ID's as well as the collection based on item ID
+/// </summary>
 public class ItemsList : MonoBehaviour
 {
     public GameObject[] itemCollection;
 
-    //  Gotta fix that automatic itemIDCollection creation
+    //  Needs fix: automatic itemIDCollection creation
 
     //public int[] itemIDCollection;
 
@@ -26,6 +32,8 @@ public class ItemsList : MonoBehaviour
     //    }
     //}
 }
+
+// The first manual way used for Item  and ID collection.
 #region Manual Database
 ////[Space(10)]
 ////[Header("Resources")]

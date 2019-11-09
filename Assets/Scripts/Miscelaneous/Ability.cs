@@ -2,8 +2,11 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+
+// Dimitrios Kitsikidis
 /// <summary>
-/// Ability with Attributes Creation
+/// Holds all values that define an Ability
+/// Holds the ability behaviour upon instantiation
 /// </summary>
 public class Ability : MonoBehaviour
 {
@@ -33,9 +36,11 @@ public class Ability : MonoBehaviour
     [Header("Other Attributes")]
     public GameObject ChildAbility;
     public LayerMask WhatCanItHit;
-    // Addjust mask in code to change whenever it's about switch to hit everything and switch to hit only enemies
     
 
+    /// <summary>
+    /// Runs and Filters through the timers to handle the ability behaviours
+    /// </summary>
     private void Update()
     {
         if (Duration <= 0f && Bursts <= 0) Destroy(gameObject);
@@ -60,6 +65,10 @@ public class Ability : MonoBehaviour
 
     /// <summary>
     /// Where the magic happens (once the casting phase is finished)
+    /// Makes a list of collisions..
+    /// .. Filters the entities that shall be harmed
+    /// and calls the entity's method to harm them.
+    /// <para>WARNING: Functionality is currently only restricted to box shaped abilities</para>
     /// </summary>
     /// <param name="abilityToCast"></param>
     /// <param name="abilitysStandards"></param>
@@ -104,6 +113,9 @@ public class Ability : MonoBehaviour
     }
 
 
+    /// <summary>
+    /// Allows for in-scene visibility of the ability area etc.
+    /// </summary>
     private void OnDrawGizmosSelected()
     {
         Position_X = transform.position.x;
@@ -159,48 +171,4 @@ public class Ability : MonoBehaviour
         //       transform.position.y + ((boxColliderY / 2f) - 0.5f)),
         //       new Vector3(boxColliderX, boxColliderY));
     }
-
-
-    ///// <summary>
-    ///// Casual Block XY (with child ability)
-    ///// </summary>
-    //public void Initialize(bool hitAll, string abilityName, int abilityDamage, int abilityBursts,
-    //    float abilityCastingTime, float abilityDuration, float abilityBurstWait, float abilityChildCastWait,
-    //    float abilityRangeAxisX, float abilityRangeAxisY, GameObject childCast, LayerMask whatCanTheAbilityHit)
-    //{
-    //    HitAllEntities = hitAll;
-    //    CastName = abilityName;
-    //    Damage = abilityDamage;
-    //    Bursts = abilityBursts;
-    //    CastingTime = abilityCastingTime;
-    //    Duration = abilityDuration;
-    //    BurstWait = abilityBurstWait;
-    //    StartBurstWait = abilityBurstWait;
-    //    ChildAbilityWait = abilityChildCastWait;
-    //    ColliderAreaAxisX = abilityRangeAxisX;
-    //    ColliderAreaAxisY = abilityRangeAxisY;
-    //    ChildAbility = childCast;
-    //    WhatCanItHit = whatCanTheAbilityHit;
-    //}
-
-
-    ///// <summary>
-    ///// Casual Block XY
-    ///// </summary>
-    //public void Initialize(bool hitAll, string abilityName, int abilityDamage, int abilityBursts,
-    //    float abilityCastingTime, float abilityDuration, float abilityBurstWait,
-    //    float abilityRangeAxisX, float abilityRangeAxisY, LayerMask whatCanTheAbilityHit)
-    //{
-    //    HitAllEntities = hitAll;
-    //    CastName = abilityName;
-    //    Damage = abilityDamage;
-    //    Bursts = abilityBursts;
-    //    CastingTime = abilityCastingTime;
-    //    Duration = abilityDuration;
-    //    BurstWait = abilityBurstWait;
-    //    StartBurstWait = abilityBurstWait;
-    //    ColliderAreaAxisX = abilityRangeAxisX;
-    //    ColliderAreaAxisY = abilityRangeAxisY;
-    //    WhatCanItHit = whatCanTheAbilityHit;
-    //}
 }

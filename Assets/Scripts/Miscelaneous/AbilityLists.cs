@@ -2,6 +2,12 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+
+// Dimitrios Kitsikidis
+/// <summary>
+/// Just a list of all the abilitylists categorized, ..
+/// .. so we don't have to codewise look into the project files and search for all prefab abilities. 
+/// </summary>
 public class AbilityLists : MonoBehaviour
 {
     [Header("Player")]

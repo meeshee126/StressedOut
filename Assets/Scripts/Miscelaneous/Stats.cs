@@ -2,8 +2,12 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+
+// Dimitrios Kitsikidis
 /// <summary>
-/// Holds all the stats of the unit, entity, etc.
+/// Holds all the stats of the entity, etc.
+/// (aka the stats which each entity uses for identifications of various elements, ..
+/// .. such as name, health, movement speed, etc.)
 /// </summary>
 public class Stats : MonoBehaviour
 {
