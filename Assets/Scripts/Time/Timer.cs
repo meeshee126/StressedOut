@@ -57,7 +57,7 @@ public class Timer : MonoBehaviour
         time = time.Subtract(new TimeSpan(0, 0, 0, 0, (int)(Time.deltaTime * 1000)));
 
         //Sun rotation clockwise
-        transform.Rotate(0, 0, 0.2f);
+        sun.transform.Rotate(0, 0, -0.2f);
     }
 
     /// <summary>
@@ -146,7 +146,7 @@ public class Timer : MonoBehaviour
         time = time.Subtract(new TimeSpan(0, 0, 0, 0, (int)(Time.deltaTime * timeCost)));
 
         //faster sun rotation
-        sun.transform.Rotate(0, 0, 100);
+        sun.transform.Rotate(0, 0, -100);
     }
 
     /// <summary>
