@@ -64,4 +64,25 @@ public class Stats : MonoBehaviour
         Boar = 4,
         Player = 100
     }
+
+	//Henrik Hafner
+	//Save the Datas from the Player
+	public void SavePlayer()
+	{
+		SaveSystem.SavePlayer(this);
+	}
+
+	//Henrik Hafner
+	// Load the SaveFiles to the Player
+	public void LoadPlayer()
+	{
+		PlayerData data = SaveSystem.LoadPlayer();
+
+		health = data.health;
+
+		Vector2 position;
+		position.x = data.position[0];
+		position.y = data.position[1];
+		transform.position = position;
+	}
 }
