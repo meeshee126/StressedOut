@@ -37,7 +37,7 @@ public class AreaChange : MonoBehaviour
             posX += 25;
 
             //Michael Schmidt
-            timeBehaviour.timeCost = TimeBehaviour.TimeCost.HighCost;  
+            timeBehaviour.timeCost = timeBehaviour.areaChanging;  
         }
         if (enter.gameObject.tag == "EnterLeft" && mainCamera.transform.position.x == posX)
         {
@@ -46,7 +46,7 @@ public class AreaChange : MonoBehaviour
             posX -= 25;
 
             //Michael Schmidt
-            timeBehaviour.timeCost = TimeBehaviour.TimeCost.HighCost;
+            timeBehaviour.timeCost = timeBehaviour.areaChanging;
         }
         if (enter.gameObject.tag == "EnterUp" && mainCamera.transform.position.y == posY)
         {
@@ -55,7 +55,7 @@ public class AreaChange : MonoBehaviour
             posY += 15;
 
             //Michael Schmidt
-            timeBehaviour.timeCost = TimeBehaviour.TimeCost.HighCost;
+            timeBehaviour.timeCost = timeBehaviour.areaChanging;
         }
         if (enter.gameObject.tag == "EnterDown" && mainCamera.transform.position.y == posY)
         {
@@ -64,7 +64,7 @@ public class AreaChange : MonoBehaviour
             posY -= 15;
 
             //Michael Schmidt
-            timeBehaviour.timeCost = TimeBehaviour.TimeCost.HighCost;
+            timeBehaviour.timeCost = timeBehaviour.areaChanging;
         }
     }
 
