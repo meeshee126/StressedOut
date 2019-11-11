@@ -71,10 +71,20 @@ public class Player : MonoBehaviour
     {
         if (stats.comboResetTimer > 0f) stats.comboResetTimer -= Time.deltaTime;
         if (stats.comboResetTimer <= 0f) stats.currentCombo = 0;
-        ItemPickingHandler();
-        ApplyMovementInput();
-        ApplyAttackInput();
-        StartQuickTimeEvent();
+        if (selectedAbility.GetComponent<Ability>().CastingTime > 0f)
+        {
+            // Set Player Movement to 0
+            characterRB.velocity = new Vector2(0f, 0f);
+            // Player Ability Casting animation
+            selectedAbility.GetComponent<Ability>().CastingTime -= Time.deltaTime;
+        }
+        if (selectedAbility.GetComponent<Ability>().CastingTime <= 0f)
+        {
+            ApplyItemHandlerInput();
+            ApplyMovementInput();
+            ApplyAttackInput();
+            StartQuickTimeEvent();
+        }
     }
 
 
@@ -104,7 +114,7 @@ public class Player : MonoBehaviour
     /// </summary>
     /// <param name="moveX"></param>
     /// <param name="moveY"></param>
-    void AnimationUpdate(float moveX, float moveY)
+    void MovementAnimationUpdate(float moveX, float moveY)
     {
         // Changes Animation Based on direction facing.
         characterAnimator.SetFloat("FaceX", moveX);
@@ -138,23 +148,23 @@ public class Player : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.Space))
         {
-            selectedAbility = GetAbilityList();
+            GetAbility();
             // CHECK WETHER THIS ABILITY IS ON COOLDOWN OR NOT
             for (int i = 0; i < LocalAbilityList.Length; i++)
             {
-                if (selectedAbility.GetComponent<Ability>().name == LocalAbilityList[i].GetComponent<Ability>().name)
+                if (selectedAbility.GetComponent<Ability>().CastName == LocalAbilityList[i].GetComponent<Ability>().CastName)
                 {
                     if (LocalAbilityList[i].GetComponent<Ability>().Cooldown > 0f)
                     {
-                        Debug.Log(LocalAbilityList[i].GetComponent<Ability>().name + " . . . is Still on cooldown . . .");
+                        Debug.Log(LocalAbilityList[i].GetComponent<Ability>().CastName + " . . . is Still on cooldown . . .");
                     }
                     if (LocalAbilityList[i].GetComponent<Ability>().Cooldown <= 0f)
                     {
                         Instantiate(selectedAbility, transform.position, Quaternion.identity);
                         for (int j = 0; j < abilityLists.playerAbilities.Length; j++)
                         {
-                            if (LocalAbilityList[i].GetComponent<Ability>().name ==
-                                abilityLists.playerAbilities[j].GetComponent<Ability>().name)
+                            if (LocalAbilityList[i].GetComponent<Ability>().CastName ==
+                                abilityLists.playerAbilities[j].GetComponent<Ability>().CastName)
                             {
                                 LocalAbilityList[i].GetComponent<Ability>().Cooldown =
                                     abilityLists.playerAbilities[j].GetComponent<Ability>().Cooldown;
@@ -195,7 +205,7 @@ public class Player : MonoBehaviour
     /// .. and casts the correct attack based on that
     /// </summary>
     /// <returns> the obtained gameobject from the selected ability </returns>
-    GameObject GetAbilityList()
+    void GetAbility()
     {
         Item item = playerHand.GetComponent<Item>();
         if (item.itemType == Item.ItemType.weapon)
@@ -205,9 +215,9 @@ public class Player : MonoBehaviour
             {
                 switch(stats.currentCombo)
                 {
-                    case 0: return AbilitySelector("Entry-Attack");
-                    case 1: return AbilitySelector("First-MainAttack");
-                    case 2: return AbilitySelector("Second-MainAttack");
+                    case 0: AbilitySelector("Entry-Attack"); break;
+                    case 1: AbilitySelector("First-MainAttack"); break;
+                    case 2: AbilitySelector("Second-MainAttack"); break;
                 }
                 // Go thru the Sword Ability Selection
             }
@@ -219,7 +229,6 @@ public class Player : MonoBehaviour
 
         // Read from Combo manager
         // Filter thru the abilities available for the currently holding item
-        return null;
     }
 
 
@@ -230,7 +239,7 @@ public class Player : MonoBehaviour
     /// </summary>
     /// <param name="selectedAbilityName"></param>
     /// <returns> the ability that matches the inputed name when the method got called </returns>
-    public GameObject AbilitySelector(string selectedAbilityName)
+    public void AbilitySelector(string selectedAbilityName)
     {
         for (int i = 0; i < abilityLists.playerAbilities.Length; i++)
         {
@@ -239,11 +248,13 @@ public class Player : MonoBehaviour
                 stats.currentCombo++;
                 stats.comboResetTimer = 1.5f;
                 if (stats.currentCombo >= 3) stats.currentCombo = 0;
-                selectedAbility = abilityLists.playerAbilities[i];
-                return abilityLists.playerAbilities[i];
+                selectedAbility.GetComponent<Ability>().
+                    SetValues(abilityLists.playerAbilities[i].GetComponent<Ability>());
+                //selectedAbility = abilityLists.playerAbilities[i];
+                //return selectedAbility = abilityLists.playerAbilities[i];
             }
         }
-        return null;
+        //return null;
     }
 
 
@@ -298,7 +309,7 @@ public class Player : MonoBehaviour
     /// ... the process of item pick-up
     /// <para>WARNING: Some components are incomplete</para>
     /// </summary>
-    public void ItemPickingHandler()
+    public void ApplyItemHandlerInput()
     {
         Collider2D[] collisionsInCastArea = Physics2D.OverlapCircleAll(transform.position, 1f);
 
