@@ -20,15 +20,16 @@ public class Player : MonoBehaviour
 {
     private CapsuleCollider2D characterCollider;
     private Animator characterAnimator;
-    private Rigidbody2D characterRB;
     private Stats stats;
 
     ResourceManager resourceManager;
-    LetterEvent quickTimeEvent;
     WeaponStats weaponStats;
 
     [HideInInspector]
     public TimeBehaviour timeBehaviour;
+    [HideInInspector]
+    public Rigidbody2D characterRB;
+
     private AbilityLists abilityLists;
     private GameObject gameManager;
     private ItemsList itemList;
@@ -50,7 +51,6 @@ public class Player : MonoBehaviour
     {
         gameManager = GameObject.Find("GameManager");
         resourceManager = GameObject.Find("GameManager").GetComponent<ResourceManager>();
-        quickTimeEvent = GameObject.Find("QuickTimeEvent").GetComponent<LetterEvent>();
         timeBehaviour = gameManager.GetComponent<TimeBehaviour>();
         itemList = gameManager.GetComponentInChildren<ItemsList>();
         abilityLists = gameManager.GetComponentInChildren<AbilityLists>();
@@ -83,7 +83,6 @@ public class Player : MonoBehaviour
             ApplyItemHandlerInput();
             ApplyMovementInput();
             ApplyAttackInput();
-            StartQuickTimeEvent();
         }
     }
 
@@ -176,27 +175,6 @@ public class Player : MonoBehaviour
         }
         CooldownManager();
     }
-
-
-    //Michael Schmidt
-    /// <summary>
-    /// Call QuickTimeEvent when start gathering
-    /// </summary>
-    void StartQuickTimeEvent()
-    {
-        if(Input.GetKeyDown(KeyCode.Q))
-        {
-            //enable QuickTimeEvent script
-            quickTimeEvent.enabled = true;
-
-            //disable player velocity 
-            characterRB.velocity = Vector2.zero;
-
-            //disable player script
-            this.enabled = false;
-        }
-    }
-
 
     // Dimitrios Kitsikidis
     /// <summary>

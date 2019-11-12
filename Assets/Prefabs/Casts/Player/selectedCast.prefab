@@ -48,7 +48,7 @@ MonoBehaviour:
   HitAllEntities: 0
   Damage: 3
   Bursts: 1
-  CastingTime: -0.0136431325
+  CastingTime: -0.008969203
   Duration: 2
   BurstWait: 0.5
   Cooldown: 2

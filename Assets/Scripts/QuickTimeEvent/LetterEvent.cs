@@ -9,7 +9,7 @@ public class LetterEvent : MonoBehaviour
     [SerializeField]
     GameObject player;
 
-    [Header("Spawnfield")]
+    [Header("Spawnarea")]
     [SerializeField]
     Vector3 offset;
 
@@ -28,6 +28,9 @@ public class LetterEvent : MonoBehaviour
 
     [HideInInspector]
     public int correctInput = 0;
+
+    [HideInInspector]
+    public bool won;
 
     void Start()
     {
@@ -83,6 +86,8 @@ public class LetterEvent : MonoBehaviour
         timeBehaviour.timeCost = timeBehaviour.winQuickTimeEvent;
 
         QuitLetterEvent();
+
+        won = true;
     }
 
     /// <summary>
