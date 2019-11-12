@@ -10,11 +10,15 @@ public class Projectile : MonoBehaviour
     private Transform enemy;
     private Vector2 target;
 
+	Entity entity;
+
 	private void Start()
     {
         enemy = GameObject.FindGameObjectWithTag("Enemy").transform;
 
         target = new Vector2(enemy.position.x, enemy.position.y);
+
+		entity = GameObject.FindWithTag("Enemy").GetComponent<Entity>();
 	}
 
     private void Update()
@@ -25,7 +29,8 @@ public class Projectile : MonoBehaviour
         if (transform.position.x == target.x && transform.position.y == target.y)
         {
             Destroy(gameObject);
-        }
+			entity.TakeDamage(1);
+		}
 
         if (GameObject.FindWithTag("Enemy") != null)
         {
