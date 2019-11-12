@@ -16,6 +16,7 @@ TagManager:
   - Miscellaneous
   - Consumable
   - BuildRadius
+  - Projectile
   layers:
   - Default
   - TransparentFX

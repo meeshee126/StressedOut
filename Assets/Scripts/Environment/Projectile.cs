@@ -10,12 +10,12 @@ public class Projectile : MonoBehaviour
     private Transform enemy;
     private Vector2 target;
 
-    private void Start()
+	private void Start()
     {
         enemy = GameObject.FindGameObjectWithTag("Enemy").transform;
 
         target = new Vector2(enemy.position.x, enemy.position.y);
-    }
+	}
 
     private void Update()
     {
