@@ -80,7 +80,7 @@ public class LetterEvent : MonoBehaviour
         Debug.Log("Won QuickTimeEvent");
 
         //low cost for time behaviour
-        timeBehaviour.timeCost = TimeBehaviour.TimeCost.LowCost;
+        timeBehaviour.timeCost = timeBehaviour.winQuickTimeEvent;
 
         QuitLetterEvent();
     }
@@ -93,7 +93,7 @@ public class LetterEvent : MonoBehaviour
         Debug.Log("Lose QuickTimeEvent");
 
         //middle cost for time behaviour
-        timeBehaviour.timeCost = TimeBehaviour.TimeCost.MiddleCost;
+        timeBehaviour.timeCost = timeBehaviour.loseQuickTimeEvent;
 
         QuitLetterEvent();
     }

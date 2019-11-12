@@ -16,14 +16,21 @@ public class TimeBehaviour : MonoBehaviour
     [SerializeField]
     int highCost;
 
-    [Header("")]
+    [Header("Duration in Seconds")]
     [SerializeField]
     //how long the multiplication should run
-    float durationInSeconds;
+    float duration;
+
+    [Header("Set Time Cost for interactions")]
+    public TimeCost winQuickTimeEvent;
+    public TimeCost loseQuickTimeEvent;
+    public TimeCost crafting;
+    public TimeCost areaChanging;
+
+    [Header("(INFO) Current Time Cost")]
+    public TimeCost timeCost = TimeCost.NoCost;
 
     Timer timer;
-
-    public TimeCost timeCost = TimeCost.NoCost;
 
     float count;
 
@@ -41,6 +48,7 @@ public class TimeBehaviour : MonoBehaviour
         TimeCosts();
     }
 
+
     /// <summary>
     /// Time behaviour after interacting with gameobjects and areas
     /// </summary>
@@ -54,7 +62,7 @@ public class TimeBehaviour : MonoBehaviour
                 count += Time.deltaTime;
 
                 //multiplicate current time with choosed timecost for a certain amount of time
-                if (count <= durationInSeconds) { timer.SpeedTime(veryLowCost); }
+                if (count <= duration) { timer.SpeedTime(veryLowCost); }
 
                 else
                 {
@@ -68,7 +76,7 @@ public class TimeBehaviour : MonoBehaviour
 
                 count += Time.deltaTime;
 
-                if (count <= durationInSeconds) { timer.SpeedTime(lowCost); }
+                if (count <= duration) { timer.SpeedTime(lowCost); }
 
                 else
                 {
@@ -82,7 +90,7 @@ public class TimeBehaviour : MonoBehaviour
 
                 count += Time.deltaTime;
 
-                if (count <= durationInSeconds) { timer.SpeedTime(middleCost); }
+                if (count <= duration) { timer.SpeedTime(middleCost); }
 
                 else
                 {
@@ -96,7 +104,7 @@ public class TimeBehaviour : MonoBehaviour
 
                 count += Time.deltaTime;
 
-                if (count <= durationInSeconds) { timer.SpeedTime(highCost); }
+                if (count <= duration) { timer.SpeedTime(highCost); }
 
                 else
                 {

@@ -171,4 +171,38 @@ public class Ability : MonoBehaviour
         //       transform.position.y + ((boxColliderY / 2f) - 0.5f)),
         //       new Vector3(boxColliderX, boxColliderY));
     }
+
+
+    /// <summary>
+    /// Use this to apply values from one ability to another.
+    /// </summary>
+    /// <param name="Values"></param>
+    public void SetValues(Ability Values)
+    {
+        name = Values.name;
+        CastName = Values.CastName;
+        isCircle = Values.isCircle;
+        HitAllEntities = Values.HitAllEntities;
+        Damage = Values.Damage;
+        Bursts = Values.Bursts;
+
+        CastingTime = Values.CastingTime;
+        Duration = Values.Duration;
+        BurstWait = Values.BurstWait;
+        Cooldown = Values.Cooldown;
+        StartBurstWait = Values.StartBurstWait;
+        ChildAbilityWait = Values.ChildAbilityWait;
+
+        isBoxDirectionalExpanding = Values.isBoxDirectionalExpanding;
+        Position_X = Values.Position_X;
+        Position_Y = Values.Position_Y;
+        boxColliderX = Values.boxColliderX;
+        boxColliderY = Values.boxColliderY;
+        circleColliderRadius = Values.circleColliderRadius;
+
+        ChildAbility = Values.ChildAbility;
+        WhatCanItHit = Values.WhatCanItHit;
+
+        Debug.Log("Values Set");
+    }
 }
