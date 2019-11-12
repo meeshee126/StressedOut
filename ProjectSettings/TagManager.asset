@@ -57,3 +57,6 @@ TagManager:
   - name: DropedItem
     uniqueID: 4267789825
     locked: 0
+  - name: UI
+    uniqueID: 171591769
+    locked: 0
