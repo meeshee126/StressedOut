@@ -17,6 +17,7 @@ TagManager:
   - Consumable
   - BuildRadius
   - Projectile
+  - Gatherable
   layers:
   - Default
   - TransparentFX

@@ -18,7 +18,7 @@ public class ObjectGeneration : MonoBehaviour
     {
         for (int i = 0; i < spawnCount; i++)
         {
-            Instantiate(AreaObject, new Vector3(transform.position.x + Random.Range(0, 18), transform.position.y + Random.Range(0, 8), transform.position.z), Quaternion.identity);
+            Instantiate(AreaObject, new Vector3(transform.position.x + Random.Range(0, 18), transform.position.y + Random.Range(0, 8), transform.position.z), Quaternion.identity, this.transform);
         }
     }
 }

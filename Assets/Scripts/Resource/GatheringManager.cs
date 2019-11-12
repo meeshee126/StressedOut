@@ -20,6 +20,7 @@ public class GatheringManager : MonoBehaviour
         player = GameObject.Find("Player").GetComponent<Player>();
     }
 
+
     void ChangeSprite()
     {
         this.gameObject.GetComponent<CircleCollider2D>().enabled = false;
@@ -27,7 +28,7 @@ public class GatheringManager : MonoBehaviour
         letterEvent.won = false;
     }
 
-    private void OnTriggerStay2D(Collider2D collision)
+   /* private void OnTriggerStay2D(Collider2D collision)
     {
         if (collision.gameObject.name == "Player")
         {
@@ -44,6 +45,7 @@ public class GatheringManager : MonoBehaviour
             }
         }
     }
+    */
 
     private void OnTriggerExit2D(Collider2D collision)
     {
