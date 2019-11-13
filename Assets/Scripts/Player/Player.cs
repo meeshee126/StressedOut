@@ -38,9 +38,10 @@ public class Player : MonoBehaviour
     public GameObject selectedAbility;
     public GameObject playerHand;
 
+    public GameObject ExampleAbility;
     public GameObject[] QuickbarContent = new GameObject[5];
     public GameObject[] libraryAbilityList;
-    public GameObject[] LocalAbilityList;
+    public List<GameObject> LocalAbilityList = new List<GameObject>();
 
 
     // Unity
@@ -59,6 +60,18 @@ public class Player : MonoBehaviour
         characterRB = GetComponent<Rigidbody2D>();
         characterAnimator = GetComponent<Animator>();
         characterCollider = GetComponent<CapsuleCollider2D>();
+    }
+
+
+    private void Start()
+    {
+        for (int i = 0; i < abilityLists.playerAbilities.Length; i++)
+        {
+            LocalAbilityList.Add(ExampleAbility);
+            LocalAbilityList[i] = abilityLists.playerAbilities[i];
+            //ExampleAbility.GetComponent<Ability>().
+            //    SetValues(abilityLists.playerAbilities[i].GetComponent<Ability>());
+        }
     }
 
 
@@ -84,6 +97,7 @@ public class Player : MonoBehaviour
             ApplyMovementInput();
             ApplyAttackInput();
         }
+        // MAKE IT READ THE 
     }
 
 
@@ -149,7 +163,7 @@ public class Player : MonoBehaviour
         {
             GetAbility();
             // CHECK WETHER THIS ABILITY IS ON COOLDOWN OR NOT
-            for (int i = 0; i < LocalAbilityList.Length; i++)
+            for (int i = 0; i < LocalAbilityList.Count; i++)
             {
                 if (selectedAbility.GetComponent<Ability>().CastName == LocalAbilityList[i].GetComponent<Ability>().CastName)
                 {
@@ -242,11 +256,12 @@ public class Player : MonoBehaviour
     /// </summary>
     public void CooldownManager()
     {
-        for (int i = 0; i < LocalAbilityList.Length; i++)
+        for (int i = 0; i < LocalAbilityList.Count; i++)
         {
             if (LocalAbilityList[i].GetComponent<Ability>().Cooldown > 0f)
             {
-                    LocalAbilityList[i].GetComponent<Ability>().Cooldown -= Time.deltaTime;
+                LocalAbilityList[i].GetComponent<Ability>().Cooldown -= Time.deltaTime;
+                Debug.Log(LocalAbilityList[i].GetComponent<Ability>().Cooldown);
             }
         }
     }
@@ -293,42 +308,35 @@ public class Player : MonoBehaviour
 
         for (int i = 0; i < collisionsInCastArea.Length; i++)
         {
-            if (collisionsInCastArea[i].gameObject.GetComponent<Item>())
+            if (collisionsInCastArea[i].gameObject.GetComponent<Item>() &&
+                collisionsInCastArea[i] == GetClosest(collisionsInCastArea))
             {
-                if (collisionsInCastArea[i] == GetClosest(collisionsInCastArea))
+                // Is It an Item and Did Player PRESS <"F">
+                if (Input.GetKeyDown(KeyCode.F))
                 {
-                    if (collisionsInCastArea[i] == GetClosest(collisionsInCastArea))
+                    // Which Item Type
+                    switch (collisionsInCastArea[i].GetComponent<Item>().itemType)
                     {
-                        // Is It an Item and Did Player PRESS <"F">
-                        if (Input.GetKeyDown(KeyCode.F))
-                        {
-
-                            // Which Item Type
-                            switch (collisionsInCastArea[i].GetComponent<Item>().itemType)
-                            {
-                                case Item.ItemType.none:
-                                    Debug.Log("Called none");
-                                    IfNoneItem(collisionsInCastArea[i]);
-                                    break;
-                                case Item.ItemType.consumable:
-                                    Debug.Log("Called consumable");
-                                    IfConsumableItem(collisionsInCastArea[i]);
-                                    break;
-                                case Item.ItemType.weapon:
-                                    Debug.Log("Called Weapon");
-                                    IfWeaponItem(collisionsInCastArea[i]);
-                                    break;
-                                case Item.ItemType.armor:
-                                    Debug.Log("Called armor");
-                                    IfArmorItem(collisionsInCastArea[i]);
-                                    break;
-                                case Item.ItemType.miscelaneous:
-                                    Debug.Log("Called miscelaneous");
-                                    IfMiscellaneousItem(collisionsInCastArea[i]);
-                                    break;
-
-                            }
-                        }
+                        case Item.ItemType.none:
+                            Debug.Log("Called none");
+                            IfNoneItem(collisionsInCastArea[i]);
+                            break;
+                        case Item.ItemType.consumable:
+                            Debug.Log("Called consumable");
+                            IfConsumableItem(collisionsInCastArea[i]);
+                            break;
+                        case Item.ItemType.weapon:
+                            Debug.Log("Called Weapon");
+                            IfWeaponItem(collisionsInCastArea[i]);
+                            break;
+                        case Item.ItemType.armor:
+                            Debug.Log("Called armor");
+                            IfArmorItem(collisionsInCastArea[i]);
+                            break;
+                        case Item.ItemType.miscelaneous:
+                            Debug.Log("Called miscelaneous");
+                            IfMiscellaneousItem(collisionsInCastArea[i]);
+                            break;
                     }
                 }
             }

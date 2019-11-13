@@ -36,7 +36,17 @@ public class Ability : MonoBehaviour
     [Header("Other Attributes")]
     public GameObject ChildAbility;
     public LayerMask WhatCanItHit;
-    
+
+    [Header("Temporal Attributes")]
+    public SpriteRenderer spriteRenderer;
+    public Sprite Casting, Idle, Attack;
+
+
+    private void Start()
+    {
+        spriteRenderer = GetComponent<SpriteRenderer>();
+    }
+
 
     /// <summary>
     /// Runs and Filters through the timers to handle the ability behaviours
@@ -47,13 +57,19 @@ public class Ability : MonoBehaviour
 
         // Animation: Ability-Casting
         CastingTime -= Time.deltaTime;
+        if (CastingTime > 0f)
+        {
+            spriteRenderer.sprite = Casting;
+        }
         if (CastingTime <= 0f)
         {
+            spriteRenderer.sprite = Idle;
             Duration -= Time.deltaTime;
             BurstWait -= Time.deltaTime;
             ChildAbilityWait -= Time.deltaTime;
             if (BurstWait <= 0f && Bursts > 0)
             {
+                spriteRenderer.sprite = Attack;
                 CastAttack();
                 Bursts--;
                 BurstWait = StartBurstWait;
@@ -75,26 +91,12 @@ public class Ability : MonoBehaviour
     public void CastAttack()
     {
         Collider2D[] collisionsInCastArea = Physics2D.OverlapBoxAll(
-            new Vector3(Position_X, Position_Y), new Vector2(boxColliderX, boxColliderY),
-            Quaternion.identity.x, LayerMask.NameToLayer("Entity"));
+            new Vector3(Position_X, Position_Y), new Vector2(boxColliderX, boxColliderY), 0f);
 
         for (int i = 0; i < collisionsInCastArea.Length; i++)
         {
             // If the Entity.state == Neutral or Bad or Good & Entity.type  == Aggresive
-            if (collisionsInCastArea[i].CompareTag("Enemy") ||
-                (collisionsInCastArea[i].CompareTag("Neutral") &&
-
-                (collisionsInCastArea[i].GetComponent<Stats>().state == Stats.BehaviourState.Aggressive &&
-                (collisionsInCastArea[i].GetComponent<Stats>().type == Stats.BehaviourType.Neutral ||
-                collisionsInCastArea[i].GetComponent<Stats>().type == Stats.BehaviourType.Bad ||
-                collisionsInCastArea[i].GetComponent<Stats>().type == Stats.BehaviourType.Good)) ||
-
-                (collisionsInCastArea[i].GetComponent<Stats>().state == Stats.BehaviourState.Passive &&
-                (collisionsInCastArea[i].GetComponent<Stats>().type == Stats.BehaviourType.Bad ||
-                collisionsInCastArea[i].GetComponent<Stats>().type == Stats.BehaviourType.Neutral))) ||
-
-                (collisionsInCastArea[i].CompareTag("Friendly") &&
-                collisionsInCastArea[i].GetComponent<Stats>().state == Stats.BehaviourState.Aggressive))
+            if (collisionsInCastArea[i].GetComponent<Entity>())
             {
                 collisionsInCastArea[i].GetComponent<Entity>().TakeDamage(Damage);
             }
@@ -206,3 +208,19 @@ public class Ability : MonoBehaviour
         Debug.Log("Values Set");
     }
 }
+
+
+ //||
+ //               (collisionsInCastArea[i].CompareTag("Neutral") &&
+
+ //               (collisionsInCastArea[i].GetComponent<Stats>().state == Stats.BehaviourState.Aggressive &&
+ //               (collisionsInCastArea[i].GetComponent<Stats>().type == Stats.BehaviourType.Neutral ||
+ //               collisionsInCastArea[i].GetComponent<Stats>().type == Stats.BehaviourType.Bad ||
+ //               collisionsInCastArea[i].GetComponent<Stats>().type == Stats.BehaviourType.Good)) ||
+
+ //               (collisionsInCastArea[i].GetComponent<Stats>().state == Stats.BehaviourState.Passive &&
+ //               (collisionsInCastArea[i].GetComponent<Stats>().type == Stats.BehaviourType.Bad ||
+ //               collisionsInCastArea[i].GetComponent<Stats>().type == Stats.BehaviourType.Neutral))) ||
+
+ //               (collisionsInCastArea[i].CompareTag("Friendly") &&
+ //               collisionsInCastArea[i].GetComponent<Stats>().state == Stats.BehaviourState.Aggressive)

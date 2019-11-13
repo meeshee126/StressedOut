@@ -59,20 +59,20 @@ public class Entity : MonoBehaviour
     public void MovementHandler()
     {
         //Point-Patroll
-        transform.position = Vector2.MoveTowards(transform.position, moveSpots[randomSpot].position, movementSpeed * Time.deltaTime);
+        //transform.position = Vector2.MoveTowards(transform.position, moveSpots[randomSpot].position, movementSpeed * Time.deltaTime);
 
-        if (Vector2.Distance(transform.position, moveSpots[randomSpot].position) < 0.5f)
-        {
-            if (waitTime <= 0)
-            {
-                randomSpot = Random.Range(0, moveSpots.Length);
-                waitTime = startWaitTime;
-            }
-            else
-            {
-                waitTime -= Time.deltaTime;
-            }
-        }
+        //if (Vector2.Distance(transform.position, moveSpots[randomSpot].position) < 0.5f)
+        //{
+        //    if (waitTime <= 0)
+        //    {
+        //        randomSpot = Random.Range(0, moveSpots.Length);
+        //        waitTime = startWaitTime;
+        //    }
+        //    else
+        //    {
+        //        waitTime -= Time.deltaTime;
+        //    }
+        //}
 
 
         // Path Finding towards TARGET
