@@ -8,6 +8,7 @@ public class AreaChange : MonoBehaviour
 	public Camera mainCamera;
     Vector3 newPosition;
     TimeBehaviour timeBehaviour;
+    Timer timer;
 
     public int posX = 0;
     public int posY = 0;
@@ -17,6 +18,7 @@ public class AreaChange : MonoBehaviour
 	private void Start()
     {
         timeBehaviour = GameObject.Find("GameManager").GetComponent<TimeBehaviour>();
+        timer = GameObject.Find("GameManager").GetComponent<Timer>();
         newPosition = mainCamera.transform.position;
     }
 

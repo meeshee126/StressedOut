@@ -42,7 +42,7 @@ public class TimeBehaviour : MonoBehaviour
     void Update()
     {
         //no timecost anymore when in panic mode
-        if (timer.currentDayTime == Timer.DayTime.Panic)
+        if (timer.currentDayTime != Timer.DayTime.Day)
             return;
 
         TimeCosts();

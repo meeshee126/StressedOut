@@ -238,8 +238,11 @@ MonoBehaviour:
   mask:
     serializedVersion: 2
     m_Bits: 3840
-  spacing: 1
-  dropMin: 1
+  spacing: 0.7
+  cooldownTimer: 1.5
+  dropMin: 3
   dropMax: 3
   ressource: {fileID: 7941317824819057169, guid: 646d962c6f963234097b4c935b5cb93d,
     type: 3}
+  cooldown: 0
+  count: 0

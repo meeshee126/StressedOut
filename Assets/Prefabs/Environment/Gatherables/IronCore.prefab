@@ -145,10 +145,13 @@ MonoBehaviour:
   mask:
     serializedVersion: 2
     m_Bits: 3840
-  spacing: 1
-  dropMin: 1
+  spacing: 0.7
+  cooldownTimer: 1.5
+  dropMin: 3
   dropMax: 3
   ressource: {fileID: 91640884545294335, guid: c72e6f3caa87d624f8e2d0ed6454fe40, type: 3}
+  cooldown: 0
+  count: 0
 --- !u!1 &4783086283068535055
 GameObject:
   m_ObjectHideFlags: 0

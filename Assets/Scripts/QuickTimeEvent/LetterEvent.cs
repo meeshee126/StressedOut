@@ -30,7 +30,7 @@ public class LetterEvent : MonoBehaviour
     public int correctInput = 0;
 
     [HideInInspector]
-    public bool won;
+    public bool won, failed;
 
     void Start()
     {
@@ -101,6 +101,9 @@ public class LetterEvent : MonoBehaviour
         timeBehaviour.timeCost = timeBehaviour.loseQuickTimeEvent;
 
         QuitLetterEvent();
+
+        failed = true;
+        Debug.Log("Failed!");
     }
 
     /// <summary>
