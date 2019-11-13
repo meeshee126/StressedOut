@@ -16,13 +16,15 @@ public class Timer : MonoBehaviour
     public float panicTimer;
 
     [Header("")]
-    public DayTime currentDayTime = DayTime.Day;
-
     [SerializeField]
     GameObject sun;
-
+    [SerializeField]
+    Image background;
     [SerializeField]
     Text uiPanicTimer;
+
+    [Header("(INFO) current day time")]
+    public DayTime currentDayTime = DayTime.Day;
 
     Sun sunScript;
     TimeSpan time;
@@ -41,6 +43,7 @@ public class Timer : MonoBehaviour
     {
         TimerCountdown();
         CheckDayTime();
+        SetBackground();
 
         if (dayOver)
         {
@@ -147,6 +150,24 @@ public class Timer : MonoBehaviour
 
         //faster sun rotation
         sun.transform.Rotate(0, 0, -100);
+    }
+
+    /// <summary>
+    /// Set Background Panel when changing daytime
+    /// </summary>
+    void SetBackground()
+    {
+        //get Colors
+        Color day = new Color(0, 0, 0, 0);
+        Color dusk = new Color(0, 0, 0, 0.15f);
+        Color night = new Color(0, 0, 0, 0.5f);
+
+        //set Colors
+        if (currentDayTime == Timer.DayTime.Day) { background.color = day; }
+        
+        if (currentDayTime == Timer.DayTime.Panic) { background.color = dusk; }
+
+        if (currentDayTime == Timer.DayTime.Night) { background.color = night; }
     }
 
     /// <summary>

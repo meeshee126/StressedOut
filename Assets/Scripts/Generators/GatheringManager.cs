@@ -22,6 +22,11 @@ public class GatheringManager : MonoBehaviour
     [SerializeField]
     float spacing;
 
+    [Header("Cooldowntimer after fail")]
+    [SerializeField]
+    float cooldownTimer;
+
+
     [Header("Item Drop configurations")]
     [SerializeField]
     [Range(0, 20)]
@@ -33,13 +38,14 @@ public class GatheringManager : MonoBehaviour
     GameObject ressource;
 
     GeneratorManager generatorManager;
-
     Collider2D[] colliders;
     SpriteRenderer spriteRenderer;
     LetterEvent letterEvent;
     Player player;
+    Timer timer;
 
-    int dropCount;
+    public bool cooldown;
+    public float count;
 
     void Start()
     {
@@ -50,11 +56,33 @@ public class GatheringManager : MonoBehaviour
         spriteRenderer = GetComponent<SpriteRenderer>();
         letterEvent = GameObject.Find("QuickTimeEvent").GetComponent<LetterEvent>();
         player = GameObject.Find("Player").GetComponent<Player>();
+        timer = GameObject.Find("GameManager").GetComponent<Timer>();
     }
+
+   /* void CheckCooldown()
+    {
+        if (letterEvent.failed)
+        {
+            count += Time.deltaTime;
+            if (count > cooldownTimer)
+            {
+                cooldown = false;
+                count = 0;
+                letterEvent.failed = false;
+            }
+            else
+            {
+
+                cooldown = true;
+            }
+
+        }
+    }
+    */
 
     private void OnTriggerStay2D(Collider2D collision)
     {
-        if (collision.gameObject.name == "Player")
+        if (collision.gameObject.name == "Player" && timer.currentDayTime == Timer.DayTime.Day && !cooldown)
         {
             transform.GetChild(0).gameObject.SetActive(true);
 
@@ -66,9 +94,13 @@ public class GatheringManager : MonoBehaviour
             if (letterEvent.won)
             {
                 this.gameObject.GetComponent<CircleCollider2D>().enabled = false;
+                letterEvent.won = false;
                 generatorManager.SpawnObject(this.gameObject);
                 ChangeSprite();
+               
             }
+
+
         }
     }
     
@@ -98,7 +130,6 @@ public class GatheringManager : MonoBehaviour
     void ChangeSprite()
     {
         spriteRenderer.sprite = decomposed;
-        letterEvent.won = false;
     }
 
     private void OnDrawGizmosSelected()

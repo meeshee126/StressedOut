@@ -16,9 +16,6 @@ public class ResourceManager : MonoBehaviour
 
     private void Start()
     {
-		wood = 2000;
-		stone = 2000;
-
 		uiWood = GameObject.Find("WoodCount").GetComponent<Text>();
         uiStone = GameObject.Find("StoneCount").GetComponent<Text>();
         uiIron = GameObject.Find("IronCount").GetComponent<Text>();
