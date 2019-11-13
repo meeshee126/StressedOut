@@ -69,6 +69,7 @@ public class Player : MonoBehaviour
         {
             LocalAbilityList.Add(ExampleAbility);
             LocalAbilityList[i] = abilityLists.playerAbilities[i];
+            
             //ExampleAbility.GetComponent<Ability>().
             //    SetValues(abilityLists.playerAbilities[i].GetComponent<Ability>());
         }
