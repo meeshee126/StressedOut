@@ -4,6 +4,8 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
+//Michael Schmidt
+
 public class PauseManager : MonoBehaviour
 {
     [SerializeField]

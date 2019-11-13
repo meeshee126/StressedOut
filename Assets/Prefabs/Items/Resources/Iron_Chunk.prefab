@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 8161848899452969894}
   - component: {fileID: -7998310207248758644}
   - component: {fileID: -7875936434234388965}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: Iron_Chunk
   m_TagString: Resource
   m_Icon: {fileID: 0}

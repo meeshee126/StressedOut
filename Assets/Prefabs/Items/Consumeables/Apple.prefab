@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: -34080397763602377}
   - component: {fileID: 1272984920508319513}
   - component: {fileID: 205915001920080754}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: Apple
   m_TagString: Consumable
   m_Icon: {fileID: 0}
@@ -145,12 +145,14 @@ MonoBehaviour:
   itemType: 2
   itemName: Apple
   iD: 2001
+  amount: 0
   itemHealth: 0
   isPickedUp: 0
   isDead: 0
-  ItemTypeAttribute: 
+  ItemTypeAttribute: 0
   spriteRenderer: {fileID: 0}
   itemCollider: {fileID: 0}
   itemRB: {fileID: 0}
   physicsMaterial: {fileID: 0}
   gameManager: {fileID: 0}
+  targetPlayer: {fileID: 0}

@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 4865815063042507915}
   - component: {fileID: 4865815063042507916}
   - component: {fileID: 4865815063042507918}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: Gold_Chunk
   m_TagString: Resource
   m_Icon: {fileID: 0}

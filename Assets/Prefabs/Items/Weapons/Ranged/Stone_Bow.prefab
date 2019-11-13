@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 5725922450795467669}
   - component: {fileID: 6131693716295783547}
   - component: {fileID: 1453922003582943718}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: Stone_Bow
   m_TagString: Equippable
   m_Icon: {fileID: 0}
@@ -146,12 +146,14 @@ MonoBehaviour:
   itemType: 3
   itemName: Stone_Bow
   iD: 532
+  amount: 0
   itemHealth: 0
   isPickedUp: 0
   isDead: 0
-  ItemTypeAttribute: 
+  ItemTypeAttribute: 0
   spriteRenderer: {fileID: 0}
   itemCollider: {fileID: 0}
   itemRB: {fileID: 0}
   physicsMaterial: {fileID: 0}
   gameManager: {fileID: 0}
+  targetPlayer: {fileID: 0}

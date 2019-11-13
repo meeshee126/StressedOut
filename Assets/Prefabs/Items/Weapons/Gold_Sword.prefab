@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 6397662423022960951}
   - component: {fileID: 4802990874557482713}
   - component: {fileID: 257512673490539332}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: Gold_Sword
   m_TagString: Equippable
   m_Icon: {fileID: 0}
@@ -146,12 +146,14 @@ MonoBehaviour:
   itemType: 3
   itemName: Gold_Sword
   iD: 504
+  amount: 0
   itemHealth: 0
   isPickedUp: 0
   isDead: 0
-  ItemTypeAttribute: 
+  ItemTypeAttribute: 0
   spriteRenderer: {fileID: 0}
   itemCollider: {fileID: 0}
   itemRB: {fileID: 0}
   physicsMaterial: {fileID: 0}
   gameManager: {fileID: 0}
+  targetPlayer: {fileID: 0}

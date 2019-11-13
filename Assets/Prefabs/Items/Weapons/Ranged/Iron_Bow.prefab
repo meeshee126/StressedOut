@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 257272556252020999}
   - component: {fileID: 1872568176224290537}
   - component: {fileID: 6397867381937230708}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: Iron_Bow
   m_TagString: Equippable
   m_Icon: {fileID: 0}
@@ -146,12 +146,14 @@ MonoBehaviour:
   itemType: 3
   itemName: Iron_Bow
   iD: 533
+  amount: 0
   itemHealth: 0
   isPickedUp: 0
   isDead: 0
-  ItemTypeAttribute: 
+  ItemTypeAttribute: 0
   spriteRenderer: {fileID: 0}
   itemCollider: {fileID: 0}
   itemRB: {fileID: 0}
   physicsMaterial: {fileID: 0}
   gameManager: {fileID: 0}
+  targetPlayer: {fileID: 0}

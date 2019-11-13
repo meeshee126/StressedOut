@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 8629142853871396506}
   - component: {fileID: 7903370290494562676}
   - component: {fileID: 3214182337812919529}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: Stone_Sword
   m_TagString: Equippable
   m_Icon: {fileID: 0}
@@ -146,12 +146,14 @@ MonoBehaviour:
   itemType: 3
   itemName: Stone_Sword
   iD: 502
+  amount: 0
   itemHealth: 0
   isPickedUp: 0
   isDead: 0
-  ItemTypeAttribute: 
+  ItemTypeAttribute: 0
   spriteRenderer: {fileID: 0}
   itemCollider: {fileID: 0}
   itemRB: {fileID: 0}
   physicsMaterial: {fileID: 0}
   gameManager: {fileID: 0}
+  targetPlayer: {fileID: 0}

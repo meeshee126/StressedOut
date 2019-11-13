@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 6659558342305155666}
   - component: {fileID: -6352844600378122287}
   - component: {fileID: 1220241616196532048}
-  m_Layer: 8
+  m_Layer: 11
   m_Name: Wood
   m_TagString: Resource
   m_Icon: {fileID: 0}
@@ -149,9 +149,10 @@ MonoBehaviour:
   itemHealth: 0
   isPickedUp: 0
   isDead: 0
-  ItemTypeAttribute: 
+  ItemTypeAttribute: 0
   spriteRenderer: {fileID: 0}
   itemCollider: {fileID: 0}
   itemRB: {fileID: 0}
   physicsMaterial: {fileID: 0}
   gameManager: {fileID: 0}
+  targetPlayer: {fileID: 0}

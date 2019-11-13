@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 2792146340900345996}
   - component: {fileID: 4382288991845785442}
   - component: {fileID: 9071512129054640895}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: Diamond_Chunk
   m_TagString: Resource
   m_Icon: {fileID: 0}

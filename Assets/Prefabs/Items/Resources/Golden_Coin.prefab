@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 2417664491199608807}
   - component: {fileID: 4315560980148924425}
   - component: {fileID: 8851415439145805204}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: Golden_Coin
   m_TagString: Resource
   m_Icon: {fileID: 0}

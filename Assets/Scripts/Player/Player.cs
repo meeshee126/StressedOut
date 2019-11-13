@@ -293,18 +293,6 @@ public class Player : MonoBehaviour
 
         for (int i = 0; i < collisionsInCastArea.Length; i++)
         {
-            if (collisionsInCastArea[i].gameObject.tag == "Gatherable" &&
-                collisionsInCastArea[i] == GetClosest(collisionsInCastArea))   
-            {
-                collisionsInCastArea[i].gameObject.transform.GetChild(0).gameObject.SetActive(true);
-            }
-
-            else
-            {
-                collisionsInCastArea[i].gameObject.transform.GetChild(0).gameObject.SetActive(false);
-
-            }
-
             if (collisionsInCastArea[i].gameObject.GetComponent<Item>())
             {
                 if (collisionsInCastArea[i] == GetClosest(collisionsInCastArea))

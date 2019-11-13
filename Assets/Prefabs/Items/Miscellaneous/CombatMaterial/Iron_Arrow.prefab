@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 290052990112493404}
   - component: {fileID: 2191229348015958194}
   - component: {fileID: 6871850719814057263}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: Iron_Arrow
   m_TagString: Miscellaneous
   m_Icon: {fileID: 0}
@@ -146,12 +146,14 @@ MonoBehaviour:
   itemType: 5
   itemName: Iron_Arrow
   iD: 802
+  amount: 0
   itemHealth: 0
   isPickedUp: 0
   isDead: 0
-  ItemTypeAttribute: 
+  ItemTypeAttribute: 0
   spriteRenderer: {fileID: 0}
   itemCollider: {fileID: 0}
   itemRB: {fileID: 0}
   physicsMaterial: {fileID: 0}
   gameManager: {fileID: 0}
+  targetPlayer: {fileID: 0}

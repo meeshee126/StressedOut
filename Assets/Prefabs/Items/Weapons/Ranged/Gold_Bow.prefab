@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 112357271878512861}
   - component: {fileID: 2009056804571920179}
   - component: {fileID: 6545104844598190766}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: Gold_Bow
   m_TagString: Equippable
   m_Icon: {fileID: 0}
@@ -146,12 +146,14 @@ MonoBehaviour:
   itemType: 3
   itemName: Gold_Bow
   iD: 534
+  amount: 0
   itemHealth: 0
   isPickedUp: 0
   isDead: 0
-  ItemTypeAttribute: 
+  ItemTypeAttribute: 0
   spriteRenderer: {fileID: 0}
   itemCollider: {fileID: 0}
   itemRB: {fileID: 0}
   physicsMaterial: {fileID: 0}
   gameManager: {fileID: 0}
+  targetPlayer: {fileID: 0}
