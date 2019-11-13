@@ -45,4 +45,68 @@ public static class SaveSystem
 			return null;
 		}
 	}
+
+	public static void SaveResource(ResourceManager resource)
+	{
+		BinaryFormatter formatter = new BinaryFormatter();
+		string path = Application.persistentDataPath + "/resource.fun";
+		FileStream stream = new FileStream(path, FileMode.Create);
+
+		ResourceData data = new ResourceData(resource);
+
+		formatter.Serialize(stream, data);
+		stream.Close();
+	}
+
+	public static ResourceData LoadResource()
+	{
+		string path = Application.persistentDataPath + "/resource.fun";
+		if (true)
+		{
+			BinaryFormatter formatter = new BinaryFormatter();
+			FileStream stream = new FileStream(path, FileMode.Open);
+
+			ResourceData data = formatter.Deserialize(stream) as ResourceData;
+			stream.Close();
+
+			return data;
+		}
+		else
+		{
+			Debug.LogError("Save file not found in " + path);
+			return null;
+		}
+	}
+
+	public static void SaveBuilding(GenerateBase generateBase)
+	{
+		BinaryFormatter formatter = new BinaryFormatter();
+		string path = Application.persistentDataPath + "/building.fun";
+		FileStream stream = new FileStream(path, FileMode.Create);
+
+		BuildingData data = new BuildingData(generateBase);
+
+		formatter.Serialize(stream, data);
+		stream.Close();
+	}
+
+	public static BuildingData LoadBuilding()
+	{
+		string path = Application.persistentDataPath + "/building.fun";
+		if (true)
+		{
+			BinaryFormatter formatter = new BinaryFormatter();
+			FileStream stream = new FileStream(path, FileMode.Open);
+
+			BuildingData data = formatter.Deserialize(stream) as BuildingData;
+			stream.Close();
+
+			return data;
+		}
+		else
+		{
+			Debug.LogError("Save file not found in " + path);
+			return null;
+		}
+	}
 }
