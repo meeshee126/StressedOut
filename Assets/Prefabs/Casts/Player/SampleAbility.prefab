@@ -66,9 +66,9 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 256
   spriteRenderer: {fileID: 0}
-  Casting: {fileID: 0}
-  Idle: {fileID: 0}
-  Attack: {fileID: 0}
+  Casting: {fileID: -824107830588233029, guid: 9a7ba262b5b27c14ab3423732fa0f5df, type: 3}
+  Idle: {fileID: 1374132880823927637, guid: 9a7ba262b5b27c14ab3423732fa0f5df, type: 3}
+  Attack: {fileID: 4016992256119440540, guid: 9a7ba262b5b27c14ab3423732fa0f5df, type: 3}
 --- !u!212 &5048855701384171109
 SpriteRenderer:
   m_ObjectHideFlags: 0

@@ -3337,6 +3337,7 @@ MonoBehaviour:
   - {fileID: 6195772544572288024, guid: fe3837d044977ff4da0e94c407f140e5, type: 3}
   correctInput: 0
   won: 0
+  failed: 0
 --- !u!4 &509846981 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 6358046047950125150, guid: 972e8b1a3bac80c42be9cf0ef9efd63f,
@@ -5255,6 +5256,10 @@ MonoBehaviour:
   WhatCanItHit:
     serializedVersion: 2
     m_Bits: 0
+  spriteRenderer: {fileID: 0}
+  Casting: {fileID: 0}
+  Idle: {fileID: 0}
+  Attack: {fileID: 0}
 --- !u!4 &1013605669
 Transform:
   m_ObjectHideFlags: 0
@@ -32777,7 +32782,7 @@ PrefabInstance:
     - target: {fileID: 8642264823993486120, guid: 963f7399ec26d4144aba53c7cc9828fa,
         type: 3}
       propertyPath: LocalAbilityList.Array.size
-      value: 3
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8642264823993486120, guid: 963f7399ec26d4144aba53c7cc9828fa,
         type: 3}
