@@ -112,7 +112,7 @@ public class Player : MonoBehaviour
         float moveHorizontal = Input.GetAxis("Horizontal") * stats.movementSpeed;
         float moveVertical = Input.GetAxis("Vertical") * stats.movementSpeed;
 
-        //AnimationUpdate(moveHorizontal, moveVertical);
+        MovementAnimationUpdate(moveHorizontal, moveVertical);
 
         characterRB.velocity = new Vector2(moveHorizontal, moveVertical);
         #region old

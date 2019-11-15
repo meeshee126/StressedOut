@@ -31239,6 +31239,25 @@ MonoBehaviour:
   state: 1
   comboResetTimer: 0
   currentCombo: 0
+--- !u!95 &1628602504
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1628602502}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 8b2af1987e93c3c478fbbcf3cdfbb467, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!1 &1630294978
 GameObject:
   m_ObjectHideFlags: 0
@@ -32830,6 +32849,16 @@ PrefabInstance:
       propertyPath: m_IsTrigger
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 8642264823993486118, guid: 963f7399ec26d4144aba53c7cc9828fa,
+        type: 3}
+      propertyPath: m_Offset.x
+      value: -0.015
+      objectReference: {fileID: 0}
+    - target: {fileID: 8642264823993486118, guid: 963f7399ec26d4144aba53c7cc9828fa,
+        type: 3}
+      propertyPath: m_Offset.y
+      value: -0.25
+      objectReference: {fileID: 0}
     - target: {fileID: 8642264823993486121, guid: 963f7399ec26d4144aba53c7cc9828fa,
         type: 3}
       propertyPath: m_Constraints
@@ -32880,6 +32909,12 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 8642264823993486119, guid: 963f7399ec26d4144aba53c7cc9828fa,
+        type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: -958950880525387099, guid: 1bc7ce5997763fc4a983dcc105559851,
+        type: 3}
     m_RemovedComponents:
     - {fileID: 2115935522157676091, guid: 963f7399ec26d4144aba53c7cc9828fa, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 963f7399ec26d4144aba53c7cc9828fa, type: 3}
