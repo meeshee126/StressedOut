@@ -18,6 +18,7 @@ TagManager:
   - BuildRadius
   - Projectile
   - Gatherable
+  - Building
   layers:
   - Default
   - TransparentFX

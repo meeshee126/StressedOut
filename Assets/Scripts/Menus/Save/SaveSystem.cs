@@ -78,13 +78,13 @@ public static class SaveSystem
 		}
 	}
 
-	public static void SaveBuilding(GenerateBase generateBase)
+	public static void SaveBuilding(BuildingManager buildingManager)
 	{
 		BinaryFormatter formatter = new BinaryFormatter();
 		string path = Application.persistentDataPath + "/building.fun";
 		FileStream stream = new FileStream(path, FileMode.Create);
 
-		BuildingData data = new BuildingData(generateBase);
+		BuildingData data = new BuildingData(buildingManager);
 
 		formatter.Serialize(stream, data);
 		stream.Close();

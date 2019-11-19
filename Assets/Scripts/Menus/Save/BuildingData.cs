@@ -6,21 +6,33 @@ using UnityEngine;
 [System.Serializable]
 public class BuildingData
 {
-	public int building;
+	public int[] isActive;
+	public int[] health;
 
-	public BuildingData(GenerateBase generateBase)
+	public BuildingData(BuildingManager buildingManager)
 	{
-		if (generateBase.Wood.gameObject.activeSelf == false && generateBase.Stone.gameObject.activeSelf == false)
+        GameObject[] gameObjects = buildingManager.buildingObj;//GameObject.FindGameObjectsWithTag("Building")
+
+        isActive = new int[gameObjects.Length];
+		health = new int[gameObjects.Length];
+
+		for (int i = 0; i < gameObjects.Length; i++)
 		{
-			building = 0;
-		}
-		else if (generateBase.Wood.gameObject.activeSelf == true && generateBase.Stone.gameObject.activeSelf == false)
-		{
-			building = 1;
-		}
-		else if (generateBase.Wood.gameObject.activeSelf == false && generateBase.Stone.gameObject.activeSelf == true)
-		{
-			building = 2;
+            GenerateBase currentBuilding = gameObjects[i].GetComponent<GenerateBase>();
+			health[i] = currentBuilding.health;
+
+			if (currentBuilding.Wood.gameObject.activeSelf == false && currentBuilding.Stone.gameObject.activeSelf == false)
+			{
+				isActive[i] = 0;
+			}
+			else if (currentBuilding.Wood.gameObject.activeSelf == true && currentBuilding.Stone.gameObject.activeSelf == false)
+			{
+				isActive[i] = 1;
+			}
+			else if (currentBuilding.Wood.gameObject.activeSelf == false && currentBuilding.Stone.gameObject.activeSelf == true)
+			{
+				isActive[i] = 2;
+			}
 		}
 	}
 }

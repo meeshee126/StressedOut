@@ -5,9 +5,9 @@ using UnityEngine;
 //Henrik Hafner
 public class GenerateBase : MonoBehaviour
 {
-    bool doBuild;
-    bool isBuild;
-    bool doRepair;
+    public bool doBuild;
+	public bool isBuild;
+	public bool doRepair;
 
     string buildPhase;
 
@@ -158,37 +158,4 @@ public class GenerateBase : MonoBehaviour
             }
         }
     }
-
-	//Henrik Hafner
-	//Save the Datas from the Player
-	public void SaveBuilding()
-	{
-		SaveSystem.SaveBuilding(this);
-	}
-
-	//Henrik Hafner
-	// Load the SaveFiles to the Player
-	public void LoadBuilding()
-	{
-		BuildingData data = SaveSystem.LoadBuilding();
-		if (data.building == 0)
-		{
-			Wood.gameObject.SetActive(false);
-			Stone.gameObject.SetActive(false);
-
-			isBuild = false;
-		}
-		else if (data.building == 1)
-		{
-			Wood.gameObject.SetActive(true);
-			Stone.gameObject.SetActive(false);
-			isBuild = true;
-		}
-		else if (data.building == 2)
-		{
-			Stone.gameObject.SetActive(true);
-			Wood.gameObject.SetActive(false);
-			isBuild = true;
-		}
-	}
 }
