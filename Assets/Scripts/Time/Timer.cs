@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -26,11 +27,13 @@ public class Timer : MonoBehaviour
     [Header("(INFO) current day time")]
     public DayTime currentDayTime = DayTime.Day;
 
+    [HideInInspector]
+    public bool dayOver;
+
     Sun sunScript;
     TimeSpan time;
     bool showPanicTimer;
-    bool dayOver;
-
+  
     void Start()
     {
         sunScript = GameObject.Find("Sunset").GetComponent<Sun>();
@@ -127,7 +130,55 @@ public class Timer : MonoBehaviour
         //reset timer
         time = new TimeSpan(0, minutes, seconds);
 
+        //Generate new area objects
+        GenerateNewMap();
+
         dayOver = false;
+    }
+
+    /// <summary>
+    /// Generate new Areas aftter a day ends
+    /// </summary>
+    void GenerateNewMap()
+    {
+        List<Transform> areaList = new List<Transform>();
+        List<Transform> areaChildList = new List<Transform>();
+        List<Transform> areaObjectsList = new List<Transform>();
+        GameObject areaLength;
+
+        areaLength = GameObject.Find("Areas");
+
+        //Add all objects from "Areas" to a list
+        areaList = areaLength.GetComponentsInChildren<Transform>().ToList();
+
+        //get all objects which are gatherable and add it to a new list
+        for (int i = 0; i < areaList.Count; i++)
+        {
+            if (areaList[i].gameObject.tag == "Gatherable")
+            {
+                areaChildList.Add(areaList[i]);
+            }
+        }
+
+        //destroy all gatherable objects
+        for (int i = 0; i < areaChildList.Count; i++)
+        {
+            Destroy(areaChildList[i].gameObject);
+        }
+
+        for (int i = 0; i < areaLength.transform.childCount; i++)
+        {
+            //add all object generators to a list
+            areaObjectsList.Add(areaLength.transform.GetChild(i));
+
+            //call ObjectGeneration script for each object generator
+            areaObjectsList[i].gameObject.GetComponent<ObjectGeneration>().Generation();
+        }
+
+        //clear all lists
+        areaList.Clear();
+        areaChildList.Clear();
+        areaObjectsList.Clear();
     }
 
     /// <summary>
@@ -153,7 +204,7 @@ public class Timer : MonoBehaviour
     }
 
     /// <summary>
-    /// Set Background Panel when changing daytime
+    /// Set Background when changing daytime
     /// </summary>
     void SetBackground()
     {
@@ -163,10 +214,8 @@ public class Timer : MonoBehaviour
         Color night = new Color(0, 0, 0, 0.5f);
 
         //set Colors
-        if (currentDayTime == Timer.DayTime.Day) { background.color = day; }
-        
+        if (currentDayTime == Timer.DayTime.Day) { background.color = day; }     
         if (currentDayTime == Timer.DayTime.Panic) { background.color = dusk; }
-
         if (currentDayTime == Timer.DayTime.Night) { background.color = night; }
     }
 

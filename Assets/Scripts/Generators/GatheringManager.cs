@@ -26,7 +26,6 @@ public class GatheringManager : MonoBehaviour
     [SerializeField]
     float cooldownTimer;
 
-
     [Header("Item Drop configurations")]
     [SerializeField]
     [Range(0, 20)]

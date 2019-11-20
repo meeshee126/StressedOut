@@ -47,9 +47,10 @@ MonoBehaviour:
   radius: 9.99
   mask:
     serializedVersion: 2
-    m_Bits: 512
+    m_Bits: 1536
   spacing: 1
   spawnMin: 1
   spawnMax: 11
   areaObject: {fileID: 3505269384073326155, guid: bdc7b774c05ddee429bc4d4942bcf624,
     type: 3}
+  list: []

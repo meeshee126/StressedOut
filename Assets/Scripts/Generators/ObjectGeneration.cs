@@ -31,16 +31,26 @@ public class ObjectGeneration : MonoBehaviour
 
     int spawnCount;
 
+    Timer timer;
     Collider2D[] colliders;
+    GeneratorManager generatorManager;
+    public List<GameObject> list = new List<GameObject>();
 
     public void Awake()
     {
-        GeneratorManager generatorManager = new GeneratorManager(offset, radius, mask, 
-                                                                spacing, spawnMin, spawnMax, 
-                                                                areaObject, colliders);
+        timer = GameObject.Find("GameManager").GetComponent<Timer>();
+
+        Generation();
+    }
+
+
+    public void Generation()
+    {
+        generatorManager = new GeneratorManager(offset, radius, mask,
+                                                              spacing, spawnMin, spawnMax,
+                                                              areaObject, colliders);
 
         generatorManager.SpawnObject(this.gameObject);
-
     }
 
     private void OnDrawGizmosSelected()
