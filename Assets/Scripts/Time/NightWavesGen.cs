@@ -32,8 +32,8 @@ public class NightWavesGen : MonoBehaviour
         // &&   Enemies NOT Ready?
         if (timer.currentDayTime == Timer.DayTime.Panic && !areEnemiesReady)
         {
-            // Set up enemylist
-            // areEnemiesReady = true;
+            FillUpEnemiesList();
+            areEnemiesReady = true;
         }
 
         // Time == Night?
@@ -59,41 +59,63 @@ public class NightWavesGen : MonoBehaviour
     /// </summary>
     void FillUpEnemiesList()
     {
-        //EnemyList = new GameObject[Random.Range(2, 8)];
-        // Set List.Length
-        // Run through List.length
-            // Set each obj to random enemy (from available enemies List)
+        SetEnemiesList = new GameObject[Random.Range(2, 8)];
+        SpawnedEnemiesList = new GameObject[SetEnemiesList.Length];
+        for (int i = 0; i < SetEnemiesList.Length; i++)
+        {
+            SetEnemiesList[i] = AvailableEnemiesList[Random.Range(0, AvailableEnemiesList.Length)];
+        }
     }
     
 
     /// <summary>
     /// Empties 
     /// </summary>
-    void EmptyEnemiesList()
+    void ResetEnemiesList()
     {
-        // Run through List.length
-            // Set each obj to null
-        // Set List Length back to 0
+        SetEnemiesList = new GameObject[0];
     }
 
 
     void SpawnEnemiesFromList()
     {
+        for (int i = 0; i < SetEnemiesList.Length; i++)
+        {
+            SpawnedEnemiesList[i] = Instantiate(SetEnemiesList[i], PickRandomAvailableSpot() , Quaternion.identity);
+        }
+
         // Run though Available Spots List.length
         // Run though EnemiesList List.length
-        // Instatiate each obj (random position)
+            // Instatiate each obj (random position)
     }
 
-    Transform PickRandomSpot()
+    Vector2 PickRandomAvailableSpot()
     {
+        Vector2 spot = new Vector2(0f, 0f);
+        spot = new Vector2(
+            AvailableEnemiesList[Random.Range(0, AvailableEnemiesList.Length)].
+                GetComponent<BoxCollider2D>().size.x,
+            AvailableEnemiesList[Random.Range(0, AvailableEnemiesList.Length)].
+                GetComponent<BoxCollider2D>().size.y);
+            ;
+            AvailableEnemiesList
+            // Set spot to new available spot position
         // Get Available spawn Area Values
-        // 
-        return null;
+        return spot;
     }
 
-    bool EnemiesDeadCheck()
+    bool areEnemiesDeadCheck()
     {
-        // Run through
+        for (int i = 0; i < SpawnedEnemiesList.Length; i++)
+        {
+            if (true)
+            {
+                return true;
+            }
+        }
+        // Run through spawnedlist
+            // If (all dead)
+            // return true
         return false;
     }
 }
