@@ -63,7 +63,7 @@ public class GenerateBase : MonoBehaviour
     /// <param name="player"></param>
     void OnTriggerEnter2D(Collider2D player)
     {
-        if (player.gameObject.tag == "Player" && area.isTrigger == false)
+        if (player.gameObject.tag == "Player" /*&& area.isTrigger == false*/)
         {
 			area.isTrigger = true;
             MessagePanel.gameObject.SetActive(true);

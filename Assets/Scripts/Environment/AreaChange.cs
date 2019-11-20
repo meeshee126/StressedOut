@@ -5,7 +5,88 @@ using UnityEngine;
 //Henrik Hafner
 public class AreaChange : MonoBehaviour
 {
-	public Camera mainCamera;
+    Transform camera, player;
+
+    GameObject[] chunks;
+
+    TimeBehaviour timeBehaviour;
+
+    Vector3 lastPosition;
+
+    public bool isTrigger;
+
+    private void Start()
+    {
+      
+        camera = GameObject.Find("Main Camera").GetComponent<Transform>();
+        player = GameObject.Find("Player").GetComponent<Transform>();
+        timeBehaviour = GameObject.Find("GameManager").GetComponent<TimeBehaviour>();
+        chunks = GameObject.FindGameObjectsWithTag("Chunk");
+
+        SetCameraPosition();
+        
+    }
+
+    private void Update()
+    {
+        SetCameraPosition();
+    }
+
+    void SetCameraPosition()
+    {
+        Vector3 newPosition = GetClosestChunk().position;
+        newPosition.z = -10;
+        camera.position = newPosition;
+
+        if(lastPosition != camera.position)
+        {
+            timeBehaviour.timeCost = timeBehaviour.areaChanging;
+            lastPosition = camera.position;
+        }
+    }
+
+    Transform GetClosestChunk()
+    {
+        Transform closestChunk = null;
+        float closestDistance = Mathf.Infinity;
+        foreach (GameObject chunk in chunks)
+        {
+            float distance = Vector2.Distance(player.position, chunk.transform.position);
+
+            if (distance < closestDistance)
+            {
+                closestDistance = distance;
+                closestChunk = chunk.transform;
+                
+            }
+
+        }
+        return closestChunk;
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    /*
+    public Camera mainCamera;
     Vector3 newPosition;
     TimeBehaviour timeBehaviour;
     Timer timer;
@@ -13,7 +94,6 @@ public class AreaChange : MonoBehaviour
     public int posX = 0;
     public int posY = 0;
 
-	public bool isTrigger;
 
 	private void Start()
     {
@@ -31,55 +111,58 @@ public class AreaChange : MonoBehaviour
     {
         /* Michael Schmidt:
          * Timecosts will call when player entering a new area */
-     
-        if (enter.gameObject.tag == "EnterRight" && mainCamera.transform.position.x == posX)
-        {
-            newPosition = mainCamera.transform.position + new Vector3(25, 0, 0);
-            transform.position = transform.position + new Vector3(5,0,0);
-            posX += 25;
+    /*
+       if (enter.gameObject.tag == "EnterRight" && mainCamera.transform.position.x == posX)
+       {
+           newPosition = mainCamera.transform.position + new Vector3(25, 0, 0);
+           transform.position = transform.position + new Vector3(5,0,0);
+           posX += 25;
 
-            //Michael Schmidt
-            timeBehaviour.timeCost = timeBehaviour.areaChanging;  
-        }
-        if (enter.gameObject.tag == "EnterLeft" && mainCamera.transform.position.x == posX)
-        {
-            newPosition = mainCamera.transform.position + new Vector3(-25, 0, 0);
-            transform.position = transform.position + new Vector3(-5, 0, 0);
-            posX -= 25;
+           //Michael Schmidt
+           timeBehaviour.timeCost = timeBehaviour.areaChanging;  
+       }
+       if (enter.gameObject.tag == "EnterLeft" && mainCamera.transform.position.x == posX)
+       {
+           newPosition = mainCamera.transform.position + new Vector3(-25, 0, 0);
+           transform.position = transform.position + new Vector3(-5, 0, 0);
+           posX -= 25;
 
-            //Michael Schmidt
-            timeBehaviour.timeCost = timeBehaviour.areaChanging;
-        }
-        if (enter.gameObject.tag == "EnterUp" && mainCamera.transform.position.y == posY)
-        {
-            newPosition = mainCamera.transform.position + new Vector3(0, 15, 0);
-            transform.position = transform.position + new Vector3(0, 5.5f, 0);
-            posY += 15;
+           //Michael Schmidt
+           timeBehaviour.timeCost = timeBehaviour.areaChanging;
+       }
+       if (enter.gameObject.tag == "EnterUp" && mainCamera.transform.position.y == posY)
+       {
+           newPosition = mainCamera.transform.position + new Vector3(0, 15, 0);
+           transform.position = transform.position + new Vector3(0, 5.5f, 0);
+           posY += 15;
 
-            //Michael Schmidt
-            timeBehaviour.timeCost = timeBehaviour.areaChanging;
-        }
-        if (enter.gameObject.tag == "EnterDown" && mainCamera.transform.position.y == posY)
-        {
-            newPosition = mainCamera.transform.position + new Vector3(0, -15, 0);
-            transform.position = transform.position + new Vector3(0, -5.5f, 0);
-            posY -= 15;
+           //Michael Schmidt
+           timeBehaviour.timeCost = timeBehaviour.areaChanging;
+       }
+       if (enter.gameObject.tag == "EnterDown" && mainCamera.transform.position.y == posY)
+       {
+           newPosition = mainCamera.transform.position + new Vector3(0, -15, 0);
+           transform.position = transform.position + new Vector3(0, -5.5f, 0);
+           posY -= 15;
 
-            //Michael Schmidt
-            timeBehaviour.timeCost = timeBehaviour.areaChanging;
-        }
-    }
+           //Michael Schmidt
+           timeBehaviour.timeCost = timeBehaviour.areaChanging;
+       }
+   }
 
-    private void Update()
-    {
-        // Moves the camera and making it glide
-        if (Vector3.Distance(mainCamera.transform.position, newPosition) > 0.03f)
-        {
-            mainCamera.transform.position += (newPosition - mainCamera.transform.position) * 0.15f;
-        }
-        else
-        {
-            mainCamera.transform.position = newPosition;
-        }
-    }
+   private void Update()
+   {
+       // Moves the camera and making it glide
+       if (Vector3.Distance(mainCamera.transform.position, newPosition) > 0.03f)
+       {
+           mainCamera.transform.position += (newPosition - mainCamera.transform.position) * 0.15f;
+       }
+       else
+       {
+           mainCamera.transform.position = newPosition;
+       }
+   }
+   */
+
+
 }
