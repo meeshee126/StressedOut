@@ -5,9 +5,9 @@ using UnityEngine;
 //Henrik Hafner
 public class GenerateBase : MonoBehaviour
 {
-    bool doBuild;
-    bool isBuild;
-    bool doRepair;
+    public bool doBuild;
+	public bool isBuild;
+	public bool doRepair;
 
     string buildPhase;
 

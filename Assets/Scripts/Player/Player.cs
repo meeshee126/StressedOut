@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 [RequireComponent(typeof(Animator))]
@@ -18,30 +19,40 @@ using UnityEngine;
 /// </summary>
 public class Player : MonoBehaviour
 {
-    private CapsuleCollider2D characterCollider;
-    private Animator characterAnimator;
-    private Stats stats;
+    [HideInInspector]
+    public CapsuleCollider2D characterCollider;
+    [HideInInspector]
+    public Animator characterAnimator;
+    [HideInInspector]
+    public Rigidbody2D characterRB;
+    [HideInInspector]
+    public Stats stats;
 
-    ResourceManager resourceManager;
-    WeaponStats weaponStats;
+    [HideInInspector]
+    public ResourceManager resourceManager;
+    [HideInInspector]
+    public WeaponStats weaponStats;
 
     [HideInInspector]
     public TimeBehaviour timeBehaviour;
-    [HideInInspector]
-    public Rigidbody2D characterRB;
 
     private AbilityLists abilityLists;
     private GameObject gameManager;
     private ItemsList itemList;
 
-    public GameObject Helmet, Suite, Boots;
-    public GameObject selectedAbility;
+    [Header("Equipment")]
+    [Space(15)]
     public GameObject playerHand;
-
-    public GameObject ExampleAbility;
+    public GameObject Helmet, Suite, Boots;
     public GameObject[] QuickbarContent = new GameObject[5];
+
+    [Space(15)]
+    [Header("Abilities Related")]
+    [Space(15)]
+    public GameObject selectedAbility;
+    public GameObject ExampleAbility;
     public GameObject[] libraryAbilityList;
-    public List<GameObject> LocalAbilityList = new List<GameObject>();
+    public List<GameObject> LocalAbilityList;
 
 
     // Unity
@@ -52,27 +63,33 @@ public class Player : MonoBehaviour
     {
         gameManager = GameObject.Find("GameManager");
         resourceManager = GameObject.Find("GameManager").GetComponent<ResourceManager>();
-        timeBehaviour = gameManager.GetComponent<TimeBehaviour>();
-        itemList = gameManager.GetComponentInChildren<ItemsList>();
         abilityLists = gameManager.GetComponentInChildren<AbilityLists>();
+        itemList = gameManager.GetComponentInChildren<ItemsList>();
+        timeBehaviour = gameManager.GetComponent<TimeBehaviour>();
 
-        stats = GetComponent<Stats>();
-        characterRB = GetComponent<Rigidbody2D>();
-        characterAnimator = GetComponent<Animator>();
         characterCollider = GetComponent<CapsuleCollider2D>();
+        characterAnimator = GetComponent<Animator>();
+        characterRB = GetComponent<Rigidbody2D>();
+        stats = GetComponent<Stats>();
     }
 
 
     private void Start()
     {
-        for (int i = 0; i < abilityLists.playerAbilities.Length; i++)
+        LocalAbilityList = new List<GameObject>(abilityLists.playerAbilities);
+
+        for (int i = 0; i < LocalAbilityList.Count; i++)
         {
-            LocalAbilityList.Add(ExampleAbility);
-            LocalAbilityList[i] = abilityLists.playerAbilities[i];
-            
-            //ExampleAbility.GetComponent<Ability>().
-            //    SetValues(abilityLists.playerAbilities[i].GetComponent<Ability>());
+            Debug.Log(LocalAbilityList[i].GetComponent<Ability>().CastName);
         }
+        //for (int i = 0; i < abilityLists.playerAbilities.Length; i++)
+        //{
+        //    List<GameObject> temporary = new List<GameObject>(abilityLists.playerAbilities);
+        //    LocalAbilityList.Add(ExampleAbility);
+        //    LocalAbilityList[i] = abilityLists.playerAbilities[i];
+        //    //ExampleAbility.GetComponent<Ability>().
+        //    //    SetValues(abilityLists.playerAbilities[i].GetComponent<Ability>());
+        //}
     }
 
 
@@ -112,7 +129,7 @@ public class Player : MonoBehaviour
         float moveHorizontal = Input.GetAxis("Horizontal") * stats.movementSpeed;
         float moveVertical = Input.GetAxis("Vertical") * stats.movementSpeed;
 
-        //AnimationUpdate(moveHorizontal, moveVertical);
+        MovementAnimationUpdate(moveHorizontal, moveVertical);
 
         characterRB.velocity = new Vector2(moveHorizontal, moveVertical);
         #region old
@@ -262,7 +279,7 @@ public class Player : MonoBehaviour
             if (LocalAbilityList[i].GetComponent<Ability>().Cooldown > 0f)
             {
                 LocalAbilityList[i].GetComponent<Ability>().Cooldown -= Time.deltaTime;
-                Debug.Log(LocalAbilityList[i].GetComponent<Ability>().Cooldown);
+                //Debug.Log(LocalAbilityList[i].GetComponent<Ability>().Cooldown);
             }
         }
     }

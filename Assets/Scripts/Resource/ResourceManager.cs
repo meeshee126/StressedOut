@@ -126,4 +126,24 @@ public class ResourceManager : MonoBehaviour
                 break;
         }
     }
+
+	//Henrik Hafner
+	//Save the Datas from the ResourceManager
+	public void SaveResource()
+	{
+		SaveSystem.SaveResource(this);
+	}
+
+	//Henrik Hafner
+	// Load the SaveFiles to the ResourceManager
+	public void LoadResource()
+	{
+		ResourceData data = SaveSystem.LoadResource();
+
+		wood = data.wood;
+		stone = data.stone;
+		iron = data.iron;
+		gold = data.gold;
+		diamond = data.diamond;
+	}
 }

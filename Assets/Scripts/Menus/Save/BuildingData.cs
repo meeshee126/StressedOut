@@ -1,0 +1,38 @@
+﻿using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+//Henrik Hafner
+[System.Serializable]
+public class BuildingData
+{
+	public int[] isActive;
+	public int[] health;
+
+	public BuildingData(BuildingManager buildingManager)
+	{
+        GameObject[] gameObjects = buildingManager.buildingObj;//GameObject.FindGameObjectsWithTag("Building")
+
+        isActive = new int[gameObjects.Length];
+		health = new int[gameObjects.Length];
+
+		for (int i = 0; i < gameObjects.Length; i++)
+		{
+            GenerateBase currentBuilding = gameObjects[i].GetComponent<GenerateBase>();
+			health[i] = currentBuilding.health;
+
+			if (currentBuilding.Wood.gameObject.activeSelf == false && currentBuilding.Stone.gameObject.activeSelf == false)
+			{
+				isActive[i] = 0;
+			}
+			else if (currentBuilding.Wood.gameObject.activeSelf == true && currentBuilding.Stone.gameObject.activeSelf == false)
+			{
+				isActive[i] = 1;
+			}
+			else if (currentBuilding.Wood.gameObject.activeSelf == false && currentBuilding.Stone.gameObject.activeSelf == true)
+			{
+				isActive[i] = 2;
+			}
+		}
+	}
+}
