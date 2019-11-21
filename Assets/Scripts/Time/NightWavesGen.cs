@@ -98,7 +98,7 @@ public class NightWavesGen : MonoBehaviour
             AvailableEnemiesList[Random.Range(0, AvailableEnemiesList.Length)].
                 GetComponent<BoxCollider2D>().size.y);
             ;
-            AvailableEnemiesList
+       // AvailableEnemiesList();
             // Set spot to new available spot position
         // Get Available spawn Area Values
         return spot;

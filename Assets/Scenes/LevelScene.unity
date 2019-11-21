@@ -4752,10 +4752,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3ccf628eb2660e145aaf3c6842b97b53, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  veryLowCost: 3000
-  lowCost: 4000
-  middleCost: 5000
-  highCost: 6000
+  veryLowCost: 9000
+  lowCost: 12000
+  middleCost: 15000
+  highCost: 18000
   duration: 0.5
   winQuickTimeEvent: 1
   loseQuickTimeEvent: 3
@@ -6364,17 +6364,17 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 3028756093948723585, guid: 524306346c2e3ca4ba4ab0e86cdba0ff,
-        type: 3}
-      propertyPath: m_Name
-      value: Chunk
-      objectReference: {fileID: 0}
     - target: {fileID: 1481496516803514640, guid: 524306346c2e3ca4ba4ab0e86cdba0ff,
         type: 3}
       propertyPath: areaObject
       value: 
       objectReference: {fileID: 4658548979034672725, guid: 4b8e97ca1f8a15d4e9eb73b74ed24844,
         type: 3}
+    - target: {fileID: 3028756093948723585, guid: 524306346c2e3ca4ba4ab0e86cdba0ff,
+        type: 3}
+      propertyPath: m_Name
+      value: Chunk
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 524306346c2e3ca4ba4ab0e86cdba0ff, type: 3}
 --- !u!1 &1200453937
@@ -8272,7 +8272,7 @@ MonoBehaviour:
   EntityName: Entity Sample
   health: 4
   armor: 0
-  movementSpeed: 5
+  movementSpeed: 400
   entityID: 0
   type: 0
   state: 1
