@@ -19,6 +19,7 @@ TagManager:
   - Projectile
   - Gatherable
   - Building
+  - Chunk
   layers:
   - Default
   - TransparentFX

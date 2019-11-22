@@ -126,12 +126,13 @@ public class Player : MonoBehaviour
     /// </summary>
     void ApplyMovementInput()
     {
-        float moveHorizontal = Input.GetAxis("Horizontal") * stats.movementSpeed;
-        float moveVertical = Input.GetAxis("Vertical") * stats.movementSpeed;
+        float moveHorizontal = Input.GetAxis("Horizontal");
+        float moveVertical = Input.GetAxis("Vertical");
 
         MovementAnimationUpdate(moveHorizontal, moveVertical);
 
-        characterRB.velocity = new Vector2(moveHorizontal, moveVertical);
+        characterRB.velocity = new Vector2(moveHorizontal, moveVertical) * stats.movementSpeed * Time.deltaTime;
+        
         #region old
         //transform.Translate(new Vector2(moveHorizontal, moveVertical));
         #endregion
