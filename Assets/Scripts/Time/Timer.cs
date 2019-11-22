@@ -123,7 +123,7 @@ public class Timer : MonoBehaviour
     /// <summary>
     /// setting for day mode
     /// </summary>
-    void NewDay()
+    public void NewDay()
     {
         currentDayTime = DayTime.Day;
 

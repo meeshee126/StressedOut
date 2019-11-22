@@ -40,14 +40,16 @@ public class NightWavesGen : MonoBehaviour
         // &&   Enemies Ready?
         if (timer.currentDayTime == Timer.DayTime.Night && areEnemiesReady)
         {
-            // Spawn Enemies
-            // areEnemiesReady = false;
+            SpawnEnemiesFromList();
+            areEnemiesReady = false;
         }
 
         // Time == Night?
         // &&   Enemies Dead
         if (timer.currentDayTime == Timer.DayTime.Night && areEnemiesDead)
         {
+            timer.NewDay();
+            ResetEnemiesList();
             // Set Time back to day
             // Empty Enemy List
         }
@@ -89,30 +91,39 @@ public class NightWavesGen : MonoBehaviour
             // Instatiate each obj (random position)
     }
 
-    Vector2 PickRandomAvailableSpot()
+    Vector3 PickRandomAvailableSpot()
     {
-        Vector2 spot = new Vector2(0f, 0f);
-        spot = new Vector2(
-            AvailableEnemiesList[Random.Range(0, AvailableEnemiesList.Length)].
-                GetComponent<BoxCollider2D>().size.x,
-            AvailableEnemiesList[Random.Range(0, AvailableEnemiesList.Length)].
-                GetComponent<BoxCollider2D>().size.y);
-            ;
-            AvailableEnemiesList
+        int field = Random.Range(0, AvailableEnemiesList.Length);
+
+        Vector3 spotInField = new Vector3(
+            Random.Range(
+            AvailableEnemiesList[field].transform.position.x -
+            (AvailableEnemiesList[field].GetComponent<BoxCollider2D>().size.x / 2),
+            AvailableEnemiesList[field].transform.position.x +
+            (AvailableEnemiesList[field].GetComponent<BoxCollider2D>().size.x / 2)),
+            Random.Range(
+            AvailableEnemiesList[field].transform.position.y -
+            (AvailableEnemiesList[field].GetComponent<BoxCollider2D>().size.y / 2),
+            AvailableEnemiesList[field].transform.position.y +
+            (AvailableEnemiesList[field].GetComponent<BoxCollider2D>().size.y / 2)));
+        //    AvailableEnemiesList
             // Set spot to new available spot position
         // Get Available spawn Area Values
-        return spot;
+        return spotInField;
     }
 
     bool areEnemiesDeadCheck()
     {
+        int enemiesAliveCount = 0;
         for (int i = 0; i < SpawnedEnemiesList.Length; i++)
         {
-            if (true)
+            if (SpawnedEnemiesList[i].GetComponent<Stats>().health > 0)
             {
-                return true;
+                enemiesAliveCount++;
             }
         }
+
+        if (enemiesAliveCount == 0) return true;
         // Run through spawnedlist
             // If (all dead)
             // return true
