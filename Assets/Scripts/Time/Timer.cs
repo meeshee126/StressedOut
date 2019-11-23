@@ -94,6 +94,13 @@ public class Timer : MonoBehaviour
                 //enable UI Timer
                 uiPanicTimer.text = string.Format("{0:0}:{1:00}", time.Minutes, time.Seconds);
 
+                //if timer gets a certain time
+                if (sunScript.slider.normalizedValue > (panicTimer / 100))
+                {
+                    //switch to day mode
+                    currentDayTime = Timer.DayTime.Day;
+                }
+
                 //if timer countdown reach 0
                 if (time.Seconds < 0)
                 {
@@ -108,6 +115,13 @@ public class Timer : MonoBehaviour
                 //disable UI Timer
                 uiPanicTimer.text = "";
 
+                //if timer gets a certain time
+                if (sunScript.slider.normalizedValue > (panicTimer / 100))
+                {
+                    //switch to day mode
+                    currentDayTime = Timer.DayTime.Day;
+                }
+
                 //If wave in night is killed
                 if (Input.GetKeyDown(KeyCode.Alpha1))
                 {
@@ -115,7 +129,7 @@ public class Timer : MonoBehaviour
 
                     //day is over and switch to day mode
                     dayOver = true;
-					sunScript.seconds = sunScript.maxTime;
+					//sunScript.seconds = sunScript.maxTime;
                 }
 
                 break;
@@ -135,6 +149,7 @@ public class Timer : MonoBehaviour
         //Generate new area objects
         GenerateNewMap();
 
+        sunScript.sliderSeted = false;
         dayOver = false;
     }
 
@@ -184,10 +199,20 @@ public class Timer : MonoBehaviour
     /// <param name="timeCost"></param>
     public void SpeedTime(float timeCost)
     {
-		sunScript.seconds -= timeCost;
+        time = time.Subtract(new TimeSpan(0, 0, 0, 0, (int)(Time.deltaTime * timeCost * 1000)));
 
         //faster sun rotation
         sun.transform.Rotate(0, 0, -100);
+    }
+
+    /// <summary>
+    /// Convert hours and minutes to seconds
+    /// </summary>
+    /// <returns></returns>
+    public float TotalTimeInSeconds()
+    {
+        float total = (time.Minutes * 60) + time.Seconds;
+        return total;
     }
 
     /// <summary>
@@ -199,4 +224,21 @@ public class Timer : MonoBehaviour
         Panic,
         Night
     }
+
+    //Henrik Hafner
+    //Save the Datas from the Sun for the Time
+    public void SaveTime()
+	{
+		SaveSystem.SaveTime(this);
+	}
+
+	//Henrik Hafner
+	// Load the SaveFiles to the Sun and changed the Time
+	public void LoadTime()
+	{
+		TimeData data = SaveSystem.LoadTime();
+
+        //Michael Schmidt
+        time = new TimeSpan(0, data.minutes, data.seconds);
+	}
 }

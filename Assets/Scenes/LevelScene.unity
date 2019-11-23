@@ -747,7 +747,7 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-      - m_Target: {fileID: 273723865}
+      - m_Target: {fileID: 1034122284}
         m_MethodName: LoadTime
         m_Mode: 1
         m_Arguments:
@@ -1936,11 +1936,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 835240013}
     m_Modifications:
-    - target: {fileID: 7686822299216152928, guid: fb273886b76029847a35359044bdca30,
-        type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 3317899606695121980, guid: fb273886b76029847a35359044bdca30,
         type: 3}
       propertyPath: m_Name
@@ -2113,6 +2108,11 @@ PrefabInstance:
       value: 
       objectReference: {fileID: -8602614506546368107, guid: 3d66510a1391d1c43ad113e5d40de500,
         type: 3}
+    - target: {fileID: 7686822299216152928, guid: fb273886b76029847a35359044bdca30,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 3317899606923338431, guid: fb273886b76029847a35359044bdca30,
         type: 3}
       propertyPath: m_IsActive
@@ -2225,8 +2225,8 @@ MonoBehaviour:
   red: {r: 1, g: 0, b: 0.17609787, a: 1}
   yellow: {r: 1, g: 1, b: 0, a: 1}
   slider: {fileID: 0}
-  maxTime: 305
   seconds: 30
+  sliderSeted: 0
 --- !u!1 &277714589
 GameObject:
   m_ObjectHideFlags: 0
@@ -2937,7 +2937,7 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-      - m_Target: {fileID: 273723865}
+      - m_Target: {fileID: 1034122284}
         m_MethodName: SaveTime
         m_Mode: 1
         m_Arguments:
@@ -5727,9 +5727,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c019482daa8dfd9429d2ff8c6094ccc2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  minutes: 5
-  seconds: 5
-  panicTimer: 20
+  minutes: 0
+  seconds: 30
+  panicTimer: 50
   sun: {fileID: 1200453937}
   background: {fileID: 247979255}
   uiPanicTimer: {fileID: 374564962}
@@ -5766,8 +5766,8 @@ MonoBehaviour:
   veryLowCost: 0.1
   lowCost: 0.15
   middleCost: 0.2
-  highCost: 0.25
-  duration: 0.5
+  highCost: 5
+  duration: 10
   winQuickTimeEvent: 1
   loseQuickTimeEvent: 3
   crafting: 2
@@ -6658,11 +6658,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 835240013}
     m_Modifications:
-    - target: {fileID: 7686822299216152928, guid: fb273886b76029847a35359044bdca30,
-        type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 3317899606695121980, guid: fb273886b76029847a35359044bdca30,
         type: 3}
       propertyPath: m_Name
@@ -6835,6 +6830,11 @@ PrefabInstance:
       value: 
       objectReference: {fileID: -8602614506546368107, guid: 3d66510a1391d1c43ad113e5d40de500,
         type: 3}
+    - target: {fileID: 7686822299216152928, guid: fb273886b76029847a35359044bdca30,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 3317899606923338431, guid: fb273886b76029847a35359044bdca30,
         type: 3}
       propertyPath: m_IsActive
@@ -11990,6 +11990,11 @@ PrefabInstance:
       value: 
       objectReference: {fileID: -958950880525387099, guid: 1bc7ce5997763fc4a983dcc105559851,
         type: 3}
+    - target: {fileID: 8642264823993486119, guid: 963f7399ec26d4144aba53c7cc9828fa,
+        type: 3}
+      propertyPath: m_SortingOrder
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 5671655153897469697, guid: 963f7399ec26d4144aba53c7cc9828fa,
         type: 3}
       propertyPath: mainCamera
@@ -11998,6 +12003,7 @@ PrefabInstance:
     m_RemovedComponents:
     - {fileID: 2115935522157676091, guid: 963f7399ec26d4144aba53c7cc9828fa, type: 3}
     - {fileID: 5166943126567317011, guid: 963f7399ec26d4144aba53c7cc9828fa, type: 3}
+    - {fileID: 5671655153897469697, guid: 963f7399ec26d4144aba53c7cc9828fa, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 963f7399ec26d4144aba53c7cc9828fa, type: 3}
 --- !u!4 &8863295299171745567
 Transform:

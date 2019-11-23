@@ -15,6 +15,7 @@ public class PauseManager : MonoBehaviour
     Image background;
 
     Timer timer;
+    Sun sunScript;
 
 	public GameObject ButtonSave;
 	public GameObject MainCamera;
@@ -22,6 +23,7 @@ public class PauseManager : MonoBehaviour
 	private void Start()
     {
         timer = GameObject.Find("GameManager").GetComponent<Timer>();
+        sunScript = GameObject.Find("Sunset").GetComponent<Sun>();
     }
 
     void Update()
@@ -81,8 +83,9 @@ public class PauseManager : MonoBehaviour
             // disable enviroment physics
             Time.timeScale = 0;
 
-            // disable Player controls
-            GameObject.Find("Player").GetComponent<Player>().enabled = false;        
+            // disable Player controls and Sun rotation
+            GameObject.Find("Player").GetComponent<Player>().enabled = false;     
+            
         }
 
         // if pause menu is active after pressing "escape" button

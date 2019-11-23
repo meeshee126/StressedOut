@@ -2,14 +2,18 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+//Henrik Hafner
+//Michael Schmidt
 [System.Serializable]
 public class TimeData
 {
-	public float time;
+	public int seconds;
+    public int minutes;
 
-	//Create SaveFiles form the Time Datas
-	public TimeData(Sun sun)
+    //Create SaveFiles form the Time Datas
+    public TimeData(Timer timer)
 	{
-		time = sun.seconds;
+		seconds = timer.seconds;
+        minutes = timer.minutes;
 	}
 }

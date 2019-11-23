@@ -16,13 +16,11 @@ public class Sun : MonoBehaviour
     [HideInInspector]
     public Slider slider;
 
-	public float maxTime = 305;
-	public float seconds;
+    [HideInInspector]
+    public bool sliderSeted = false;
 
-	Timer timer;
+    Timer timer;
     Image image;
-
-    bool sliderSeted = false;
 
     void Start()
     {
@@ -30,21 +28,13 @@ public class Sun : MonoBehaviour
         image = GameObject.Find("Sun").GetComponent<Image>();
 
         slider = GetComponent<Slider>();
-
-		seconds = maxTime;
     }
 
     void Update()
     {
         SliderManager();
-        SetColor();
-
-		if (seconds >= 0)
-		{
-			seconds -= Time.deltaTime;
-			slider.value = seconds;
-		}
-	}
+        SetColor();     
+    }
 
     /// <summary>
     /// Set slider with correct values from timer
@@ -54,9 +44,12 @@ public class Sun : MonoBehaviour
         if (!sliderSeted)
         {
             //set slider max value with with total ingame time
-            slider.maxValue = maxTime;
+            slider.maxValue = timer.TotalTimeInSeconds();
             sliderSeted = true;
         }
+
+        //transforms the sun
+        slider.value = timer.TotalTimeInSeconds();
     }
 
     /// <summary>
@@ -68,20 +61,4 @@ public class Sun : MonoBehaviour
         image.color = Color.Lerp(red, yellow, slider.normalizedValue >
                      (timer.panicTimer / 100) ? slider.normalizedValue : (timer.panicTimer / 100));
     }
-
-	//Henrik Hafner
-	//Save the Datas from the Sun for the Time
-	public void SaveTime()
-	{
-		SaveSystem.SaveTime(this);
-	}
-
-	//Henrik Hafner
-	// Load the SaveFiles to the Sun and changed the Time
-	public void LoadTime()
-	{
-		TimeData data = SaveSystem.LoadTime();
-
-		seconds = data.time;
-	}
 }

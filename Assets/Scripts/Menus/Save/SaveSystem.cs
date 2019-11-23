@@ -130,13 +130,13 @@ public static class SaveSystem
 	/// Save the Datas from the Time
 	/// </summary>
 	/// <param name="sun"></param>
-	public static void SaveTime(Sun sun)
+	public static void SaveTime(Timer timer)
 	{
 		BinaryFormatter formatter = new BinaryFormatter();
 		string path = Application.persistentDataPath + "/time.fun";
 		FileStream stream = new FileStream(path, FileMode.Create);
 
-		TimeData data = new TimeData(sun);
+		TimeData data = new TimeData(timer);
 
 		formatter.Serialize(stream, data);
 		stream.Close();
