@@ -149,7 +149,9 @@ public class Timer : MonoBehaviour
         //Generate new area objects
         GenerateNewMap();
 
+        //for setting new slider value
         sunScript.sliderSeted = false;
+
         dayOver = false;
     }
 
@@ -226,14 +228,14 @@ public class Timer : MonoBehaviour
     }
 
     //Henrik Hafner
-    //Save the Datas from the Sun for the Time
+    //Save the Datas from the Timer for the Time
     public void SaveTime()
 	{
 		SaveSystem.SaveTime(this);
 	}
 
 	//Henrik Hafner
-	// Load the SaveFiles to the Sun and changed the Time
+	// Load the SaveFiles to the Timer and changed the Time
 	public void LoadTime()
 	{
 		TimeData data = SaveSystem.LoadTime();
