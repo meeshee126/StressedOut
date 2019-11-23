@@ -109,4 +109,36 @@ public static class SaveSystem
 			return null;
 		}
 	}
+
+	public static void SaveTime(Sun sun)
+	{
+		BinaryFormatter formatter = new BinaryFormatter();
+		string path = Application.persistentDataPath + "/time.fun";
+		FileStream stream = new FileStream(path, FileMode.Create);
+
+		TimeData data = new TimeData(sun);
+
+		formatter.Serialize(stream, data);
+		stream.Close();
+	}
+
+	public static TimeData LoadTime()
+	{
+		string path = Application.persistentDataPath + "/time.fun";
+		if (true)
+		{
+			BinaryFormatter formatter = new BinaryFormatter();
+			FileStream stream = new FileStream(path, FileMode.Open);
+
+			TimeData data = formatter.Deserialize(stream) as TimeData;
+			stream.Close();
+
+			return data;
+		}
+		else
+		{
+			Debug.LogError("Save file not found in " + path);
+			return null;
+		}
+	}
 }

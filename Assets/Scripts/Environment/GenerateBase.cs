@@ -15,36 +15,35 @@ public class GenerateBase : MonoBehaviour
     public GameObject Stone;
     public GameObject Ruin;
 
-    public GameObject MessagePanel;
-
     public int health = 100;
 
     public SpriteRenderer mySprite;
 
 	ResourceManager resourceManager;
 
-	AreaChange area;
 
 	private void Start()
     {
 		resourceManager = GameObject.Find("GameManager").GetComponent<ResourceManager>();
-
-		area = GameObject.Find("Player").GetComponent<AreaChange>();
 
 		mySprite.enabled = false;
     }
 
     void Update()
     {
-        // Check if the building is destroyed and then disable all game object that make up the building
-        if (health == 0)
-        {
-            doRepair = true;
+		// Check if the building is destroyed and then disable all game object that make up the building
+		if (health == 0)
+		{
+			doRepair = true;
 
-            Ruin.gameObject.SetActive(true);
-            Wood.gameObject.SetActive(false);
-            Stone.gameObject.SetActive(false);
-        }
+			Ruin.gameObject.SetActive(true);
+			Wood.gameObject.SetActive(false);
+			Stone.gameObject.SetActive(false);
+		}
+		else if (health != 100)
+		{
+			doRepair = true;
+		}
 
         // Check if the building has to be built first or if it has to be repaired
         if (doRepair == true)
@@ -63,10 +62,8 @@ public class GenerateBase : MonoBehaviour
     /// <param name="player"></param>
     void OnTriggerEnter2D(Collider2D player)
     {
-        if (player.gameObject.tag == "Player" /*&& area.isTrigger == false*/)
+        if (player.gameObject.tag == "Player")
         {
-			area.isTrigger = true;
-            MessagePanel.gameObject.SetActive(true);
             doBuild = true;
         }
     }
@@ -97,11 +94,7 @@ public class GenerateBase : MonoBehaviour
     {
         if (player.gameObject.tag == "Player")
         {
-			area.isTrigger = false;
-
             doBuild = false;
-
-            MessagePanel.gameObject.SetActive(false);
 
             mySprite.enabled = false;
 
@@ -136,7 +129,7 @@ public class GenerateBase : MonoBehaviour
     // Check if the building has been destroyed and check which was the last one to fix the right building again.
     void Repair()
     {
-        if (health == 0 && Input.GetKeyDown(KeyCode.F))
+		if (health == 0 && Input.GetKeyDown(KeyCode.F))
         {
             health = 100;
 
@@ -157,5 +150,24 @@ public class GenerateBase : MonoBehaviour
                 doRepair = false;
             }
         }
-    }
+		else if (health != 100 && Input.GetKeyDown(KeyCode.F))
+		{
+			if (buildPhase == "Wood" && resourceManager.wood >= 10)
+			{
+				health = 100;
+
+				resourceManager.AddResource("Wood", -10);
+
+				doRepair = false;
+			}
+			else if (buildPhase == "Stone" && resourceManager.stone >= 10)
+			{
+				health = 100;
+
+				resourceManager.AddResource("Stone_Chunk", -10);
+
+				doRepair = false;
+			}
+		}
+	}
 }

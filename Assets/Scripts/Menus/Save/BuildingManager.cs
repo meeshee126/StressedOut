@@ -5,7 +5,7 @@ using UnityEngine;
 public class BuildingManager : MonoBehaviour
 {
 	[HideInInspector] public GenerateBase[] building;
-	public GameObject[] buildingObj; //GameObject.FindGameObjectsWithTag("Building")
+	public GameObject[] buildingObj;
 
     private void Start()
 	{
@@ -30,26 +30,43 @@ public class BuildingManager : MonoBehaviour
 
 		for (int i = 0; i < buildingObj.Length; i++)
 		{
+			building[i].health = data.health[i];
+
 			if (data.isActive[i] == 0)
 			{
 				building[i].Wood.SetActive(false);
 				building[i].Stone.SetActive(false);
+				building[i].Ruin.SetActive(false);
 
 				building[i].isBuild = false;
+				building[i].doRepair = false;
 			}
 			else if (data.isActive[i] == 1)
 			{
 				building[i].Wood.SetActive(true);
 				building[i].Stone.SetActive(false);
+				building[i].Ruin.SetActive(false);
 
 				building[i].isBuild = true;
+				building[i].doRepair = false;
 			}
 			else if (data.isActive[i] == 2)
 			{
 				building[i].Wood.SetActive(false);
 				building[i].Stone.SetActive(true);
+				building[i].Ruin.SetActive(false);
 
 				building[i].isBuild = true;
+				building[i].doRepair = false;
+			}
+			else if (data.isActive[i] == 3)
+			{
+				building[i].Wood.SetActive(false);
+				building[i].Stone.SetActive(false);
+				building[i].Ruin.SetActive(true);
+
+				building[i].isBuild = true;
+				building[i].doRepair = true;
 			}
 		}
 	}

@@ -21,17 +21,21 @@ public class BuildingData
             GenerateBase currentBuilding = gameObjects[i].GetComponent<GenerateBase>();
 			health[i] = currentBuilding.health;
 
-			if (currentBuilding.Wood.gameObject.activeSelf == false && currentBuilding.Stone.gameObject.activeSelf == false)
+			if (currentBuilding.Wood.gameObject.activeSelf == false && currentBuilding.Stone.gameObject.activeSelf == false && currentBuilding.Ruin.gameObject.activeSelf == false)
 			{
 				isActive[i] = 0;
 			}
-			else if (currentBuilding.Wood.gameObject.activeSelf == true && currentBuilding.Stone.gameObject.activeSelf == false)
+			else if (currentBuilding.Wood.gameObject.activeSelf == true && currentBuilding.Stone.gameObject.activeSelf == false && currentBuilding.Ruin.gameObject.activeSelf == false)
 			{
 				isActive[i] = 1;
 			}
-			else if (currentBuilding.Wood.gameObject.activeSelf == false && currentBuilding.Stone.gameObject.activeSelf == true)
+			else if (currentBuilding.Wood.gameObject.activeSelf == false && currentBuilding.Stone.gameObject.activeSelf == true && currentBuilding.Ruin.gameObject.activeSelf == false)
 			{
 				isActive[i] = 2;
+			}
+			else if (currentBuilding.Wood.gameObject.activeSelf == false && currentBuilding.Stone.gameObject.activeSelf == false && currentBuilding.Ruin.gameObject.activeSelf == true)
+			{
+				isActive[i] = 3;
 			}
 		}
 	}

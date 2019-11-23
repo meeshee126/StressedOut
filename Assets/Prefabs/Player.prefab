@@ -11,9 +11,9 @@ GameObject:
   - component: {fileID: 8642264823993486116}
   - component: {fileID: 8642264823993486119}
   - component: {fileID: 8642264823993486118}
+  - component: {fileID: 5671655153897469697}
   - component: {fileID: 8642264823993486121}
   - component: {fileID: 8642264823993486120}
-  - component: {fileID: 5166943126567317011}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -101,6 +101,22 @@ CapsuleCollider2D:
   m_Offset: {x: 0, y: 0}
   m_Size: {x: 0.20000002, y: 0.5}
   m_Direction: 0
+--- !u!114 &5671655153897469697
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8642264823993486123}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e384bbf5f45a0bb46aefc43225cd5178, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  mainCamera: {fileID: 0}
+  isTrigger: 0
+  posX: 0
+  posY: 0
 --- !u!50 &8642264823993486121
 Rigidbody2D:
   serializedVersion: 4
@@ -134,34 +150,24 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8e28c8a8fd4ca1244908998325a2ceab, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  timeBehaviour: {fileID: 0}
+  characterCollider: {fileID: 0}
+  characterAnimator: {fileID: 0}
   characterRB: {fileID: 0}
+  stats: {fileID: 0}
+  resourceManager: {fileID: 0}
+  weaponStats: {fileID: 0}
+  timeBehaviour: {fileID: 0}
+  playerHand: {fileID: 0}
   Helmet: {fileID: 0}
   Suite: {fileID: 0}
   Boots: {fileID: 0}
-  selectedAbility: {fileID: 0}
-  playerHand: {fileID: 0}
   QuickbarContent:
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
+  selectedAbility: {fileID: 0}
+  ExampleAbility: {fileID: 0}
   libraryAbilityList: []
   LocalAbilityList: []
---- !u!114 &5166943126567317011
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8642264823993486123}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7262b54fe4c571440ba5f6a875381379, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  mainCamera: {fileID: 0}
-  posX: 0
-  posY: 0
-  isTrigger: 0
