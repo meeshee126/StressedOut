@@ -11,8 +11,8 @@ public class AreaChange : MonoBehaviour
 
 	public bool isTrigger;
 
-	public int posX = 0;
-	public int posY = 0;
+	public float posX = 0;
+	public float posY = 0;
 
 	private void Start()
 	{
@@ -50,18 +50,18 @@ public class AreaChange : MonoBehaviour
 		}
 		if (enter.gameObject.tag == "EnterUp" && mainCamera.transform.position.y == posY)
 		{
-			newPosition = mainCamera.transform.position + new Vector3(0, 16, 0);
+			newPosition = mainCamera.transform.position + new Vector3(0, 15.75f, 0);
 			transform.position = transform.position + new Vector3(0, 4.5f, 0);
-			posY += 16;
+			posY += 15.75f;
 
 			//Michael Schmidt
 			timeBehaviour.timeCost = timeBehaviour.areaChanging;
 		}
 		if (enter.gameObject.tag == "EnterDown" && mainCamera.transform.position.y == posY)
 		{
-			newPosition = mainCamera.transform.position + new Vector3(0, -16, 0);
+			newPosition = mainCamera.transform.position + new Vector3(0, -15.75f, 0);
 			transform.position = transform.position + new Vector3(0, -4.5f, 0);
-			posY -= 16;
+			posY -= 15.75f;
 
 			//Michael Schmidt
 			timeBehaviour.timeCost = timeBehaviour.areaChanging;
