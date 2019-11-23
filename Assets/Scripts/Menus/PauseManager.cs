@@ -16,7 +16,10 @@ public class PauseManager : MonoBehaviour
 
     Timer timer;
 
-    private void Start()
+	public GameObject ButtonSave;
+	public GameObject MainCamera;
+
+	private void Start()
     {
         timer = GameObject.Find("GameManager").GetComponent<Timer>();
     }
@@ -24,9 +27,10 @@ public class PauseManager : MonoBehaviour
     void Update()
     {
         SetBackground();
+		SaveButton();
 
-        //get back to pause menu if in option menu
-        if(Input.GetKeyDown(KeyCode.Escape) && uiOptions.gameObject.activeInHierarchy)
+		//get back to pause menu if in option menu
+		if (Input.GetKeyDown(KeyCode.Escape) && uiOptions.gameObject.activeInHierarchy)
         {
             Back();
             return;
@@ -151,4 +155,24 @@ public class PauseManager : MonoBehaviour
         // loading Mainmenu scene
         SceneManager.LoadScene("MainMenu");
     }
+
+	/// <summary>
+	/// Henrik Hafner
+	/// prevents you from saving at night and when you are not in the base
+	/// </summary>
+	public void SaveButton()
+	{
+		if (timer.currentDayTime != Timer.DayTime.Day)
+		{
+			ButtonSave.gameObject.SetActive(false);
+		}
+		else if (MainCamera.transform.position.x != 0 || MainCamera.transform.position.y != 0)
+		{
+			ButtonSave.gameObject.SetActive(false);
+		}
+		else
+		{
+			ButtonSave.gameObject.SetActive(true);
+		}
+	}
 }

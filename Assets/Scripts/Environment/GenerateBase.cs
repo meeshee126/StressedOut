@@ -5,7 +5,7 @@ using UnityEngine;
 //Henrik Hafner
 public class GenerateBase : MonoBehaviour
 {
-    public bool doBuild;
+	public bool doBuild;
 	public bool isBuild;
 	public bool doRepair;
 
@@ -14,17 +14,18 @@ public class GenerateBase : MonoBehaviour
     public GameObject Wood;
     public GameObject Stone;
     public GameObject Ruin;
-
-    public int health = 100;
-
     public SpriteRenderer mySprite;
-
 	ResourceManager resourceManager;
+	TimeBehaviour timeBehaviour;
 
+	public int maxHealth = 200;
+    public int health = 200;
 
 	private void Start()
     {
 		resourceManager = GameObject.Find("GameManager").GetComponent<ResourceManager>();
+
+		timeBehaviour = GameObject.Find("GameManager").GetComponent<TimeBehaviour>();
 
 		mySprite.enabled = false;
     }
@@ -40,13 +41,13 @@ public class GenerateBase : MonoBehaviour
 			Wood.gameObject.SetActive(false);
 			Stone.gameObject.SetActive(false);
 		}
-		else if (health != 100)
+		else if (health < maxHealth)
 		{
 			doRepair = true;
 		}
 
         // Check if the building has to be built first or if it has to be repaired
-        if (doRepair == true)
+        if (doRepair == true && doBuild == true)
         {
             Repair();
         }
@@ -74,7 +75,12 @@ public class GenerateBase : MonoBehaviour
 	/// <param name="player"></param>
 	private void OnTriggerStay2D(Collider2D player)
     {
-        if (isBuild == false && player.gameObject.tag == "Player")
+		if (player.gameObject.tag == "Enemy" && isBuild == true && health > 0)
+		{
+			health -= 1;
+		}
+
+		if (isBuild == false && player.gameObject.tag == "Player")
         {
 			mySprite.enabled = true;
             mySprite.color = new Color(1f, 1f, 1f, .5f);
@@ -84,11 +90,27 @@ public class GenerateBase : MonoBehaviour
             mySprite.enabled = false;
         }
 
-        if (Wood.gameObject.activeSelf == false && player.gameObject.tag == "Player")
+        if (Wood.gameObject.activeSelf == false && Stone.gameObject.activeSelf == false && player.gameObject.tag == "Player" && doRepair == false)
         {
             resourceManager.ResourceCosts("Wood_Chunk", "-10");
         }
-    }
+		else if (Wood.gameObject.activeSelf == true && Stone.gameObject.activeSelf == false && player.gameObject.tag == "Player" && doRepair == false)
+		{
+			resourceManager.ResourceCosts("Wood_Chunk", "-20");
+			resourceManager.ResourceCosts("Stone_Chunk", "-10");
+		}
+
+		if (Wood.gameObject.activeSelf == true && Stone.gameObject.activeSelf == false && player.gameObject.tag == "Player" && doRepair == true)
+		{
+			resourceManager.ResourceCosts("Wood_Chunk", "-5");
+			resourceManager.ResourceCosts("Stone_Chunk", "");
+		}
+		else if (Wood.gameObject.activeSelf == false && Stone.gameObject.activeSelf == true && player.gameObject.tag == "Player" && doRepair == true)
+		{
+			resourceManager.ResourceCosts("Wood_Chunk", "-10");
+			resourceManager.ResourceCosts("Stone_Chunk", "-5");
+		}
+	}
 
     void OnTriggerExit2D(Collider2D player)
     {
@@ -98,8 +120,10 @@ public class GenerateBase : MonoBehaviour
 
             mySprite.enabled = false;
 
-            resourceManager.ResourceCosts("Wood_Chunk", "");
-        }
+			resourceManager.ResourceCosts("Wood_Chunk", "");
+			resourceManager.ResourceCosts("Stone_Chunk", "");
+			resourceManager.ResourceCosts("Iron_Chunk", "");
+		}
     }
 
     //Build and upgrade buildings when the requirements are met in order to activate the respective gameobject.
@@ -113,17 +137,25 @@ public class GenerateBase : MonoBehaviour
             isBuild = true;
 
             buildPhase = "Wood";
-        }
 
-        else if (doBuild == true && isBuild == true && Input.GetKeyDown(KeyCode.F) && resourceManager.stone >= 10)
+			timeBehaviour.timeCost = timeBehaviour.crafting;
+		}
+
+        else if (doBuild == true && isBuild == true && Stone.gameObject.activeSelf == false && Input.GetKeyDown(KeyCode.F) && resourceManager.wood >= 20 && resourceManager.stone >= 10 && health == maxHealth)
         {
+			resourceManager.AddResource("Wood", -20);
 			resourceManager.AddResource("Stone_Chunk", -10);
 
 			Wood.gameObject.SetActive(false);
             Stone.gameObject.SetActive(true);
 
+			health = 400;
+			maxHealth = 400;
+
             buildPhase = "Stone";
-        }
+
+			timeBehaviour.timeCost = timeBehaviour.crafting;
+		}
     }
 
     // Check if the building has been destroyed and check which was the last one to fix the right building again.
@@ -131,43 +163,49 @@ public class GenerateBase : MonoBehaviour
     {
 		if (health == 0 && Input.GetKeyDown(KeyCode.F))
         {
-            health = 100;
+            health = maxHealth;
 
             Ruin.gameObject.SetActive(false);
 
             if (buildPhase == "Wood" && resourceManager.wood >= 10)
             {
-				resourceManager.AddResource("Wood", -10);
+				resourceManager.AddResource("Wood", -5);
 
 				Wood.gameObject.SetActive(true);
                 doRepair = false;
             }
             else if (buildPhase == "Stone" && resourceManager.stone >= 10)
             {
-				resourceManager.AddResource("Stone_Chunk", -10);
+				resourceManager.AddResource("Wood", -10);
+				resourceManager.AddResource("Stone_Chunk", -5);
 
 				Stone.gameObject.SetActive(true);
                 doRepair = false;
             }
-        }
-		else if (health != 100 && Input.GetKeyDown(KeyCode.F))
+
+			timeBehaviour.timeCost = timeBehaviour.crafting;
+		}
+		else if (health < maxHealth && Input.GetKeyDown(KeyCode.F))
 		{
 			if (buildPhase == "Wood" && resourceManager.wood >= 10)
 			{
-				health = 100;
+				health = maxHealth;
 
-				resourceManager.AddResource("Wood", -10);
+				resourceManager.AddResource("Wood", -5);
 
 				doRepair = false;
 			}
 			else if (buildPhase == "Stone" && resourceManager.stone >= 10)
 			{
-				health = 100;
+				health = maxHealth;
 
-				resourceManager.AddResource("Stone_Chunk", -10);
+				resourceManager.AddResource("Wood", -10);
+				resourceManager.AddResource("Stone_Chunk", -5);
 
 				doRepair = false;
 			}
+
+			timeBehaviour.timeCost = timeBehaviour.crafting;
 		}
 	}
 }

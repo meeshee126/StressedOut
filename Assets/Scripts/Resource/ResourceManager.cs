@@ -9,7 +9,7 @@ using UnityEngine.UI;
 public class ResourceManager : MonoBehaviour
 {
     Text uiWood, uiStone, uiIron, uiGold, uiDiamond;
-    Text uiWoodCosts, uiStoneCosts, uiIronCosts, uiGoldCosts, uiDiamondCosts;
+	Text uiWoodCosts, uiStoneCosts, uiIronCosts;
 
     [SerializeField]
     public int wood, stone, iron, gold, diamond;
@@ -23,9 +23,11 @@ public class ResourceManager : MonoBehaviour
         uiDiamond = GameObject.Find("DiamondCount").GetComponent<Text>();
 
         uiWoodCosts = GameObject.Find("WoodCosts").GetComponent<Text>();
+		uiStoneCosts = GameObject.Find("StoneCosts").GetComponent<Text>();
+		uiIronCosts = GameObject.Find("IronCosts").GetComponent<Text>();
 
-        //Set all resource display to 0
-        SetUI(uiWood);
+		//Set all resource display to 0
+		SetUI(uiWood);
         SetUI(uiStone);
         SetUI(uiIron);
         SetUI(uiGold);
@@ -114,16 +116,12 @@ public class ResourceManager : MonoBehaviour
                 break;
 
             case "Stone_Chunk":
-                break;
+				uiStoneCosts.text = costs;
+				break;
 
             case "Iron_Chunk":
-                break;
-
-            case "Gold_Chunk":
-                break;
-
-            case "Diamond_Chunk":
-                break;
+				uiIronCosts.text = costs;
+				break;
         }
     }
 
@@ -135,7 +133,7 @@ public class ResourceManager : MonoBehaviour
 	}
 
 	//Henrik Hafner
-	// Load the SaveFiles to the ResourceManager
+	//Load the SaveFiles to the ResourceManager
 	public void LoadResource()
 	{
 		ResourceData data = SaveSystem.LoadResource();

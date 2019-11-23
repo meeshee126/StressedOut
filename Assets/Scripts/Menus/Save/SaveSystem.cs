@@ -46,6 +46,10 @@ public static class SaveSystem
 		}
 	}
 
+	/// <summary>
+	/// Save the Datas from the Resource Manager
+	/// </summary>
+	/// <param name="resource"></param>
 	public static void SaveResource(ResourceManager resource)
 	{
 		BinaryFormatter formatter = new BinaryFormatter();
@@ -58,6 +62,10 @@ public static class SaveSystem
 		stream.Close();
 	}
 
+	/// <summary>
+	/// Load the Datas from the Resource Manager
+	/// </summary>
+	/// <returns></returns>
 	public static ResourceData LoadResource()
 	{
 		string path = Application.persistentDataPath + "/resource.fun";
@@ -78,6 +86,10 @@ public static class SaveSystem
 		}
 	}
 
+	/// <summary>
+	/// Save the Datas from the Buildings
+	/// </summary>
+	/// <param name="buildingManager"></param>
 	public static void SaveBuilding(BuildingManager buildingManager)
 	{
 		BinaryFormatter formatter = new BinaryFormatter();
@@ -90,6 +102,10 @@ public static class SaveSystem
 		stream.Close();
 	}
 
+	/// <summary>
+	/// Load the Datas from the Buildings
+	/// </summary>
+	/// <returns></returns>
 	public static BuildingData LoadBuilding()
 	{
 		string path = Application.persistentDataPath + "/building.fun";
@@ -110,6 +126,10 @@ public static class SaveSystem
 		}
 	}
 
+	/// <summary>
+	/// Save the Datas from the Time
+	/// </summary>
+	/// <param name="sun"></param>
 	public static void SaveTime(Sun sun)
 	{
 		BinaryFormatter formatter = new BinaryFormatter();
@@ -122,6 +142,10 @@ public static class SaveSystem
 		stream.Close();
 	}
 
+	/// <summary>
+	/// Load the Datas from the Time
+	/// </summary>
+	/// <returns></returns>
 	public static TimeData LoadTime()
 	{
 		string path = Application.persistentDataPath + "/time.fun";

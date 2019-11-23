@@ -6,15 +6,15 @@ using UnityEngine;
 
 public class TimeBehaviour : MonoBehaviour
 {
-    [Header("Timecosts (multiplied with milliseconds)")]
+    [Header("Timecosts")]
     [SerializeField]
-    int veryLowCost;
+    float veryLowCost;
     [SerializeField]
-    int lowCost;
+    float lowCost;
     [SerializeField]
-    int middleCost;
+    float middleCost;
     [SerializeField]
-    int highCost;
+    float highCost;
 
     [Header("Duration in Seconds")]
     [SerializeField]

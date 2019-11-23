@@ -71,9 +71,9 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: -1901604964916192024, guid: 3d66510a1391d1c43ad113e5d40de500,
+  m_Sprite: {fileID: -6293791718297976782, guid: 3d66510a1391d1c43ad113e5d40de500,
     type: 3}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 0.20754719, g: 0.20754719, b: 0.20754719, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -121,7 +121,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: daa58c085e400764491f6ca687bdca49, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  projectile: {fileID: 1765985032368114802, guid: b3292ec0777233144be9fad98ef57b27,
+  projectile: {fileID: 2841624533096392277, guid: b60604e53e1dc264d8b955f283227573,
     type: 3}
 --- !u!1 &95034656383531187
 GameObject:
@@ -326,8 +326,9 @@ MonoBehaviour:
   Wood: {fileID: 95034656383531187}
   Stone: {fileID: 95034655831807091}
   Ruin: {fileID: 480722473988368134}
-  health: 100
   mySprite: {fileID: 5640010576981606939}
+  maxHealth: 100
+  health: 100
 --- !u!212 &5640010576981606939
 SpriteRenderer:
   m_ObjectHideFlags: 0

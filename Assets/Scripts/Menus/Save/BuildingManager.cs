@@ -17,13 +17,17 @@ public class BuildingManager : MonoBehaviour
 		}
 	}
 
-	//Saving
+	/// <summary>
+	/// Make sure ALL buildings are saved
+	/// </summary>
 	public void SaveController()
 	{
 		SaveSystem.SaveBuilding(this);
 	}
 
-	//Loading
+	/// <summary>
+	/// Make sure ALL buildings are loaded
+	/// </summary>
 	public void LoadController()
 	{
 		BuildingData data = SaveSystem.LoadBuilding();

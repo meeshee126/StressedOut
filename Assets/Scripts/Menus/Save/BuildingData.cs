@@ -9,6 +9,7 @@ public class BuildingData
 	public int[] isActive;
 	public int[] health;
 
+	//Create SaveFiles form the Building Datas
 	public BuildingData(BuildingManager buildingManager)
 	{
         GameObject[] gameObjects = buildingManager.buildingObj;//GameObject.FindGameObjectsWithTag("Building")

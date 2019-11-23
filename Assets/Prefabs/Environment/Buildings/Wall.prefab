@@ -28,7 +28,7 @@ Transform:
   m_GameObject: {fileID: 3317899606695121980}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 3, y: 1, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 3, y: 1, z: 1}
   m_Children:
   - {fileID: 3317899607075758397}
   - {fileID: 3317899606923338417}
@@ -80,8 +80,9 @@ MonoBehaviour:
   Wood: {fileID: 3317899607075758395}
   Stone: {fileID: 3317899606923338431}
   Ruin: {fileID: 0}
-  health: 100
   mySprite: {fileID: 4121657893406843368}
+  maxHealth: 200
+  health: 100
 --- !u!212 &4121657893406843368
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -120,8 +121,9 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 108901113276366688, guid: 3d66510a1391d1c43ad113e5d40de500, type: 3}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Sprite: {fileID: -8602614506546368107, guid: 3d66510a1391d1c43ad113e5d40de500,
+    type: 3}
+  m_Color: {r: 0.9622642, g: 0.6184562, b: 0.24964403, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0

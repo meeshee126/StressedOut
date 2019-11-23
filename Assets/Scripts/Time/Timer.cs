@@ -31,7 +31,7 @@ public class Timer : MonoBehaviour
     public bool dayOver;
 
     Sun sunScript;
-    TimeSpan time;
+    public TimeSpan time;
     bool showPanicTimer;
     
 
@@ -115,6 +115,7 @@ public class Timer : MonoBehaviour
 
                     //day is over and switch to day mode
                     dayOver = true;
+					sunScript.seconds = sunScript.maxTime;
                 }
 
                 break;
@@ -178,22 +179,12 @@ public class Timer : MonoBehaviour
     }
 
     /// <summary>
-    /// Convert hours and minutes to seconds
-    /// </summary>
-    /// <returns></returns>
-    public float TotalTimeInSeconds()
-    {
-        float total = (time.Minutes * 60) + time.Seconds;
-        return total;
-    }
-
-    /// <summary>
     /// called after interacting with gameobjects or areas
     /// </summary>
     /// <param name="timeCost"></param>
-    public void SpeedTime(int timeCost)
+    public void SpeedTime(float timeCost)
     {
-        time = time.Subtract(new TimeSpan(0, 0, 0, 0, (int)(Time.deltaTime * timeCost)));
+		sunScript.seconds -= timeCost;
 
         //faster sun rotation
         sun.transform.Rotate(0, 0, -100);
