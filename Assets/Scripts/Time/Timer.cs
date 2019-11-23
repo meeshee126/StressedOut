@@ -6,7 +6,6 @@ using UnityEngine;
 using UnityEngine.UI;
 
 //Michael Schmidt
-
 public class Timer : MonoBehaviour
 {
     [Header("Set Timer")]
@@ -23,28 +22,39 @@ public class Timer : MonoBehaviour
     Image background;
     [SerializeField]
     Text uiPanicTimer;
+    [SerializeField]
+    Text uiDay;
 
     [Header("(INFO) current day time")]
     public DayTime currentDayTime = DayTime.Day;
 
     [HideInInspector]
-    public bool dayOver;
+    public int dayCounter;
 
     Sun sunScript;
+
     public TimeSpan time;
+
     bool showPanicTimer;
-    
+    bool dayOver;
+  
 
     void Start()
     {
         sunScript = GameObject.Find("Sunset").GetComponent<Sun>();
 
+        //Set Day
+        SetDay();
+
         //Set Timer
         time = new TimeSpan(0, minutes, seconds);
+
+      
     }
 
     void Update()
     {
+        SetDay();
         TimerCountdown();
         CheckDayTime();
         SetBackground();
@@ -53,6 +63,19 @@ public class Timer : MonoBehaviour
         {
             NewDay();
         }
+    }
+
+    /// <summary>
+    /// Set current day
+    /// </summary>
+    void SetDay()
+    {
+        if(uiDay.text == "")
+        {
+            dayCounter = 1;
+        }
+
+        uiDay.text = dayCounter.ToString();
     }
 
     /// <summary>
@@ -149,8 +172,11 @@ public class Timer : MonoBehaviour
         //Generate new area objects
         GenerateNewMap();
 
-        //for setting new slider value
+        //for setting new max slider value
         sunScript.sliderSeted = false;
+
+        //set new Day
+        dayCounter++;
 
         dayOver = false;
     }
@@ -241,6 +267,7 @@ public class Timer : MonoBehaviour
 		TimeData data = SaveSystem.LoadTime();
 
         //Michael Schmidt
+        dayCounter = data.day;
         time = new TimeSpan(0, data.minutes, data.seconds);
 	}
 }
