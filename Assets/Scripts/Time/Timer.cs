@@ -172,10 +172,10 @@ public class Timer : MonoBehaviour
         //Generate new area objects
         GenerateNewMap();
 
-        //for setting new max slider value
+        //reset sun
         sunScript.sliderSeted = false;
 
-        //set new Day
+        //counting day
         dayCounter++;
 
         dayOver = false;
