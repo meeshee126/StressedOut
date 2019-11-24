@@ -2,102 +2,161 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-[RequireComponent(typeof(Animator))]
+//Adds Components to the gameObject when script Component is inserted
 [RequireComponent(typeof(Rigidbody2D))]
 [RequireComponent(typeof(CapsuleCollider2D))]
-[RequireComponent(typeof(Stats))]
+[RequireComponent(typeof(Animator))]
 
 public class Entity : MonoBehaviour
 {
-    Stats stats;
+    //Set target = Player
+    public GameObject target;
 
-    public float movementSpeed;
+    [Header("Infight checks")]
+    public bool attack;
+    public bool idle;
 
+    [Header("Radiuses ")]
+    public float observationRadius;
+    public float attackRadius;
+    public float dodgeRadius;
+    public float lostRadius;
     [SerializeField]
-    private float startWaitTime;
+    private bool showObservationRadius, showAttackRadius, showDodgeRadius, showLostRadius;
 
-    private float waitTime, minimumRoamDistance = 10f;
+    [Header("Entity Configurations")]
+    public float movementSpeed;
+    public float currentAngle;
+
+    [Header("Timers")]
+    public float timeToCompleteCircle;
+    public float startWaitTime;
+    private float waitTime;
 
     private int randomSpot;
 
+    [Header("FX")]
+    public GameObject HurtFX;
+    public GameObject HurtCriticalFX, SlowedFX, DazedFX, StunnedFX;
+
+    [Header("")]
+    public Stats stats;
+    public CapsuleCollider2D characterCapsuleCollider;
+    public Rigidbody2D characterRB;
+    public Animator characterAnimator;
+    public RaycastHit2D raycastHit2D;
     public Transform[] moveSpots;
-    public GameObject lowDamageBloodParticle;
-    public GameObject highDamageBloodParticle;
-    private Rigidbody2D characterRigidbody;
-    private Animator characterAnimator;
-    private CapsuleCollider2D characterCapsuleCollider;
-    private RaycastHit2D raycastHit2D;
+
+
 
     private void Awake()
     {
         //Finds Component in gameObject and uses it
-        characterRigidbody = GetComponent<Rigidbody2D>();
-        characterAnimator = GetComponent<Animator>();
         characterCapsuleCollider = GetComponent<CapsuleCollider2D>();
-        stats = GetComponent<Stats>();
+        characterRB = GetComponent<Rigidbody2D>();
         randomSpot = Random.Range(0, moveSpots.Length);
+        characterAnimator = GetComponent<Animator>();
+        stats = GetComponent<Stats>();
         waitTime = startWaitTime;
     }
 
-    void FixedUpdate()
+
+    private void FixedUpdate()
     {
         if (stats.health <= 0)
         {
-            //Death Animation... then = ?
-            Destroy(gameObject);
+            // Make a state system of unborn, alive, dead, etc.. probably in Stats.cs
+            // By that handle the states and delete enemy only after 5 minutes or so idk..
+            Dead();
         }
-        if (characterRigidbody != null && characterCapsuleCollider != null && characterAnimator != null)
+        if (stats.health > 0)
         {
-            MovementHandler();
+            Dead();
         }
+        if (characterRB != null && characterCapsuleCollider != null && characterAnimator != null){ }
         else if (characterCapsuleCollider == null) Debug.LogWarning("Capsule Collider not attached to " + gameObject.name);
         else if (characterAnimator == null) Debug.LogWarning("Animator not attached to " + gameObject.name);
-        else if (characterRigidbody == null) Debug.LogWarning("Rigidbody not attached to " + gameObject.name);
+        else if (characterRB == null) Debug.LogWarning("Rigidbody not attached to " + gameObject.name);
     }
 
+    bool Unborn()
+    { return false; }
 
-    public void MovementHandler()
+
+    bool Alive()
+    { return false; }
+
+    
+    bool Dead()
+    { return false; }
+
+
+    /// <summary>
+    /// Reduces Entity's health by ~damage
+    /// </summary>
+    /// <param name="damage"></param>
+    public void TakeDamage(int damage)
     {
-        //Point-Patroll
-        //transform.position = Vector2.MoveTowards(transform.position, moveSpots[randomSpot].position, movementSpeed * Time.deltaTime);
-
-        //if (Vector2.Distance(transform.position, moveSpots[randomSpot].position) < 0.5f)
-        //{
-        //    if (waitTime <= 0)
-        //    {
-        //        randomSpot = Random.Range(0, moveSpots.Length);
-        //        waitTime = startWaitTime;
-        //    }
-        //    else
-        //    {
-        //        waitTime -= Time.deltaTime;
-        //    }
-        //}
-
-
-        // Path Finding towards TARGET
-        // Use Tags?
+        Instantiate(HurtFX, gameObject.transform.position, Quaternion.identity);
+        stats.health -= damage;
+        Debug.Log("Damage DONE!!!  --  " + damage);
     }
 
 
-    public void TakeDamage(int damageTaken)
+    /// <summary>
+    /// Stuns Entity for ~duration long in seconds
+    /// </summary>
+    /// <param name="duration"></param>
+    public void TakeStun(float duration)
+    { }
+
+
+    /// <summary>
+    /// Slows Entity for ~duration long in seconds
+    /// </summary>
+    /// <param name="duration"></param>
+    public void TakeSlow(float duration)
+    { }
+
+
+    /// <summary>
+    /// Dazes Entity for ~duration long in seconds
+    /// </summary>
+    /// <param name="duration"></param>
+    public void TakeDaze(float duration)
+    { }
+
+
+    /// <summary>
+    /// Draws The Apropriate Gizmos
+    /// </summary>
+    private void OnDrawGizmosSelected()
     {
-        stats.health -= damageTaken;
-        Debug.Log("Damage DONE!!!  --  " + damageTaken);
+        if (showObservationRadius)
+        {
+            Gizmos.color = Color.red;
+            Gizmos.DrawWireSphere(this.transform.position, observationRadius);
+        }
+        if (showAttackRadius)
+        {
+            Gizmos.color = Color.green;
+            Gizmos.DrawWireSphere(this.transform.position, attackRadius);
+        }
+        if (showDodgeRadius)
+        {
+            Gizmos.color = Color.blue;
+            Gizmos.DrawWireSphere(this.transform.position, dodgeRadius);
+        }
+        if (showLostRadius)
+        {
+            Gizmos.color = Color.yellow;
+            Gizmos.DrawWireSphere(this.transform.position, lostRadius);
+        }
     }
+
 
     // Add Controlled method (when hit by CC)
 
-    public void Neutral()
-    {
-
-    }
-    public void Friendly()
-    {
-
-    }
-    public void Enemy()
-    {
-
-    }
+    // Probably put all this in independent classes..
+    // and / or make a entity behaviour system for them.
 }

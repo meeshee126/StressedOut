@@ -21,8 +21,8 @@ public class Stats : MonoBehaviour
     
     [Range(0, 500)]
     public int armor = 0;
-    [Range(-500, 500)]
-    public int movementSpeed = 5;
+    [Range(-1500, 1500)]
+    public int movementSpeed = 350;
     // more to be added?
 
 

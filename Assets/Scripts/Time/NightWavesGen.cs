@@ -93,19 +93,19 @@ public class NightWavesGen : MonoBehaviour
 
     Vector3 PickRandomAvailableSpot()
     {
-        int field = Random.Range(0, AvailableEnemiesList.Length);
+        int field = Random.Range(0, AvailableSpotsList.Length);
 
         Vector3 spotInField = new Vector3(
             Random.Range(
-            AvailableEnemiesList[field].transform.position.x -
-            (AvailableEnemiesList[field].GetComponent<BoxCollider2D>().size.x / 2),
-            AvailableEnemiesList[field].transform.position.x +
-            (AvailableEnemiesList[field].GetComponent<BoxCollider2D>().size.x / 2)),
+            AvailableSpotsList[field].transform.position.x -
+            (AvailableSpotsList[field].GetComponent<BoxCollider2D>().size.x / 2),
+            AvailableSpotsList[field].transform.position.x +
+            (AvailableSpotsList[field].GetComponent<BoxCollider2D>().size.x / 2)),
             Random.Range(
-            AvailableEnemiesList[field].transform.position.y -
-            (AvailableEnemiesList[field].GetComponent<BoxCollider2D>().size.y / 2),
-            AvailableEnemiesList[field].transform.position.y +
-            (AvailableEnemiesList[field].GetComponent<BoxCollider2D>().size.y / 2)));
+            AvailableSpotsList[field].transform.position.y -
+            (AvailableSpotsList[field].GetComponent<BoxCollider2D>().size.y / 2),
+            AvailableSpotsList[field].transform.position.y +
+            (AvailableSpotsList[field].GetComponent<BoxCollider2D>().size.y / 2)));
         //    AvailableEnemiesList
             // Set spot to new available spot position
         // Get Available spawn Area Values
