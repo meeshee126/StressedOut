@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System.Linq;
 
 // Michael Schmidt
 
@@ -28,6 +29,9 @@ public class TimeBehaviour : MonoBehaviour
     public TimeCost areaChanging;
 
     [Header("(INFO) Current Time Cost")]
+    public List<TimeCost> executeList = new List<TimeCost>();
+
+    [HideInInspector]
     public TimeCost timeCost = TimeCost.NoCost;
 
     Timer timer;
@@ -41,82 +45,65 @@ public class TimeBehaviour : MonoBehaviour
 
     void Update()
     {
+        CheckDayTime();
+        GetTimeCost();
+        SetTimeCost();
+    }
+
+    void CheckDayTime()
+    {
         //no timecost anymore when in panic mode
         if (timer.currentDayTime != Timer.DayTime.Day)
         {
-            timeCost = TimeCost.NoCost;
+            executeList.Clear();
             return;
         }
-           
-
-        TimeCosts();
     }
-
 
     /// <summary>
     /// Time behaviour after interacting with gameobjects and areas
     /// </summary>
-    void TimeCosts()
+    void GetTimeCost()
     {
         //Check which cost is choosed
-        switch(timeCost)
+        switch (timeCost)
         {
-            case TimeCost.VeryLowCost:
+            default: timeCost = TimeCost.NoCost; break;
+            case TimeCost.VeryLowCost: executeList.Add(TimeCost.VeryLowCost); break;
+            case TimeCost.LowCost: executeList.Add(TimeCost.LowCost); break;
+            case TimeCost.MiddleCost: executeList.Add(TimeCost.MiddleCost); break;
+            case TimeCost.HighCost: executeList.Add(TimeCost.HighCost); break;  
+        } 
+    }
 
-                count += Time.deltaTime;
+    void SetTimeCost()
+    {
+        if (executeList.Count == 0)
+            return;
 
-                //multiplicate current time with choosed timecost for a certain amount of time
-                if (count <= duration) { timer.SpeedTime(veryLowCost); }
+        count += Time.deltaTime;
+        if (count <= duration)
+        {
+            timer.SpeedTime(GetValue(executeList[0]));
+        }
 
-                else
-                {
-                    count = 0;
-                    timeCost = TimeCost.NoCost;
-                }
+        if (count > duration)
+        {
+            count = 0;
+            executeList.RemoveAt(0);
+        }
+        timeCost = TimeCost.NoCost;
+    }
 
-                break;
-
-            case TimeCost.LowCost:
-
-                count += Time.deltaTime;
-
-                if (count <= duration) { timer.SpeedTime(lowCost); }
-
-                else
-                {
-                    count = 0;
-                    timeCost = TimeCost.NoCost;
-                }
-
-                break;
-
-            case TimeCost.MiddleCost:
-
-                count += Time.deltaTime;
-
-                if (count <= duration) { timer.SpeedTime(middleCost); }
-
-                else
-                {
-                    count = 0;
-                    timeCost = TimeCost.NoCost;
-                }
-
-                break;
-
-            case TimeCost.HighCost:
-
-                count += Time.deltaTime;
-
-                if (count <= duration) { timer.SpeedTime(highCost); }
-
-                else
-                {
-                    count = 0;
-                    timeCost = TimeCost.NoCost;
-                }
-
-                break;
+    float GetValue(TimeCost currentTimeCost)
+    {
+        switch (currentTimeCost)
+        {
+            default: return 0;
+            case TimeCost.VeryLowCost: return veryLowCost;
+            case TimeCost.LowCost: return lowCost; 
+            case TimeCost.MiddleCost: return middleCost;
+            case TimeCost.HighCost: return highCost; 
         }
     }
 
