@@ -56,8 +56,8 @@ MonoBehaviour:
   StartBurstWait: 0.5
   ChildAbilityWait: 0
   isBoxDirectionalExpanding: 0
-  Position_X: 3.68
-  Position_Y: -3.24
+  Position_X: 0
+  Position_Y: 0
   boxColliderX: 30
   boxColliderY: 30
   circleColliderRadius: 0

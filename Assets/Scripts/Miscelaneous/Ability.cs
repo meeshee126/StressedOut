@@ -53,6 +53,9 @@ public class Ability : MonoBehaviour
     /// </summary>
     private void Update()
     {
+        Position_X = transform.position.x;
+        Position_Y = transform.position.y;
+
         if (Duration <= 0f && Bursts <= 0) Destroy(gameObject);
 
         // Animation: Ability-Casting
@@ -204,8 +207,6 @@ public class Ability : MonoBehaviour
 
         ChildAbility = Values.ChildAbility;
         WhatCanItHit = Values.WhatCanItHit;
-
-        Debug.Log("Values Set");
     }
 }
 

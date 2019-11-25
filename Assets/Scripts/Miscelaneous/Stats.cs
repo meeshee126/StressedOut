@@ -12,24 +12,24 @@ using UnityEngine;
 public class Stats : MonoBehaviour
 {
     [Header("About")]
-    public string EntityName = "Entity Sample";
-
+    public string entityName = "Entity Sample";
+    [TextArea]
+    public string description;
 
     [Header("Main Stats")]
     public int health = 4;
-    // more to be added?
     
-    [Range(0, 500)]
+    [Range(-25, 150)]
     public int armor = 0;
-    [Range(-1500, 1500)]
-    public int movementSpeed = 350;
+    [Range(-15, 15)]
+    public int movementSpeed = 4;
     // more to be added?
 
 
     [Header("Non-Player Stats")]
-    public EntityIdentification entityID = EntityIdentification.Undefined;
-    public BehaviourType type = BehaviourType.Neutral;
-    public BehaviourState state = BehaviourState.Passive;
+    public EntityIdentification entityID = EntityIdentification.undefined;
+    public BehaviourType type = BehaviourType.undefined;
+    public BehaviourState state = BehaviourState.undefined;
 
     [Header("Miscelaneous Combat Stats")]
     [Range(0f, 15f)]
@@ -39,16 +39,18 @@ public class Stats : MonoBehaviour
 
     public enum BehaviourType
     {
-        Bad = -1,
-        Neutral = 0,
-        Good = 1
+        undefined = -10,
+        bad = -1,
+        neutral = 0,
+        good = 1
     }
 
 
     public enum BehaviourState
     {
-        Aggressive = -1,
-        Passive = 1
+        undefined = -10,
+        aggressive = -1,
+        passive = 1
     }
 
 
@@ -57,12 +59,12 @@ public class Stats : MonoBehaviour
     /// </summary>
     public enum EntityIdentification
     {
-        Undefined = 0,
-        Slime = 1,
-        Bandit = 2,
-        Bear = 3,
-        Boar = 4,
-        Player = 100
+        undefined = 0,
+        slime = 1,
+        bandit = 2,
+        bear = 3,
+        boar = 4,
+        player = 100
     }
 
 	//Henrik Hafner

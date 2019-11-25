@@ -6,12 +6,12 @@ using UnityEngine;
 
 public class IAttack : MonoBehaviour, IState
 {
-    EntityBehaviour entity;
+    Entity entity;
 
     //get target from entityBehavior class
     GameObject target => entity.target;
 
-    public IAttack(EntityBehaviour entity)
+    public IAttack(Entity entity)
     {
         this.entity = entity;
     }
@@ -65,7 +65,9 @@ public class IAttack : MonoBehaviour, IState
         entity.transform.up = target.transform.position - entity.transform.position;
 
         //Move to target
-        entity.transform.position += entity.gameObject.transform.up * entity.movementSpeed * Time.deltaTime;
+        //entity.transform.position += entity.gameObject.transform.up * entity.stats.movementSpeed * Time.deltaTime;
+        entity.characterRB.MovePosition(target.transform.position * (entity.stats.movementSpeed * Time.deltaTime));
+
     }
 
     /// <summary>

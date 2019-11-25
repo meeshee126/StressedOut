@@ -4,7 +4,7 @@ using UnityEngine;
 
 //Michael Schmidt
 
-public class Bear : EntityBehaviour
+public class Bear : Entity
 {
     Machine brain = new Machine();
 

@@ -5029,7 +5029,7 @@ Transform:
   - {fileID: 547741876}
   - {fileID: 1231510473}
   m_Father: {fileID: 0}
-  m_RootOrder: 6
+  m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &835240014
 MonoBehaviour:
@@ -5372,7 +5372,7 @@ GameObject:
   m_Component:
   - component: {fileID: 881330681}
   - component: {fileID: 881330680}
-  m_Layer: 9
+  m_Layer: 0
   m_Name: SpawnEnemiesSpot
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -5417,7 +5417,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 10
+  m_RootOrder: 9
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &887955271
 GameObject:
@@ -5658,74 +5658,6 @@ GameObject:
     type: 3}
   m_PrefabInstance: {fileID: 1700893792}
   m_PrefabAsset: {fileID: 0}
---- !u!1 &1013605667
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1013605669}
-  - component: {fileID: 1013605668}
-  m_Layer: 8
-  m_Name: GameObject
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!114 &1013605668
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1013605667}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7c1e778a6c55b18479fa3f999eed0031, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  CastName: 
-  isCircle: 0
-  HitAllEntities: 0
-  Damage: 0
-  Bursts: 0
-  CastingTime: 0
-  Duration: 0
-  BurstWait: 0
-  Cooldown: 0
-  StartBurstWait: 0
-  ChildAbilityWait: 0
-  isBoxDirectionalExpanding: 0
-  Position_X: 0
-  Position_Y: 0
-  boxColliderX: 0
-  boxColliderY: 0
-  circleColliderRadius: 0
-  ChildAbility: {fileID: 0}
-  WhatCanItHit:
-    serializedVersion: 2
-    m_Bits: 0
-  spriteRenderer: {fileID: 0}
-  Casting: {fileID: 0}
-  Idle: {fileID: 0}
-  Attack: {fileID: 0}
---- !u!4 &1013605669
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1013605667}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_RootOrder: 9
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1017886693 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 7686822299216152928, guid: fb273886b76029847a35359044bdca30,
@@ -5765,8 +5697,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c019482daa8dfd9429d2ff8c6094ccc2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  minutes: 2
-  seconds: 3
+  minutes: 0
+  seconds: 1
   panicTimer: 50
   sun: {fileID: 1200453937}
   background: {fileID: 247979255}
@@ -9871,14 +9803,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ad868c53ffa44ce40b009ab345f2dd01, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  EntityName: Entity Sample
+  entityName: Entity Sample
+  description: 
   health: 4
   armor: 0
-  movementSpeed: 400
-  entityID: 0
+  movementSpeed: 4
+  entityID: 100
   type: 0
   state: 1
-  comboResetTimer: 0
+  comboResetTimer: 3.05
   currentCombo: 0
 --- !u!95 &1628602504
 Animator:
@@ -12098,7 +12031,7 @@ PrefabInstance:
     - target: {fileID: 8642264823993486116, guid: 963f7399ec26d4144aba53c7cc9828fa,
         type: 3}
       propertyPath: m_RootOrder
-      value: 7
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 8642264823993486116, guid: 963f7399ec26d4144aba53c7cc9828fa,
         type: 3}
@@ -12149,6 +12082,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Constraints
       value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 8642264823993486121, guid: 963f7399ec26d4144aba53c7cc9828fa,
+        type: 3}
+      propertyPath: m_Mass
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 8642264823993486120, guid: 963f7399ec26d4144aba53c7cc9828fa,
         type: 3}
@@ -12205,6 +12143,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_SortingOrder
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8642264823993486119, guid: 963f7399ec26d4144aba53c7cc9828fa,
+        type: 3}
+      propertyPath: m_FlipY
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5671655153897469697, guid: 963f7399ec26d4144aba53c7cc9828fa,
         type: 3}

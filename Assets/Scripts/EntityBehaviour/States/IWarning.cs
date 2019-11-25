@@ -6,14 +6,14 @@ using UnityEngine;
 
 public class IWarning : MonoBehaviour, IState
 {
-    EntityBehaviour entity;
+    Entity entity;
 
     //get target from entityBehavior class
     GameObject target => entity.target;
 
     float count;
   
-    public IWarning(EntityBehaviour entity)
+    public IWarning(Entity entity)
     {
         this.entity = entity;
     }
@@ -37,6 +37,7 @@ public class IWarning : MonoBehaviour, IState
     {
         Debug.Log("Warning");
         entity.idle = false;
+        entity.stats.movementSpeed = 3;
         LookAtTarget();
         TimeToAttack();
     }

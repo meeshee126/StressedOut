@@ -2,50 +2,60 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+// Michael Schmidt
+// Dimitrios Kitsikidis
+
 //Adds Components to the gameObject when script Component is inserted
 [RequireComponent(typeof(Rigidbody2D))]
 [RequireComponent(typeof(CapsuleCollider2D))]
 [RequireComponent(typeof(Animator))]
+[RequireComponent(typeof(Stats))]
 
 public class Entity : MonoBehaviour
 {
+    [Header("Behaviour Configurations")]
     //Set target = Player
     public GameObject target;
+    public GameObject facingDirection;
+    
+    [Space(10)]
+    [Header("Radiuses")]
+    [Space]
+    public float observationRadius;
+    public float attackRadius, dodgeRadius, lostRadius;
+    [SerializeField]
+    private bool showObservationRadius, showAttackRadius, showDodgeRadius, showLostRadius;
+    public float currentAngle;
 
+    [Space(10)]
     [Header("Infight checks")]
+    [Space]
     public bool attack;
     public bool idle;
 
-    [Header("Radiuses ")]
-    public float observationRadius;
-    public float attackRadius;
-    public float dodgeRadius;
-    public float lostRadius;
-    [SerializeField]
-    private bool showObservationRadius, showAttackRadius, showDodgeRadius, showLostRadius;
 
-    [Header("Entity Configurations")]
-    public float movementSpeed;
-    public float currentAngle;
-
+    [Space(10)]
     [Header("Timers")]
+    [Space]
     public float timeToCompleteCircle;
-    public float startWaitTime;
-    private float waitTime;
+    public float timeBeforeDestroy;
+    public float waitTime;
 
     private int randomSpot;
 
+    [Space(10)]
     [Header("FX")]
+    [Space]
     public GameObject HurtFX;
     public GameObject HurtCriticalFX, SlowedFX, DazedFX, StunnedFX;
 
-    [Header("")]
-    public Stats stats;
+    [Space(10)]
+    [Header("Other..")]
+    [Space]
     public CapsuleCollider2D characterCapsuleCollider;
-    public Rigidbody2D characterRB;
     public Animator characterAnimator;
-    public RaycastHit2D raycastHit2D;
-    public Transform[] moveSpots;
+    public Rigidbody2D characterRB;
+    public Stats stats;
 
 
 
@@ -53,11 +63,10 @@ public class Entity : MonoBehaviour
     {
         //Finds Component in gameObject and uses it
         characterCapsuleCollider = GetComponent<CapsuleCollider2D>();
-        characterRB = GetComponent<Rigidbody2D>();
-        randomSpot = Random.Range(0, moveSpots.Length);
         characterAnimator = GetComponent<Animator>();
+        characterRB = GetComponent<Rigidbody2D>();
+        target = GameObject.Find("Player");
         stats = GetComponent<Stats>();
-        waitTime = startWaitTime;
     }
 
 
@@ -65,19 +74,22 @@ public class Entity : MonoBehaviour
     {
         if (stats.health <= 0)
         {
+            if (timeBeforeDestroy > 0f) timeBeforeDestroy -= Time.deltaTime;
+            if (timeBeforeDestroy <= 0f) Destroy(gameObject);
+            
+            //Dead();
             // Make a state system of unborn, alive, dead, etc.. probably in Stats.cs
             // By that handle the states and delete enemy only after 5 minutes or so idk..
-            Dead();
         }
-        if (stats.health > 0)
+        else if (stats.health > 0)
         {
-            Dead();
+            if (characterRB != null && characterCapsuleCollider != null && characterAnimator != null) { }
+            else if (characterCapsuleCollider == null) Debug.LogWarning("Capsule Collider not attached to " + gameObject.name);
+            else if (characterAnimator == null) Debug.LogWarning("Animator not attached to " + gameObject.name);
+            else if (characterRB == null) Debug.LogWarning("Rigidbody not attached to " + gameObject.name);
         }
-        if (characterRB != null && characterCapsuleCollider != null && characterAnimator != null){ }
-        else if (characterCapsuleCollider == null) Debug.LogWarning("Capsule Collider not attached to " + gameObject.name);
-        else if (characterAnimator == null) Debug.LogWarning("Animator not attached to " + gameObject.name);
-        else if (characterRB == null) Debug.LogWarning("Rigidbody not attached to " + gameObject.name);
     }
+
 
     bool Unborn()
     { return false; }
@@ -97,7 +109,7 @@ public class Entity : MonoBehaviour
     /// <param name="damage"></param>
     public void TakeDamage(int damage)
     {
-        Instantiate(HurtFX, gameObject.transform.position, Quaternion.identity);
+        if(HurtFX != null) Instantiate(HurtFX, gameObject.transform.position, Quaternion.identity);
         stats.health -= damage;
         Debug.Log("Damage DONE!!!  --  " + damage);
     }

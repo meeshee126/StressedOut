@@ -6,7 +6,7 @@ using UnityEngine;
 
 public class IWander : MonoBehaviour, IState
 {
-    EntityBehaviour entity;
+    Entity entity;
 
     //get target from entityBehavior class
     GameObject target => entity.target;
@@ -16,16 +16,12 @@ public class IWander : MonoBehaviour, IState
 
     float count;
 
-    void Start()
-    {
-        //Set Entity rotation to default
-        entity.transform.rotation = Quaternion.Euler(0, 0, 0);
-    }
 
-    public IWander(EntityBehaviour entity)
+    public IWander(Entity entity)
     {
         this.entity = entity;
     }
+
 
     /// <summary>
     /// Check this class Condition
@@ -39,20 +35,48 @@ public class IWander : MonoBehaviour, IState
         return distance > this.entity.observationRadius;
     }
 
+
     /// <summary>
     /// Execute this state
     /// </summary>
     public void Execute()
     {
         SetRotation();
-        Move();
+        if (entity.waitTime > 0f) entity.waitTime -= Time.deltaTime;
+        if (entity.waitTime <= 0f)
+        {
+            entity.characterRB.mass = 3;
+            Move();
+        }
 
         //Check if Entity is walking against enviroment objects
-        if (!Walkable())
+        while (!Walkable())
         {
             AssignRandomRotation();
         }
     }
+
+
+    /// <summary>
+    /// Entity walking towards a random rotation
+    /// </summary> 
+    void Move()
+    {
+        //Moving towards
+        entity.characterRB.velocity = entity.facingDirection.transform.up * 100 * entity.stats.movementSpeed * Time.deltaTime;
+
+        //entity.transform.position += entity.gameObject.transform.up * entity.stats.movementSpeed * Time.deltaTime;
+
+        count += Time.deltaTime;
+
+        //assign a random rotation after a an amount of time
+        if (count > Random.Range(1.5f, 5f))
+        {
+            AssignRandomRotation();
+            count = 0;
+        }
+    }
+
 
     /// <summary>
     /// Check Entities path is walkable
@@ -60,13 +84,13 @@ public class IWander : MonoBehaviour, IState
     /// <returns></returns>
     bool Walkable()
     {
-        Vector3 endpoint = entity.transform.up;
+        Vector3 endpoint = entity.facingDirection.transform.up;
 
         //ray only hits environment objects
-        RaycastHit2D hit = Physics2D.Raycast(entity.transform.position, entity.transform.up, 1, environmentLayer);
+        RaycastHit2D hit = Physics2D.Raycast(entity.facingDirection.transform.position, entity.facingDirection.transform.up, 1, environmentLayer);
 
         //Set raylenght for scene view
-        Debug.DrawRay(entity.transform.position, endpoint, Color.red);
+        Debug.DrawRay(entity.facingDirection.transform.position, endpoint, Color.red);
 
         if (hit)
         {
@@ -77,6 +101,7 @@ public class IWander : MonoBehaviour, IState
         return true;  
     }
 
+
     /// <summary>
     /// Reset Entity rotation
     /// </summary>
@@ -86,45 +111,33 @@ public class IWander : MonoBehaviour, IState
         if(!entity.idle)
         {
             //Return default rotation
-            entity.transform.rotation = Quaternion.Euler(0, 0, 0);
+            entity.facingDirection.transform.rotation = Quaternion.Euler(0, 0, 0);
 
             //Set random rotation 
             AssignRandomRotation();
 
             //Entity is not in fight anymore
             entity.idle = true;
+            entity.stats.movementSpeed = 1;
         }
     }
 
-    /// <summary>
-    /// Entity walking towards a random rotation
-    /// </summary>
-    void Move()
-    {
-        //Moving towards
-        entity.transform.position += entity.gameObject.transform.up * entity.movementSpeed * Time.deltaTime;
-
-        count += Time.deltaTime;
-
-        //assign a random rotation after a an amount of time
-        if (count > Random.Range(4, 6))
-        {
-            AssignRandomRotation();
-            count = 0;
-        }
-    }
 
     /// <summary>
     /// Set Entities rotation 
     /// </summary>
     public void AssignRandomRotation()
     {
-        //get directions (up, right, down, left)
-        float[] direction = new float[] { 0, 90, 180, 270 };
+        entity.characterRB.velocity = new Vector3(0f, 0f);
 
-        //set direction
-        entity.transform.Rotate(0, 0, direction[Random.Range(0, direction.Length)]);
+        // Set a random Waiting time
+        entity.waitTime = Random.Range(0f, 5f);
+        entity.characterRB.mass = 300;
+
+        entity.facingDirection.transform.Rotate(0, 0, Random.Range(0, 360)/*direction[Random.Range(0, direction.Length)]*/);
+        // Set direction
     }
+
 
     /// <summary>
     /// Check distance between entity and target
@@ -132,6 +145,6 @@ public class IWander : MonoBehaviour, IState
     /// <returns></returns>
     float GetRadiusToTarget()
     {
-        return Vector3.Distance(entity.gameObject.transform.position, target.gameObject.transform.position);
+        return Vector3.Distance(entity.facingDirection.transform.position, target.gameObject.transform.position);
     }
 }

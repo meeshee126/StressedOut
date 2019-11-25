@@ -131,7 +131,7 @@ public class Player : MonoBehaviour
 
         MovementAnimationUpdate(moveHorizontal, moveVertical);
 
-        characterRB.velocity = new Vector2(moveHorizontal, moveVertical) * stats.movementSpeed * Time.deltaTime;
+        characterRB.velocity = new Vector2(moveHorizontal, moveVertical) * 100 * stats.movementSpeed * Time.deltaTime;
         
         #region old
         //transform.Translate(new Vector2(moveHorizontal, moveVertical));

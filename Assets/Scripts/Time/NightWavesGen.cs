@@ -10,27 +10,27 @@ public class NightWavesGen : MonoBehaviour
     public GameObject[] SetEnemiesList;
 
     GameObject gameManager;
-    Timer timer;
-    bool areEnemiesReady, areEnemiesDead;
+    Timer worldTimer;
+    bool areEnemiesReady;
 
 
     private void Awake()
     {
         gameManager = GameObject.Find("GameManager");
-        timer = gameManager.GetComponent<Timer>();
+        worldTimer = gameManager.GetComponent<Timer>();
     }
 
     private void Update()
     {
         // Time == Day?
-        if (timer.currentDayTime == Timer.DayTime.Day)
+        if (worldTimer.currentDayTime == Timer.DayTime.Day)
         {
             // Dont do anything
         }
 
         // Time == Panic?
         // &&   Enemies NOT Ready?
-        if (timer.currentDayTime == Timer.DayTime.Panic && !areEnemiesReady)
+        if (worldTimer.currentDayTime == Timer.DayTime.Panic && !areEnemiesReady)
         {
             FillUpEnemiesList();
             areEnemiesReady = true;
@@ -38,7 +38,7 @@ public class NightWavesGen : MonoBehaviour
 
         // Time == Night?
         // &&   Enemies Ready?
-        if (timer.currentDayTime == Timer.DayTime.Night && areEnemiesReady)
+        if (worldTimer.currentDayTime == Timer.DayTime.Night && areEnemiesReady)
         {
             SpawnEnemiesFromList();
             areEnemiesReady = false;
@@ -46,10 +46,12 @@ public class NightWavesGen : MonoBehaviour
 
         // Time == Night?
         // &&   Enemies Dead
-        if (timer.currentDayTime == Timer.DayTime.Night && areEnemiesDead)
+        if (worldTimer.currentDayTime == Timer.DayTime.Night && areEnemiesDeadCheck())
         {
-            timer.NewDay();
-            ResetEnemiesList();
+            worldTimer.NewDay();
+            for (int i = 0; i < SpawnedEnemiesList.Length; i++)
+                Destroy(SpawnedEnemiesList[i]);
+            ResetEnemiesLists();
             // Set Time back to day
             // Empty Enemy List
         }
@@ -73,9 +75,11 @@ public class NightWavesGen : MonoBehaviour
     /// <summary>
     /// Empties 
     /// </summary>
-    void ResetEnemiesList()
+    void ResetEnemiesLists()
     {
         SetEnemiesList = new GameObject[0];
+        SpawnedEnemiesList = new GameObject[0];
+        Debug.Log("Reseted Lists");
     }
 
 
@@ -83,7 +87,8 @@ public class NightWavesGen : MonoBehaviour
     {
         for (int i = 0; i < SetEnemiesList.Length; i++)
         {
-            SpawnedEnemiesList[i] = Instantiate(SetEnemiesList[i], PickRandomAvailableSpot() , Quaternion.identity);
+            Vector3 randomSpot = PickRandomAvailableSpot();
+            SpawnedEnemiesList[i] = Instantiate(SetEnemiesList[i], randomSpot, Quaternion.identity);
         }
 
         // Run though Available Spots List.length
@@ -117,6 +122,7 @@ public class NightWavesGen : MonoBehaviour
         int enemiesAliveCount = 0;
         for (int i = 0; i < SpawnedEnemiesList.Length; i++)
         {
+            if (SpawnedEnemiesList[i] != null)
             if (SpawnedEnemiesList[i].GetComponent<Stats>().health > 0)
             {
                 enemiesAliveCount++;
