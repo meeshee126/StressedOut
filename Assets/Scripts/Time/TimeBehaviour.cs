@@ -29,7 +29,7 @@ public class TimeBehaviour : MonoBehaviour
     public TimeCost areaChanging;
 
     [Header("(INFO) Current Time Cost")]
-    public List<TimeCost> executeList = new List<TimeCost>();
+    public List<TimeCost> executionList = new List<TimeCost>();
 
     [HideInInspector]
     public TimeCost timeCost = TimeCost.NoCost;
@@ -55,7 +55,7 @@ public class TimeBehaviour : MonoBehaviour
         //no timecost anymore when in panic mode
         if (timer.currentDayTime != Timer.DayTime.Day)
         {
-            executeList.Clear();
+            executionList.Clear();
             return;
         }
     }
@@ -69,28 +69,28 @@ public class TimeBehaviour : MonoBehaviour
         switch (timeCost)
         {
             default: timeCost = TimeCost.NoCost; break;
-            case TimeCost.VeryLowCost: executeList.Add(TimeCost.VeryLowCost); break;
-            case TimeCost.LowCost: executeList.Add(TimeCost.LowCost); break;
-            case TimeCost.MiddleCost: executeList.Add(TimeCost.MiddleCost); break;
-            case TimeCost.HighCost: executeList.Add(TimeCost.HighCost); break;  
+            case TimeCost.VeryLowCost: executionList.Add(TimeCost.VeryLowCost); break;
+            case TimeCost.LowCost: executionList.Add(TimeCost.LowCost); break;
+            case TimeCost.MiddleCost: executionList.Add(TimeCost.MiddleCost); break;
+            case TimeCost.HighCost: executionList.Add(TimeCost.HighCost); break;  
         } 
     }
 
     void SetTimeCost()
     {
-        if (executeList.Count == 0)
+        if (executionList.Count == 0)
             return;
 
         count += Time.deltaTime;
         if (count <= duration)
         {
-            timer.SpeedTime(GetValue(executeList[0]));
+            timer.SpeedTime(GetValue(executionList[0]));
         }
 
         if (count > duration)
         {
             count = 0;
-            executeList.RemoveAt(0);
+            executionList.RemoveAt(0);
         }
         timeCost = TimeCost.NoCost;
     }

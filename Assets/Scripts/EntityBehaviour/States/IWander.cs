@@ -50,7 +50,8 @@ public class IWander : MonoBehaviour, IState
         }
 
         //Check if Entity is walking against enviroment objects
-        while (!Walkable())
+        //WHILE stwitched with IF
+        if (!Walkable())
         {
             AssignRandomRotation();
         }

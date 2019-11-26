@@ -47,7 +47,7 @@ GameObject:
   - component: {fileID: 7238748255852453540}
   m_Layer: 0
   m_Name: Bandit
-  m_TagString: Untagged
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -221,14 +221,14 @@ MonoBehaviour:
   attack: 0
   idle: 0
   timeToCompleteCircle: 0
-  startWaitTime: 0
+  timeBeforeDestroy: 0
+  waitTime: 0
   HurtFX: {fileID: 0}
   HurtCriticalFX: {fileID: 0}
   SlowedFX: {fileID: 0}
   DazedFX: {fileID: 0}
   StunnedFX: {fileID: 0}
-  stats: {fileID: 0}
   characterCapsuleCollider: {fileID: 0}
-  characterRB: {fileID: 0}
   characterAnimator: {fileID: 0}
-  moveSpots: []
+  characterRB: {fileID: 0}
+  stats: {fileID: 0}

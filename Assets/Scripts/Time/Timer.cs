@@ -24,6 +24,10 @@ public class Timer : MonoBehaviour
     Text uiPanicTimer;
     [SerializeField]
     Text uiDay;
+    [SerializeField]
+    Text uiNewDay;
+    [SerializeField]
+    Animator fadeToBlack;
 
     [Header("(INFO) current day time")]
     public DayTime currentDayTime = DayTime.Day;
@@ -32,13 +36,13 @@ public class Timer : MonoBehaviour
     public int dayCounter;
 
     Sun sunScript;
+    
 
     public TimeSpan time;
 
     bool showPanicTimer;
     bool dayOver;
   
-
     void Start()
     {
         sunScript = GameObject.Find("Sunset").GetComponent<Sun>();
@@ -48,12 +52,10 @@ public class Timer : MonoBehaviour
 
         //Set Timer
         time = new TimeSpan(0, minutes, seconds);
-
-      
     }
 
     void Update()
-    {
+    {      
         SetDay();
         TimerCountdown();
         CheckDayTime();
@@ -164,21 +166,37 @@ public class Timer : MonoBehaviour
     /// </summary>
     public void NewDay()
     {
-        currentDayTime = DayTime.Day;
+        //Fade Out
+        fadeToBlack.SetBool("FadeToBlack", true);
 
-        //reset timer
-        time = new TimeSpan(0, minutes, seconds);
+        StartCoroutine(FadeIn());
 
-        //Generate new area objects
-        GenerateNewMap();
+        dayOver = false;
+    }
 
-        //reset sun
-        sunScript.sliderSeted = false;
+    IEnumerator FadeIn()
+    {
+        yield return new WaitForSeconds(1.6f);
 
         //counting day
         dayCounter++;
 
-        dayOver = false;
+        //Write new day count on black screen
+        uiNewDay.text = dayCounter.ToString();
+
+        //reset timer
+        time = new TimeSpan(0, minutes, seconds);
+        //reset sun
+        sunScript.sliderSeted = false;
+
+        //Generate new area objects
+        GenerateNewMap();
+
+        //Reset Day Time
+        currentDayTime = DayTime.Day;
+
+        //Fade In
+        fadeToBlack.SetBool("FadeToBlack", false);
     }
 
     /// <summary>

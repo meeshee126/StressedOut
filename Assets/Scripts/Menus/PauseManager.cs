@@ -83,7 +83,7 @@ public class PauseManager : MonoBehaviour
             // disable enviroment physics
             Time.timeScale = 0;
 
-            // disable Player controls and Sun rotation
+            // disable Player controls 
             GameObject.Find("Player").GetComponent<Player>().enabled = false;     
             
         }
@@ -98,7 +98,7 @@ public class PauseManager : MonoBehaviour
             // enable enviroment physics
             Time.timeScale = 1;
 
-            // enable Player and Gun Controlls
+            // enable Player and controls
             GameObject.Find("Player").GetComponent<Player>().enabled = true;
         }
     }
