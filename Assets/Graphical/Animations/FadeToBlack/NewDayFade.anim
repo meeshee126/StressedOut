@@ -418,7 +418,7 @@ AnimationClip:
     floatParameter: 0
     intParameter: 0
     messageOptions: 0
-  - time: 4.2166667
+  - time: 3.3
     functionName: Defreeze
     data: 
     objectReferenceParameter: {fileID: 0}

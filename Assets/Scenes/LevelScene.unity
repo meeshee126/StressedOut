@@ -5776,8 +5776,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   minutes: 0
-  seconds: 1
-  panicTimer: 50
+  seconds: 10
+  panicTimer: 10
   sun: {fileID: 1200453937}
   background: {fileID: 247979255}
   uiPanicTimer: {fileID: 374564962}
