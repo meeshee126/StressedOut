@@ -36,6 +36,7 @@ public class Player : MonoBehaviour
     [HideInInspector]
     public TimeBehaviour timeBehaviour;
 
+    private AudioSource audioSource;
     private AbilityLists abilityLists;
     private GameObject gameManager;
     private ItemsList itemList;
@@ -66,6 +67,7 @@ public class Player : MonoBehaviour
         abilityLists = gameManager.GetComponentInChildren<AbilityLists>();
         itemList = gameManager.GetComponentInChildren<ItemsList>();
         timeBehaviour = gameManager.GetComponent<TimeBehaviour>();
+        audioSource = GetComponent<AudioSource>();
 
         characterCollider = GetComponent<CapsuleCollider2D>();
         characterAnimator = GetComponent<Animator>();
@@ -131,8 +133,9 @@ public class Player : MonoBehaviour
 
         MovementAnimationUpdate(moveHorizontal, moveVertical);
 
-        characterRB.velocity = new Vector2(moveHorizontal, moveVertical) * 100 * stats.movementSpeed * Time.deltaTime;
-        
+       characterRB.velocity = new Vector2(moveHorizontal, moveVertical) * 100 * stats.movementSpeed * Time.deltaTime;
+       // transform.Translate(new Vector2(moveHorizontal, moveVertical) * stats.movementSpeed * Time.deltaTime);
+
         #region old
         //transform.Translate(new Vector2(moveHorizontal, moveVertical));
         #endregion
@@ -393,6 +396,11 @@ public class Player : MonoBehaviour
                 pickedItem.GetComponent<Item>().isPickedUp = true;
             }
         }
+    }
+
+    void FoodSteps()
+    {
+        audioSource.PlayOneShot(audioSource.clip);
     }
 
 

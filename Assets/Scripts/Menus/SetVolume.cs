@@ -15,9 +15,14 @@ public class SetVolume : MonoBehaviour
         slider = GetComponent<Slider>();
     }
 
-    public void SetLevel()
+    public void SetMusic()
     {
         audioMixer.SetFloat("MusicVolume", Mathf.Log(slider.value) * 20);
+    }
+
+    public void SetSFX()
+    {
+        audioMixer.SetFloat("SFXVolume", Mathf.Log(slider.value) * 20);
     }
 
 }

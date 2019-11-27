@@ -36,6 +36,11 @@ public class Projectile : MonoBehaviour
         {
             RotateTowards(enemy.position);
         }
+
+        else
+        {
+            return;
+        }
     }
 
 	/// <summary>
