@@ -36,17 +36,22 @@ public class Timer : MonoBehaviour
     public int dayCounter;
 
     Sun sunScript;
+
+    public AudioSource backgroundMusic;
+    public AudioClip dayMusic;
+    public AudioClip nightMusic;
     
 
     public TimeSpan time;
 
     bool showPanicTimer;
     bool dayOver;
+    bool musicSeted;
   
     void Start()
     {
         sunScript = GameObject.Find("Sunset").GetComponent<Sun>();
-
+        
         //Set Day
         SetDay();
 
@@ -102,12 +107,22 @@ public class Timer : MonoBehaviour
         {
             case DayTime.Day:
 
+                if (!musicSeted)
+                {
+                    backgroundMusic.clip = dayMusic;
+                    backgroundMusic.Play();
+                    backgroundMusic.pitch = 1f;
+                    musicSeted = true;
+                }
+
                 //disable UI Timer
                 uiPanicTimer.text = "";
-
+                
                 //if timer gets a certain time
                 if (sunScript.slider.normalizedValue <= (panicTimer / 100))
                 {
+                    musicSeted = false;
+
                     //switch to panic mode
                     currentDayTime = Timer.DayTime.Panic;
                 }
@@ -119,9 +134,23 @@ public class Timer : MonoBehaviour
                 //enable UI Timer
                 uiPanicTimer.text = string.Format("{0:0}:{1:00}", time.Minutes, time.Seconds);
 
+                if (!musicSeted)
+                {
+                    if(backgroundMusic.clip != dayMusic)
+                    {
+                        backgroundMusic.clip = dayMusic;
+                        backgroundMusic.Play();
+                    }
+                    backgroundMusic.pitch = 1.3f;
+                    musicSeted = true;
+                }
+                
+
                 //if timer gets a certain time
                 if (sunScript.slider.normalizedValue > (panicTimer / 100))
                 {
+                    musicSeted = false;
+
                     //switch to day mode
                     currentDayTime = Timer.DayTime.Day;
                 }
@@ -129,6 +158,8 @@ public class Timer : MonoBehaviour
                 //if timer countdown reach 0
                 if (time.Seconds < 0)
                 {
+                    musicSeted = false;
+
                     //switch to night mode
                     currentDayTime = DayTime.Night;
                 }
@@ -140,9 +171,19 @@ public class Timer : MonoBehaviour
                 //disable UI Timer
                 uiPanicTimer.text = "";
 
+                if (!musicSeted)
+                {
+                    backgroundMusic.clip = nightMusic;
+                    backgroundMusic.Play();
+                    backgroundMusic.pitch = 1f;
+                    musicSeted = true;
+                }
+
                 //if timer gets a certain time
                 if (sunScript.slider.normalizedValue > (panicTimer / 100))
                 {
+                    musicSeted = false;
+
                     //switch to day mode
                     currentDayTime = Timer.DayTime.Day;
                 }
@@ -151,6 +192,8 @@ public class Timer : MonoBehaviour
                 if (Input.GetKeyDown(KeyCode.Alpha1))
                 {
                     Debug.Log("Wave killed");
+
+                  
 
                     //day is over and switch to day mode
                     dayOver = true;
@@ -168,6 +211,8 @@ public class Timer : MonoBehaviour
     {
         //Fade Out
         fadeToBlack.SetBool("FadeToBlack", true);
+
+        backgroundMusic.Stop();
 
         StartCoroutine(FadeIn());
 
@@ -192,8 +237,12 @@ public class Timer : MonoBehaviour
         //Generate new area objects
         GenerateNewMap();
 
+        musicSeted = false;
+
         //Reset Day Time
         currentDayTime = DayTime.Day;
+
+ 
 
         //Fade In
         fadeToBlack.SetBool("FadeToBlack", false);
