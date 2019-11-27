@@ -14,7 +14,7 @@ public class NightWavesGen : MonoBehaviour
     bool areEnemiesReady;
 
     [HideInInspector]
-    public bool areEnemiesDead;
+    public bool enemiesDead;
 
 
     private void Awake()
@@ -25,6 +25,9 @@ public class NightWavesGen : MonoBehaviour
 
     private void Update()
     {
+        if (worldTimer.dayOver)
+            return;
+
         // Time == Day?
         if (worldTimer.currentDayTime == Timer.DayTime.Day)
         {
@@ -51,10 +54,13 @@ public class NightWavesGen : MonoBehaviour
         // &&   Enemies Dead
         if (worldTimer.currentDayTime == Timer.DayTime.Night && areEnemiesDeadCheck())
         {
+         
             
             for (int i = 0; i < SpawnedEnemiesList.Length; i++)
                 Destroy(SpawnedEnemiesList[i]);
             ResetEnemiesLists();
+            worldTimer.dayOver = true;
+            Debug.Log("DayOver");
             // Set Time back to day
             // Empty Enemy List
         }
@@ -126,20 +132,21 @@ public class NightWavesGen : MonoBehaviour
         for (int i = 0; i < SpawnedEnemiesList.Length; i++)
         {
             if (SpawnedEnemiesList[i] != null)
-            if (SpawnedEnemiesList[i].GetComponent<Stats>().health > 0)
-            {
-                enemiesAliveCount++;
-            }
+                if (SpawnedEnemiesList[i].GetComponent<Stats>().health > 0)
+                {
+                    enemiesAliveCount++;
+                }
         }
 
         if (enemiesAliveCount == 0)
         {
             return true;
-        } 
+        }
+
 
         // Run through spawnedlist
-            // If (all dead)
-            // return true
+        // If (all dead)
+        // return true
         return false;
     }
 }

@@ -35,6 +35,9 @@ public class Timer : MonoBehaviour
     [HideInInspector]
     public int dayCounter;
 
+    [HideInInspector]
+    public bool dayOver;
+
     Sun sunScript;
     NightWavesGen nightWaves;
 
@@ -42,13 +45,13 @@ public class Timer : MonoBehaviour
     public AudioClip dayMusic;
     public AudioClip nightMusic;
     
-
     public TimeSpan time;
 
     bool showPanicTimer;
-    bool dayOver;
     bool musicSeted;
-  
+    bool coroutineStarted;
+
+
     void Start()
     {
         sunScript = GameObject.Find("Sunset").GetComponent<Sun>();
@@ -59,6 +62,7 @@ public class Timer : MonoBehaviour
 
         //Set Timer
         time = new TimeSpan(0, minutes, seconds);
+        coroutineStarted = false;
     }
 
     void Update()
@@ -68,10 +72,7 @@ public class Timer : MonoBehaviour
         CheckDayTime();
         SetBackground();
 
-        if (dayOver)
-        {
-            NewDay();
-        }
+        
     }
 
     /// <summary>
@@ -192,15 +193,11 @@ public class Timer : MonoBehaviour
                 }
 
                 //If wave in night is killed
-                if (nightWaves.areEnemiesDead)
+                if ((Input.GetKeyDown(KeyCode.Alpha1) || dayOver) && !coroutineStarted )
                 {
-                    Debug.Log("Wave killed");
+                    dayOver = false;
+                    NewDay();
 
-                    //day is over and switch to day mode
-                    dayOver = true;
-
-
-              //    nightWaves.areEnemiesDeadCheck() = false;
                 }
                 break;
         }
@@ -217,15 +214,12 @@ public class Timer : MonoBehaviour
         backgroundMusic.Stop();
 
         StartCoroutine(FadeIn());
-
-
-        dayOver = false;
-        
     }
 
     IEnumerator FadeIn()
     {
-        yield return new WaitForSeconds(1.6f);
+        coroutineStarted = true;
+        yield return new WaitForSeconds(1.8f);
 
         //counting day
         dayCounter++;
@@ -246,9 +240,11 @@ public class Timer : MonoBehaviour
         //Reset Day Time
         currentDayTime = DayTime.Day;
 
- 
+        
+        dayOver = false;
 
         //Fade In
+        coroutineStarted = false;
         fadeToBlack.SetBool("FadeToBlack", false);
     }
 
@@ -283,8 +279,8 @@ public class Timer : MonoBehaviour
     {
         //get Colors
         Color day = new Color(0, 0, 0, 0);
-        Color dusk = new Color(0, 0, 0, 0.15f);
-        Color night = new Color(0, 0, 0, 0.5f);
+        Color dusk = new Color(0, 0, 0, 0.3f);
+        Color night = new Color(0, 0, 0, 0.7f);
 
         //set Colors
         if (currentDayTime == Timer.DayTime.Day) { background.color = day; }
