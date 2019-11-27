@@ -9,11 +9,6 @@ public class AreaChange : MonoBehaviour
 	Vector3 newPosition;
 	TimeBehaviour timeBehaviour;
 
-	//public bool isTrigger;
-
-	//public float posX = 0;
-	//public float posY = 0;
-
 	private void Start()
 	{
 		timeBehaviour = GameObject.Find("GameManager").GetComponent<TimeBehaviour>();

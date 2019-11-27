@@ -11,8 +11,8 @@ public class Bandit : Entity
     void Start()
     {
         //Add states to Bandit
-        //brain.AddState(new IAttack(this));
-        //brain.AddState(new IWarning(this));
+        brain.AddState(new IAttack(this));
+        brain.AddState(new IWarning(this));
         brain.AddState(new IWander(this));
     }
 
