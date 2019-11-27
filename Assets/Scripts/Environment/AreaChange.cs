@@ -9,10 +9,10 @@ public class AreaChange : MonoBehaviour
 	Vector3 newPosition;
 	TimeBehaviour timeBehaviour;
 
-	public bool isTrigger;
+	//public bool isTrigger;
 
-	public float posX = 0;
-	public float posY = 0;
+	//public float posX = 0;
+	//public float posY = 0;
 
 	private void Start()
 	{
@@ -21,49 +21,35 @@ public class AreaChange : MonoBehaviour
 	}
 
 	/// <summary>
-	/// Look for an entrance that the player collides with and checks what entrance it is to move the player and the camera. 
-	/// For this, the existing position of the player and the camera is controlled and then moved.
+	/// Look for an area that the player collides with and checks where it is to move the player and the camera. 
 	/// </summary>
 	/// <param name="enter"></param>
-	void OnTriggerStay2D(Collider2D enter)
+	private void OnTriggerEnter2D(Collider2D area)
 	{
-		/* Michael Schmidt:
-         * Timecosts will call when player entering a new area */
-
-		if (enter.gameObject.tag == "EnterRight" && mainCamera.transform.position.x == posX)
+		if (area.gameObject.tag == "Area")
 		{
-			newPosition = mainCamera.transform.position + new Vector3(30, 0, 0);
-			transform.position = transform.position + new Vector3(5.5f, 0, 0);
-			posX += 30;
+			newPosition.x = area.transform.position.x;
+			newPosition.y = area.transform.position.y;
 
-			//Michael Schmidt
-			timeBehaviour.timeCost = timeBehaviour.areaChanging;
-		}
-		if (enter.gameObject.tag == "EnterLeft" && mainCamera.transform.position.x == posX)
-		{
-			newPosition = mainCamera.transform.position + new Vector3(-30, 0, 0);
-			transform.position = transform.position + new Vector3(-5.5f, 0, 0);
-			posX -= 30;
+			if (transform.position.x < area.transform.position.x - 10)
+			{
+				transform.position = transform.position + new Vector3(5.5f, 0, 0);
+			}
+			else if (transform.position.x > area.transform.position.x + 10)
+			{
+				transform.position = transform.position + new Vector3(-5.5f, 0, 0);
+			}
+			else if (transform.position.y < area.transform.position.y - 7)
+			{
+				transform.position = transform.position + new Vector3(0, 3, 0);
+			}
+			else if (transform.position.y > area.transform.position.y + 7)
+			{
+				transform.position = transform.position + new Vector3(0, -3, 0);
+			}
 
-			//Michael Schmidt
-			timeBehaviour.timeCost = timeBehaviour.areaChanging;
-		}
-		if (enter.gameObject.tag == "EnterUp" && mainCamera.transform.position.y == posY)
-		{
-			newPosition = mainCamera.transform.position + new Vector3(0, 15.75f, 0);
-			transform.position = transform.position + new Vector3(0, 4.5f, 0);
-			posY += 15.75f;
-
-			//Michael Schmidt
-			timeBehaviour.timeCost = timeBehaviour.areaChanging;
-		}
-		if (enter.gameObject.tag == "EnterDown" && mainCamera.transform.position.y == posY)
-		{
-			newPosition = mainCamera.transform.position + new Vector3(0, -15.75f, 0);
-			transform.position = transform.position + new Vector3(0, -4.5f, 0);
-			posY -= 15.75f;
-
-			//Michael Schmidt
+			// Michael Schmidt:
+			// Timecosts will call when player entering a new area
 			timeBehaviour.timeCost = timeBehaviour.areaChanging;
 		}
 	}

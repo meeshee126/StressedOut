@@ -20,10 +20,14 @@ public class PauseManager : MonoBehaviour
 	public GameObject ButtonSave;
 	public GameObject MainCamera;
 
+	public Vector3 StartCamera;
+
 	private void Start()
     {
         timer = GameObject.Find("GameManager").GetComponent<Timer>();
         sunScript = GameObject.Find("Sunset").GetComponent<Sun>();
+
+		StartCamera = MainCamera.transform.position;
     }
 
     void Update()
@@ -165,17 +169,13 @@ public class PauseManager : MonoBehaviour
 	/// </summary>
 	public void SaveButton()
 	{
-		if (timer.currentDayTime != Timer.DayTime.Day)
+		if (timer.currentDayTime == Timer.DayTime.Day && MainCamera.transform.position == StartCamera)
 		{
-			ButtonSave.gameObject.SetActive(false);
-		}
-		else if (MainCamera.transform.position.x != 0 || MainCamera.transform.position.y != 0)
-		{
-			ButtonSave.gameObject.SetActive(false);
+			ButtonSave.gameObject.SetActive(true);
 		}
 		else
 		{
-			ButtonSave.gameObject.SetActive(true);
+			ButtonSave.gameObject.SetActive(false);
 		}
 	}
 }
