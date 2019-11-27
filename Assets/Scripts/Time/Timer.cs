@@ -36,6 +36,7 @@ public class Timer : MonoBehaviour
     public int dayCounter;
 
     Sun sunScript;
+    NightWavesGen nightWaves;
 
     public AudioSource backgroundMusic;
     public AudioClip dayMusic;
@@ -51,6 +52,7 @@ public class Timer : MonoBehaviour
     void Start()
     {
         sunScript = GameObject.Find("Sunset").GetComponent<Sun>();
+        nightWaves = GameObject.Find("GameManager").GetComponent<NightWavesGen>();
         
         //Set Day
         SetDay();
@@ -114,6 +116,7 @@ public class Timer : MonoBehaviour
                     backgroundMusic.pitch = 1f;
                     musicSeted = true;
                 }
+                
 
                 //disable UI Timer
                 uiPanicTimer.text = "";
@@ -189,17 +192,16 @@ public class Timer : MonoBehaviour
                 }
 
                 //If wave in night is killed
-                if (Input.GetKeyDown(KeyCode.Alpha1))
+                if (nightWaves.areEnemiesDead)
                 {
                     Debug.Log("Wave killed");
 
-                  
-
                     //day is over and switch to day mode
                     dayOver = true;
-					//sunScript.seconds = sunScript.maxTime;
-                }
 
+
+                    nightWaves.areEnemiesDeadCheck() = false;
+                }
                 break;
         }
     }
@@ -216,7 +218,9 @@ public class Timer : MonoBehaviour
 
         StartCoroutine(FadeIn());
 
+
         dayOver = false;
+        
     }
 
     IEnumerator FadeIn()
