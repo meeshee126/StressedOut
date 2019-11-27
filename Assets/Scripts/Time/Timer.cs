@@ -200,7 +200,7 @@ public class Timer : MonoBehaviour
                     dayOver = true;
 
 
-                    nightWaves.areEnemiesDeadCheck() = false;
+              //    nightWaves.areEnemiesDeadCheck() = false;
                 }
                 break;
         }
