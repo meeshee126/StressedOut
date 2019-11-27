@@ -65,8 +65,8 @@ public class IAttack : MonoBehaviour, IState
         entity.transform.up = target.transform.position - entity.transform.position;
 
         //Move to target
-        //entity.transform.position += entity.gameObject.transform.up * entity.stats.movementSpeed * Time.deltaTime;
-        entity.characterRB.MovePosition(target.transform.position * (entity.stats.movementSpeed * Time.deltaTime));
+        entity.transform.position += entity.gameObject.transform.up * entity.stats.movementSpeed * Time.deltaTime;
+        //entity.characterRB.MovePosition(target.transform.position * (entity.stats.movementSpeed * Time.deltaTime));
 
     }
 
@@ -91,6 +91,6 @@ public class IAttack : MonoBehaviour, IState
     /// <returns></returns>
     float GetRadiusToTarget()
     {
-        return Vector3.Distance(entity.gameObject.transform.position, target.gameObject.transform.position);
+        return Vector2.Distance(entity.gameObject.transform.position, target.gameObject.transform.position);
     }
 }

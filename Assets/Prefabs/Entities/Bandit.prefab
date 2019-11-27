@@ -209,14 +209,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   target: {fileID: 0}
   facingDirection: {fileID: 5266417245860317746}
-  observationRadius: 0
+  observationRadius: 3
   attackRadius: 0
-  dodgeRadius: 0
-  lostRadius: 0
-  showObservationRadius: 0
-  showAttackRadius: 0
-  showDodgeRadius: 0
-  showLostRadius: 0
+  dodgeRadius: 2
+  lostRadius: 3
+  showObservationRadius: 1
+  showAttackRadius: 1
+  showDodgeRadius: 1
+  showLostRadius: 1
   currentAngle: 0
   attack: 0
   idle: 0

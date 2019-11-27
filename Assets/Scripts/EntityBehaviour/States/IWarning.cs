@@ -38,7 +38,7 @@ public class IWarning : MonoBehaviour, IState
         Debug.Log("Warning");
         entity.idle = false;
         entity.stats.movementSpeed = 3;
-        LookAtTarget();
+        //LookAtTarget();
         TimeToAttack();
     }
 
@@ -47,8 +47,10 @@ public class IWarning : MonoBehaviour, IState
     /// </summary>
     void LookAtTarget()
     {
-        entity.transform.up = target.transform.position - entity.transform.position;
-    }
+		Vector2 direction = target.transform.position - entity.transform.position;
+		float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
+		entity.transform.rotation = Quaternion.Euler(Vector3.forward * angle);
+	}
 
     /// <summary>
     /// Set entities state to attack after an amount of time
@@ -71,6 +73,6 @@ public class IWarning : MonoBehaviour, IState
     /// <returns></returns>
     float GetRadiusToTarget()
     {
-        return Vector3.Distance(entity.gameObject.transform.position, target.gameObject.transform.position);
+        return Vector2.Distance(entity.gameObject.transform.position, target.gameObject.transform.position);
     }
 }

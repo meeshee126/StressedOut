@@ -129,7 +129,7 @@ public class IWander : MonoBehaviour, IState
     /// </summary>
     public void AssignRandomRotation()
     {
-        entity.characterRB.velocity = new Vector3(0f, 0f);
+        entity.characterRB.velocity = new Vector2(0f, 0f);
 
         // Set a random Waiting time
         entity.waitTime = Random.Range(0f, 5f);
@@ -146,6 +146,6 @@ public class IWander : MonoBehaviour, IState
     /// <returns></returns>
     float GetRadiusToTarget()
     {
-        return Vector3.Distance(entity.facingDirection.transform.position, target.gameObject.transform.position);
+        return Vector2.Distance(entity.facingDirection.transform.position, target.gameObject.transform.position);
     }
 }
