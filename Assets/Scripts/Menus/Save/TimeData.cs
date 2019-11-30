@@ -15,7 +15,7 @@ public class TimeData
     public TimeData(Timer timer)
 	{
         day = timer.dayCounter;
-		seconds = timer.seconds;
-        minutes = timer.minutes;
+		seconds = timer.time.Seconds;
+        minutes = timer.time.Minutes;
 	}
 }

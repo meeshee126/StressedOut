@@ -165,4 +165,40 @@ public static class SaveSystem
 			return null;
 		}
 	}
+
+    public static void SaveSun(Sun sun)
+    {
+        BinaryFormatter formatter = new BinaryFormatter();
+        string path = Application.persistentDataPath + "/sun.fun";
+        FileStream stream = new FileStream(path, FileMode.Create);
+
+        SunData data = new SunData(sun);
+
+        formatter.Serialize(stream, data);
+        stream.Close();
+    }
+
+    /// <summary>
+    /// Load the Datas from the Time
+    /// </summary>
+    /// <returns></returns>
+    public static SunData LoadSun()
+    {
+        string path = Application.persistentDataPath + "/sun.fun";
+        if (true)
+        {
+            BinaryFormatter formatter = new BinaryFormatter();
+            FileStream stream = new FileStream(path, FileMode.Open);
+
+            SunData data = formatter.Deserialize(stream) as SunData;
+            stream.Close();
+
+            return data;
+        }
+        else
+        {
+            Debug.LogError("Save file not found in " + path);
+            return null;
+        }
+    }
 }

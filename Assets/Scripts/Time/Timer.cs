@@ -70,9 +70,7 @@ public class Timer : MonoBehaviour
         SetDay();
         TimerCountdown();
         CheckDayTime();
-        SetBackground();
-
-        
+        SetBackground();     
     }
 
     /// <summary>
@@ -193,7 +191,7 @@ public class Timer : MonoBehaviour
                 }
 
                 //If wave in night is killed
-                if ((Input.GetKeyDown(KeyCode.Alpha1) || dayOver) && !coroutineStarted )
+                if (dayOver && !coroutineStarted)
                 {
                     dayOver = false;
                     NewDay();
@@ -219,6 +217,7 @@ public class Timer : MonoBehaviour
     IEnumerator FadeIn()
     {
         coroutineStarted = true;
+
         yield return new WaitForSeconds(1.8f);
 
         //counting day
@@ -229,18 +228,18 @@ public class Timer : MonoBehaviour
 
         //reset timer
         time = new TimeSpan(0, minutes, seconds);
-        //reset sun
-        sunScript.sliderSeted = false;
-
+       
         //Generate new area objects
         GenerateNewMap();
-
-        musicSeted = false;
 
         //Reset Day Time
         currentDayTime = DayTime.Day;
 
-        
+        musicSeted = false;
+
+        //reset sun
+        sunScript.sliderSeted = false;
+
         dayOver = false;
 
         //Fade In

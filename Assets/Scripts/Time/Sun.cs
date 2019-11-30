@@ -19,8 +19,13 @@ public class Sun : MonoBehaviour
     [HideInInspector]
     public bool sliderSeted = false;
 
+    [HideInInspector]
+    public float maxValue;
+
     Timer timer;
     Image image;
+
+   
 
     void Start()
     {
@@ -44,7 +49,8 @@ public class Sun : MonoBehaviour
         if (!sliderSeted)
         {
             //set slider max value with with total ingame time
-            slider.maxValue = timer.TotalTimeInSeconds();
+            maxValue = timer.TotalTimeInSeconds();
+            slider.maxValue = maxValue;
             sliderSeted = true;
         }
 
@@ -60,5 +66,21 @@ public class Sun : MonoBehaviour
         //changes sun color while sunset
         image.color = Color.Lerp(red, yellow, slider.normalizedValue >
                      (timer.panicTimer / 100) ? slider.normalizedValue : (timer.panicTimer / 100));
+    }
+
+    public void SaveSun()
+    {
+        SaveSystem.SaveSun(this);
+    }
+
+    //Henrik Hafner
+    // Load the SaveFiles to the Timer and changed the Time
+    public void LoadSun()
+    {
+        SunData data = SaveSystem.LoadSun();
+
+        //Michael Schmidt
+        slider.maxValue = data.maxValue;
+        sliderSeted = data.sliderCondition;
     }
 }
