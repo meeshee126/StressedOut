@@ -50,6 +50,7 @@ public class Timer : MonoBehaviour
     bool showPanicTimer;
     bool musicSeted;
     bool coroutineStarted;
+    bool entitiesSpawned;
 
 
     void Start()
@@ -170,8 +171,20 @@ public class Timer : MonoBehaviour
 
             case DayTime.Night:
 
+                EntityGenerator[] entityGenerators = GameObject.FindObjectsOfType<EntityGenerator>();
+
                 //disable UI Timer
                 uiPanicTimer.text = "";
+
+                if (!entitiesSpawned)
+                {
+                    for (int i = 0; i < entityGenerators.Length; i++)
+                    {
+                        entityGenerators[i].GenerateEntities();
+                    }
+
+                    entitiesSpawned = true;
+                }       
 
                 if (!musicSeted)
                 {
@@ -216,9 +229,16 @@ public class Timer : MonoBehaviour
 
     IEnumerator FadeIn()
     {
+        GameObject[] enemys = GameObject.FindGameObjectsWithTag("Enemy");
+
         coroutineStarted = true;
 
         yield return new WaitForSeconds(1.8f);
+
+        for (int i = 0; i < enemys.Length; i++)
+        {
+            Destroy(enemys[i]);
+        }
 
         //counting day
         dayCounter++;
@@ -242,6 +262,8 @@ public class Timer : MonoBehaviour
 
         dayOver = false;
 
+        entitiesSpawned = false;
+
         //Fade In
         coroutineStarted = false;
         fadeToBlack.SetBool("FadeToBlack", false);
@@ -256,7 +278,7 @@ public class Timer : MonoBehaviour
         GameObject[] areaObjects = GameObject.FindGameObjectsWithTag("Gatherable");
 
         //get all object generators and add it to an array
-        ObjectGeneration[] objectGenerators = GameObject.FindObjectsOfType<ObjectGeneration>();
+        ObjectGenerator[] objectGenerators = GameObject.FindObjectsOfType<ObjectGenerator>();
 
         //destroy all gatherable objects
         for (int i = 0; i < areaObjects.Length; i++)

@@ -83,7 +83,8 @@ MonoBehaviour:
   Iron: {fileID: 5086106862817272547}
   Ruin: {fileID: 7686822299216152928}
   mySprite: {fileID: 4121657893406843368}
-  buildFX: {fileID: 5647251658886864132, guid: ab10975aa61049a4785d6e55ec9fa3c7, type: 3}
+  buildSFX: {fileID: 5647251658886864132, guid: ab10975aa61049a4785d6e55ec9fa3c7,
+    type: 3}
   maxHealth: 200
   health: 100
 --- !u!212 &4121657893406843368
