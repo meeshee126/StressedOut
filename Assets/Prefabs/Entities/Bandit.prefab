@@ -228,7 +228,11 @@ MonoBehaviour:
   SlowedFX: {fileID: 0}
   DazedFX: {fileID: 0}
   StunnedFX: {fileID: 0}
+  DestroyFX: {fileID: 9023476143831567709, guid: ee8f50f72029c42478f0c4d9bbf37212,
+    type: 3}
+  destroySound: {fileID: 8300000, guid: 914a4a2a124d040df96bf13308aadc2e, type: 3}
   characterCapsuleCollider: {fileID: 0}
   characterAnimator: {fileID: 0}
   characterRB: {fileID: 0}
   stats: {fileID: 0}
+  audioSource: {fileID: 0}

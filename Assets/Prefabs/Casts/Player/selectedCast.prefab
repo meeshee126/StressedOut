@@ -52,12 +52,12 @@ MonoBehaviour:
   CastingTime: -0.50540245
   Duration: 1
   BurstWait: 0.5
-  Cooldown: -0.0041861683
+  Cooldown: -0.013798529
   StartBurstWait: 0.5
   ChildAbilityWait: 0
   isBoxDirectionalExpanding: 0
-  Position_X: 0
-  Position_Y: 0
+  Position_X: 3.68
+  Position_Y: -3.24
   boxColliderX: 30
   boxColliderY: 30
   circleColliderRadius: 0

@@ -17,7 +17,7 @@ public class Bandit : Entity
     }
 
     void Update()
-    {
+    {   
         //Call functions
         brain.Update();
     }

@@ -29,7 +29,7 @@ public class GeneratorManager : MonoBehaviour
         this.colliders = colliders;
     }
 
-    public void SpawnObject(GameObject generator)
+    public void SpawnObject(Transform generator)
     {
         int dropCount = Random.Range(spawnMin, spawnMax);
 
@@ -44,14 +44,14 @@ public class GeneratorManager : MonoBehaviour
         {
             do
             {
-                spawnPosition = generator.transform.position + new Vector3(Random.Range(-offset.x / 2, offset.x / 2),
+                spawnPosition = generator.position + new Vector3(Random.Range(-offset.x / 2, offset.x / 2),
                                                                            Random.Range(-offset.y / 2, offset.y / 2), 0);
 
                 canSpawnHere = PreventSpawnOverlap(spawnPosition, generator);
 
                 if (canSpawnHere)
                 {
-                    GameObject newObject = Instantiate(spawnObject, spawnPosition, Quaternion.identity, generator.transform) as GameObject;
+                    GameObject newObject = Instantiate(spawnObject, spawnPosition, Quaternion.identity, generator) as GameObject;
                     break;
                 }
                 catcher++;
@@ -65,9 +65,9 @@ public class GeneratorManager : MonoBehaviour
         }
     }
 
-    bool PreventSpawnOverlap(Vector3 spawnPosition, GameObject generator)
+    bool PreventSpawnOverlap(Vector3 spawnPosition, Transform generator)
     {
-        colliders = Physics2D.OverlapCircleAll(generator.transform.position, radius, mask);
+        colliders = Physics2D.OverlapCircleAll(generator.position, radius, mask);
 
         for (int i = 0; i < colliders.Length; i++)
         {

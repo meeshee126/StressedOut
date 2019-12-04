@@ -15,6 +15,8 @@ public class GenerateBase : MonoBehaviour
     public GameObject Stone;
     public GameObject Ruin;
     public SpriteRenderer mySprite;
+    public GameObject buildFX;
+
 	ResourceManager resourceManager;
 	TimeBehaviour timeBehaviour;
 
@@ -27,7 +29,7 @@ public class GenerateBase : MonoBehaviour
 
 		timeBehaviour = GameObject.Find("GameManager").GetComponent<TimeBehaviour>();
 
-		mySprite.enabled = false;
+        mySprite.enabled = false;
     }
 
     void Update()
@@ -138,7 +140,10 @@ public class GenerateBase : MonoBehaviour
 
             buildPhase = "Wood";
 
+            if (buildFX != null) Instantiate(buildFX, this.transform.position, Quaternion.identity);
+
 			timeBehaviour.timeCost = timeBehaviour.crafting;
+
 		}
 
         else if (doBuild == true && isBuild == true && Stone.gameObject.activeSelf == false && Input.GetKeyDown(KeyCode.F) && resourceManager.wood >= 20 && resourceManager.stone >= 10 && health == maxHealth)
@@ -154,7 +159,9 @@ public class GenerateBase : MonoBehaviour
 
             buildPhase = "Stone";
 
-			timeBehaviour.timeCost = timeBehaviour.crafting;
+            if (buildFX != null) Instantiate(buildFX, this.transform);
+
+            timeBehaviour.timeCost = timeBehaviour.crafting;
 		}
     }
 

@@ -47,7 +47,11 @@ public class Entity : MonoBehaviour
     [Header("FX")]
     [Space]
     public GameObject HurtFX;
-    public GameObject HurtCriticalFX, SlowedFX, DazedFX, StunnedFX;
+    public GameObject HurtCriticalFX, SlowedFX, DazedFX, StunnedFX, DestroyFX;
+
+    [Header("Audio")]
+    [SerializeField]
+    AudioClip destroySound;
 
     [Space(10)]
     [Header("Other..")]
@@ -56,8 +60,7 @@ public class Entity : MonoBehaviour
     public Animator characterAnimator;
     public Rigidbody2D characterRB;
     public Stats stats;
-
-
+    public AudioSource audioSource;
 
     private void Awake()
     {
@@ -65,6 +68,7 @@ public class Entity : MonoBehaviour
         characterCapsuleCollider = GetComponent<CapsuleCollider2D>();
         characterAnimator = GetComponent<Animator>();
         characterRB = GetComponent<Rigidbody2D>();
+        audioSource = GetComponent<AudioSource>();
         target = GameObject.Find("Player");
         stats = GetComponent<Stats>();
     }
@@ -75,8 +79,13 @@ public class Entity : MonoBehaviour
         if (stats.health <= 0)
         {
             if (timeBeforeDestroy > 0f) timeBeforeDestroy -= Time.deltaTime;
-            if (timeBeforeDestroy <= 0f) Destroy(gameObject);
-            
+            if (timeBeforeDestroy <= 0f)
+            {
+                if (DestroyFX != null) Instantiate(DestroyFX, transform.position, Quaternion.identity);
+                Destroy(gameObject);
+            }
+
+
             //Dead();
             // Make a state system of unborn, alive, dead, etc.. probably in Stats.cs
             // By that handle the states and delete enemy only after 5 minutes or so idk..
@@ -101,7 +110,6 @@ public class Entity : MonoBehaviour
     
     bool Dead()
     { return false; }
-
 
     /// <summary>
     /// Reduces Entity's health by ~damage

@@ -36,6 +36,8 @@ public class GatheringManager : MonoBehaviour
     [SerializeField]
     GameObject ressource;
 
+    public Gathering gathering;
+
     GeneratorManager generatorManager;
     Collider2D[] colliders;
     SpriteRenderer spriteRenderer;
@@ -81,12 +83,23 @@ public class GatheringManager : MonoBehaviour
 
     private void OnTriggerStay2D(Collider2D collision)
     {
-        if (collision.gameObject.name == "Player" && timer.currentDayTime == Timer.DayTime.Day && !cooldown)
+        if (collision.gameObject.name == "Player" && timer.currentDayTime == Timer.DayTime.Day)
         {
             transform.GetChild(0).gameObject.SetActive(true);
 
             if(Input.GetKeyDown(KeyCode.F))
             {
+                switch (this.gameObject.name)
+                {
+                    default: gathering = Gathering.None;
+                        break;
+                    case "Tree": gathering = Gathering.Tree;
+                        break;
+                    case "Stone": gathering = Gathering.Stone;
+                        break;
+                    case "IronCore": gathering = Gathering.Iron;
+                        break;
+                }
                 StartQuickTimeEvent();
             }
 
@@ -94,12 +107,10 @@ public class GatheringManager : MonoBehaviour
             {
                 this.gameObject.GetComponent<CircleCollider2D>().enabled = false;
                 letterEvent.won = false;
-                generatorManager.SpawnObject(this.gameObject);
+                generatorManager.SpawnObject(this.transform);
                 ChangeSprite();
                
             }
-
-
         }
     }
     
@@ -129,6 +140,14 @@ public class GatheringManager : MonoBehaviour
     void ChangeSprite()
     {
         spriteRenderer.sprite = decomposed;
+    }
+
+    public enum Gathering
+    {
+        None,
+        Tree,
+        Stone,
+        Iron
     }
 
     private void OnDrawGizmosSelected()

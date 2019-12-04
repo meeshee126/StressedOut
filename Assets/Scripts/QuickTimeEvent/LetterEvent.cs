@@ -18,6 +18,18 @@ public class LetterEvent : MonoBehaviour
     //read how many letters will spawn 
     int count;
 
+    [Header("Audio")]
+    [SerializeField]
+    GameObject gatherTreeFX;
+    [SerializeField]
+    GameObject gatherStoneFX;
+    [SerializeField]
+    GameObject gatherIronFX;
+    [SerializeField]
+    GameObject winFX;
+    [SerializeField]
+    GameObject loseFX;
+
     [SerializeField]
     //List for all assigned letter prefabs
     List<GameObject> letters = new List<GameObject>();
@@ -85,6 +97,8 @@ public class LetterEvent : MonoBehaviour
         //low cost for time behaviour
         timeBehaviour.timeCost = timeBehaviour.winQuickTimeEvent;
 
+        if (winFX != null) Instantiate(winFX, player.transform.position, Quaternion.identity);
+
         QuitLetterEvent();
 
         won = true;
@@ -99,6 +113,8 @@ public class LetterEvent : MonoBehaviour
 
         //middle cost for time behaviour
         timeBehaviour.timeCost = timeBehaviour.loseQuickTimeEvent;
+
+        if (loseFX != null) Instantiate(loseFX, player.transform.position, Quaternion.identity);
 
         QuitLetterEvent();
 

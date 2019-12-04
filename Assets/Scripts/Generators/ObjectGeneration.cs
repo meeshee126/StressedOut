@@ -50,7 +50,7 @@ public class ObjectGeneration : MonoBehaviour
                                                               spacing, spawnMin, spawnMax,
                                                               areaObject, colliders);
 
-        generatorManager.SpawnObject(this.gameObject);
+        generatorManager.SpawnObject(this.transform);
     }
 
     private void OnDrawGizmosSelected()
