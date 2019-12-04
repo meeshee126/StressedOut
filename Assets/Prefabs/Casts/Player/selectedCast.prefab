@@ -44,15 +44,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7c1e778a6c55b18479fa3f999eed0031, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  CastName: First-MainAttack
+  CastName: Entry-Attack
   isCircle: 0
   HitAllEntities: 0
-  Damage: 5
+  Damage: 1
   Bursts: 1
   CastingTime: -0.50540245
   Duration: 1
   BurstWait: 0.5
-  Cooldown: -0.002534626
+  Cooldown: -0.013798529
   StartBurstWait: 0.5
   ChildAbilityWait: 0
   isBoxDirectionalExpanding: 0
