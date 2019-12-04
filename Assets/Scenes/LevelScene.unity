@@ -2196,12 +2196,12 @@ PrefabInstance:
       value: 
       objectReference: {fileID: -8602614506546368107, guid: 3d66510a1391d1c43ad113e5d40de500,
         type: 3}
-    - target: {fileID: 7686822299216152928, guid: fb273886b76029847a35359044bdca30,
+    - target: {fileID: 3317899606923338431, guid: fb273886b76029847a35359044bdca30,
         type: 3}
       propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 3317899606923338431, guid: fb273886b76029847a35359044bdca30,
+    - target: {fileID: 7686822299216152928, guid: fb273886b76029847a35359044bdca30,
         type: 3}
       propertyPath: m_IsActive
       value: 0
@@ -3475,12 +3475,8 @@ MonoBehaviour:
   player: {fileID: 1628602502}
   offset: {x: 2.15, y: 0, z: 0}
   count: 3
-  gatherTreeFX: {fileID: 3288837111848253310, guid: c3c7673125743134382faf8198b1ac3b,
-    type: 3}
-  gatherStoneFX: {fileID: 0}
-  gatherIronFX: {fileID: 0}
-  winFX: {fileID: 3496542038964633804, guid: 8e1ad7eff8390654fa3ababa57b7058b, type: 3}
-  loseFX: {fileID: 3695914426684331335, guid: c05306a683842c54b8eac8638069e9a0, type: 3}
+  winSFX: {fileID: 3496542038964633804, guid: 8e1ad7eff8390654fa3ababa57b7058b, type: 3}
+  loseSFX: {fileID: 3695914426684331335, guid: c05306a683842c54b8eac8638069e9a0, type: 3}
   letters:
   - {fileID: 5673344627685998683, guid: 017e9d9802913d940aac04f688130c9c, type: 3}
   - {fileID: 4837937408785641483, guid: 2e0475205c3f824409dd47a812fc35ae, type: 3}
@@ -7038,12 +7034,12 @@ PrefabInstance:
       value: 
       objectReference: {fileID: -8602614506546368107, guid: 3d66510a1391d1c43ad113e5d40de500,
         type: 3}
-    - target: {fileID: 7686822299216152928, guid: fb273886b76029847a35359044bdca30,
+    - target: {fileID: 3317899606923338431, guid: fb273886b76029847a35359044bdca30,
         type: 3}
       propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 3317899606923338431, guid: fb273886b76029847a35359044bdca30,
+    - target: {fileID: 7686822299216152928, guid: fb273886b76029847a35359044bdca30,
         type: 3}
       propertyPath: m_IsActive
       value: 0

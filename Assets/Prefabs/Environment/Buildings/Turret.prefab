@@ -123,7 +123,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   projectile: {fileID: 2841624533096392277, guid: b60604e53e1dc264d8b955f283227573,
     type: 3}
-  fireFX: {fileID: 1138747650911354948, guid: a7369bf579823d642841999f25444077, type: 3}
+  fireSFX: {fileID: 1138747650911354948, guid: a7369bf579823d642841999f25444077, type: 3}
 --- !u!1 &95034656383531187
 GameObject:
   m_ObjectHideFlags: 0
@@ -247,7 +247,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   projectile: {fileID: 1765985032368114802, guid: b3292ec0777233144be9fad98ef57b27,
     type: 3}
-  fireFX: {fileID: 1138747650911354948, guid: a7369bf579823d642841999f25444077, type: 3}
+  fireSFX: {fileID: 1138747650911354948, guid: a7369bf579823d642841999f25444077, type: 3}
 --- !u!1 &95034657382472155
 GameObject:
   m_ObjectHideFlags: 0
@@ -329,7 +329,8 @@ MonoBehaviour:
   Stone: {fileID: 95034655831807091}
   Ruin: {fileID: 480722473988368134}
   mySprite: {fileID: 5640010576981606939}
-  buildFX: {fileID: 5647251658886864132, guid: ab10975aa61049a4785d6e55ec9fa3c7, type: 3}
+  buildSFX: {fileID: 5647251658886864132, guid: ab10975aa61049a4785d6e55ec9fa3c7,
+    type: 3}
   maxHealth: 100
   health: 100
 --- !u!212 &5640010576981606939

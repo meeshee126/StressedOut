@@ -15,7 +15,7 @@ public class GenerateBase : MonoBehaviour
     public GameObject Stone;
     public GameObject Ruin;
     public SpriteRenderer mySprite;
-    public GameObject buildFX;
+    public GameObject buildSFX;
 
 	ResourceManager resourceManager;
 	TimeBehaviour timeBehaviour;
@@ -140,7 +140,7 @@ public class GenerateBase : MonoBehaviour
 
             buildPhase = "Wood";
 
-            if (buildFX != null) Instantiate(buildFX, this.transform.position, Quaternion.identity);
+            if (buildSFX != null) Instantiate(buildSFX, this.transform.position, Quaternion.identity);
 
 			timeBehaviour.timeCost = timeBehaviour.crafting;
 
@@ -159,7 +159,7 @@ public class GenerateBase : MonoBehaviour
 
             buildPhase = "Stone";
 
-            if (buildFX != null) Instantiate(buildFX, this.transform);
+            if (buildSFX != null) Instantiate(buildSFX, this.transform);
 
             timeBehaviour.timeCost = timeBehaviour.crafting;
 		}
