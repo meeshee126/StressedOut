@@ -10,7 +10,7 @@ public class Turret : MonoBehaviour
     float distance;
 
     public GameObject projectile;
-    public GameObject fireSFX;
+    public GameObject fireFX;
 
     private GameObject enemy;
 
@@ -38,7 +38,7 @@ public class Turret : MonoBehaviour
                     
 					timeBtwShots = startTimeBtwShots;
 
-                    if (fireSFX != null) Instantiate(fireSFX, this.transform.position, Quaternion.identity);
+                    if (fireFX != null) Instantiate(fireFX, this.transform.position, Quaternion.identity);
 				}
 				else
 				{

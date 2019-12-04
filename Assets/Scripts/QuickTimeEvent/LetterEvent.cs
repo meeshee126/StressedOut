@@ -20,21 +20,23 @@ public class LetterEvent : MonoBehaviour
 
     [Header("Audio")]
     [SerializeField]
-    GameObject winSFX;
+    GameObject gatherTreeFX;
     [SerializeField]
-    GameObject loseSFX;
+    GameObject gatherStoneFX;
+    [SerializeField]
+    GameObject gatherIronFX;
+    [SerializeField]
+    GameObject winFX;
+    [SerializeField]
+    GameObject loseFX;
 
     [SerializeField]
     //List for all assigned letter prefabs
     List<GameObject> letters = new List<GameObject>();
 
-    Timer timer;
     TimeBehaviour timeBehaviour;
 
     GameObject placeHolder;
-
-    [HideInInspector]
-    public GameObject gatherSound;
 
     [HideInInspector]
     public int correctInput = 0;
@@ -44,27 +46,17 @@ public class LetterEvent : MonoBehaviour
 
     void Start()
     {
-        timer = GameObject.Find("GameManager").GetComponent<Timer>();
         timeBehaviour = GameObject.Find("GameManager").GetComponent<TimeBehaviour>();
     }
 
     void Update()
     {
-        CheckDayTime();
         CheckWinSituation();
     }
 
     void LateUpdate()
     {
         SpawnLetter();
-    }
-
-    void CheckDayTime()
-    {
-        if(timer.currentDayTime != Timer.DayTime.Day)
-        {
-            QuitLetterEvent();
-        }
     }
 
     /// <summary>
@@ -105,7 +97,7 @@ public class LetterEvent : MonoBehaviour
         //low cost for time behaviour
         timeBehaviour.timeCost = timeBehaviour.winQuickTimeEvent;
 
-        if (winSFX != null) Instantiate(winSFX, player.transform.position, Quaternion.identity);
+        if (winFX != null) Instantiate(winFX, player.transform.position, Quaternion.identity);
 
         QuitLetterEvent();
 
@@ -122,7 +114,7 @@ public class LetterEvent : MonoBehaviour
         //middle cost for time behaviour
         timeBehaviour.timeCost = timeBehaviour.loseQuickTimeEvent;
 
-        if (loseSFX != null) Instantiate(loseSFX, player.transform.position, Quaternion.identity);
+        if (loseFX != null) Instantiate(loseFX, player.transform.position, Quaternion.identity);
 
         QuitLetterEvent();
 

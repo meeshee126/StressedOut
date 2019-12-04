@@ -5,7 +5,7 @@ using System.Linq;
 
 //Michael Schmidt
 //Henrick Hafner
-public class ObjectGenerator : MonoBehaviour
+public class ObjectGeneration : MonoBehaviour
 {
     [Header("Set Spawn offset")]
     [SerializeField]
@@ -31,12 +31,15 @@ public class ObjectGenerator : MonoBehaviour
 
     int spawnCount;
 
+    Timer timer;
     Collider2D[] colliders;
     GeneratorManager generatorManager;
     public List<GameObject> list = new List<GameObject>();
 
     public void Awake()
     {
+        timer = GameObject.Find("GameManager").GetComponent<Timer>();
+
         Generation();
     }
 

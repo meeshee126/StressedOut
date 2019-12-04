@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 4658548978539822719}
   - component: {fileID: 4658548978539822717}
   - component: {fileID: 4658548978539822718}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: TextGather
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -242,8 +242,6 @@ MonoBehaviour:
   dropMin: 3
   dropMax: 3
   ressource: {fileID: 7818259745178180145, guid: 3210048809e4ffc46958f55b2ad03809,
-    type: 3}
-  gatherSFX: {fileID: 1894752920469661790, guid: f1a50c531238a5d45a839072a38cf314,
     type: 3}
   cooldown: 0
   count: 0

@@ -12,11 +12,7 @@ public class Letter : MonoBehaviour
     [SerializeField]
     float timeToDestroy;
 
-    Transform player;
-
-    Timer timer;
-
-    LetterEvent letterEvent;
+    LetterEvent quickTimeEvent;
 
     float count;
 
@@ -24,11 +20,7 @@ public class Letter : MonoBehaviour
 
     void Start()
     {
-        timer = GameObject.Find("GameManager").GetComponent<Timer>();
-
-        player = GameObject.Find("Player").GetComponent<Transform>();
-
-        letterEvent = GameObject.Find("QuickTimeEvent").GetComponent<LetterEvent>();
+        quickTimeEvent = GameObject.Find("QuickTimeEvent").GetComponent<LetterEvent>();
 
         //Get last letter from this gameobject name and it to lower case letter 
         character = this.gameObject.name.Substring(6).Remove(1).ToLower();
@@ -36,18 +28,9 @@ public class Letter : MonoBehaviour
 
     void Update()
     {
-        CheckDayTime();
         Move();
         PressKey();
-        Fail();
-    }
-
-    void CheckDayTime()
-    {
-        if(timer.currentDayTime != Timer.DayTime.Day)
-        {
-            Destroy(this.gameObject);
-        }
+        Destroy();
     }
 
     /// <summary>
@@ -72,8 +55,7 @@ public class Letter : MonoBehaviour
             if (Input.GetKeyDown(character))
             {
                 //count up correct input
-                letterEvent.correctInput++;
-                if (letterEvent.gatherSound != null) Instantiate(letterEvent.gatherSound, player.position, Quaternion.identity);
+                quickTimeEvent.correctInput++;
                 Destroy(this.gameObject);
             }
 
@@ -81,7 +63,7 @@ public class Letter : MonoBehaviour
             else
             {
                 //QuickTimeEvent failed
-                letterEvent.Fail();
+                quickTimeEvent.Fail();
                 Destroy(this.gameObject);
             }
         }
@@ -90,7 +72,7 @@ public class Letter : MonoBehaviour
     /// <summary>
     /// Destroy Gameobject if user gives not an input
     /// </summary>
-    void Fail()
+    void Destroy()
     {
         count += Time.deltaTime;
 
@@ -98,7 +80,7 @@ public class Letter : MonoBehaviour
         if (timeToDestroy < count)
         {
             Destroy(this.gameObject);
-            letterEvent.Fail();
+            quickTimeEvent.Fail();
         }
     }
 }
