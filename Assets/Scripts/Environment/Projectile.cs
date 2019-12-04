@@ -7,26 +7,26 @@ public class Projectile : MonoBehaviour
 {
     float speed = 20;
 
-    private Transform enemy;
-    private Vector2 target;
+    private GameObject enemy;
+    //private Vector2 target;
 
 	Entity entity;
 
 	private void Start()
     {
-        enemy = GameObject.FindGameObjectWithTag("Enemy").transform;
-
-        target = new Vector2(enemy.position.x, enemy.position.y);
+        //target = new Vector2(enemy.position.x, enemy.position.y);
 
 		entity = GameObject.FindWithTag("Enemy").GetComponent<Entity>();
 	}
 
     private void Update()
     {
-		//The projectile move himself to the target
-        transform.position = Vector2.MoveTowards(transform.position, target, speed * Time.deltaTime);
+		FindClosestEnemy();
 
-        if (transform.position.x == target.x && transform.position.y == target.y)
+		//The projectile move himself to the target
+		transform.position = Vector2.MoveTowards(transform.position, enemy.transform.position, speed * Time.deltaTime);
+
+        if (transform.position.x == enemy.transform.position.x && transform.position.y == enemy.transform.position.y)
         {
             Destroy(gameObject);
 			entity.TakeDamage(1);
@@ -34,7 +34,7 @@ public class Projectile : MonoBehaviour
 
         if (GameObject.FindWithTag("Enemy") != null)
         {
-            RotateTowards(enemy.position);
+            RotateTowards(enemy.transform.position);
         }
 
         else
@@ -42,6 +42,34 @@ public class Projectile : MonoBehaviour
             return;
         }
     }
+
+	/// <summary>
+	/// Find the closest enemy
+	/// </summary>
+	/// <returns></returns>
+	public float FindClosestEnemy()
+	{
+		float distance = Mathf.Infinity;
+
+		Vector3 position = transform.position;
+
+		GameObject[] gos;
+		gos = GameObject.FindGameObjectsWithTag("Enemy");
+
+		foreach (GameObject go in gos)
+		{
+			Vector3 diff = go.transform.position - position;
+
+			float curDistance = diff.sqrMagnitude;
+
+			if (curDistance < distance)
+			{
+				enemy = go;
+				distance = curDistance;
+			}
+		}
+		return distance;
+	}
 
 	/// <summary>
 	/// Select the enemys position to rotate the projectile to the enemy, so face the projectile always at the target
