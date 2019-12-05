@@ -15,12 +15,16 @@ public class WeaponStats : MonoBehaviour
     [Space(10)]
     public WeaponType type = WeaponType.none;
     [Range(-5,100)]
+    [Tooltip("Points")]
     public int damage = 1;
     [Range(0.1f, 10.0f)]
+    [Tooltip("Attacks per Second")]
     public float attackSpeed = 1f;
     [Range(0.1f, 100.0f)]
+    [Tooltip("Percentage")]
     public float criticalChance = 5f;
     [Range(1f, 10f)]
+    [Tooltip ("even if the damage is 1.8 with critical.. \n\r the damage infliction will be 1")]
     public float criticalDamageMultiplier = 2f;
     [Space(10)]
     public WeaponEnchantment enchantment = WeaponEnchantment.none;
