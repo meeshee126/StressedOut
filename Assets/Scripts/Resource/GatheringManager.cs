@@ -36,7 +36,9 @@ public class GatheringManager : MonoBehaviour
     [SerializeField]
     GameObject ressource;
 
-    public Gathering gathering;
+    [Header("Audio")]
+    [SerializeField]
+    GameObject gatherSFX;
 
     GeneratorManager generatorManager;
     Collider2D[] colliders;
@@ -89,17 +91,7 @@ public class GatheringManager : MonoBehaviour
 
             if(Input.GetKeyDown(KeyCode.F))
             {
-                switch (this.gameObject.name)
-                {
-                    default: gathering = Gathering.None;
-                        break;
-                    case "Tree": gathering = Gathering.Tree;
-                        break;
-                    case "Stone": gathering = Gathering.Stone;
-                        break;
-                    case "IronCore": gathering = Gathering.Iron;
-                        break;
-                }
+                letterEvent.gatherSound = gatherSFX;
                 StartQuickTimeEvent();
             }
 
@@ -142,13 +134,6 @@ public class GatheringManager : MonoBehaviour
         spriteRenderer.sprite = decomposed;
     }
 
-    public enum Gathering
-    {
-        None,
-        Tree,
-        Stone,
-        Iron
-    }
 
     private void OnDrawGizmosSelected()
     {

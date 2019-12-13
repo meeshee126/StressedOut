@@ -63,6 +63,11 @@ public class GeneratorManager : MonoBehaviour
                 }
             } while (true);
         }
+
+        foreach (Collider2D collider in colliders)
+        {
+            Debug.Log(collider.name);
+        }
     }
 
     bool PreventSpawnOverlap(Vector3 spawnPosition, Transform generator)

@@ -141,4 +141,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f4e2f702e76ca0849916a6117d0edc72, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+<<<<<<< HEAD
   clip: {fileID: 8300000, guid: 371c8fe7dbf754c66b5e7fc0e0fa8e1c, type: 3}
+=======
+  clip: {fileID: 8300000, guid: 371c8fe7dbf754c66b5e7fc0e0fa8e1c, type: 3}
+>>>>>>> parent of 0604f4e... Revert "Merge branch 'master' of https://github.com/meeshee126/StressedOut"
