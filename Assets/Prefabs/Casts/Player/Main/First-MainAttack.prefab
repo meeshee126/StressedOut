@@ -46,19 +46,19 @@ MonoBehaviour:
   CastName: First-MainAttack
   isCircle: 0
   HitAllEntities: 0
-  Damage: 5
-  Bursts: 1
-  CastingTime: -0.50540245
-  Duration: 1
-  BurstWait: 0.5
+  Damage: 1
+  Bursts: 2
+  CastingTime: 0.15
+  Duration: 0.3
+  BurstWait: 0.05
   Cooldown: 1
-  StartBurstWait: 0.5
+  StartBurstWait: 0
   ChildAbilityWait: 0
   isBoxDirectionalExpanding: 0
   Position_X: 3.68
   Position_Y: -3.24
-  boxColliderX: 30
-  boxColliderY: 30
+  boxColliderX: 3
+  boxColliderY: 3
   circleColliderRadius: 0
   ChildAbility: {fileID: 0}
   WhatCanItHit:
