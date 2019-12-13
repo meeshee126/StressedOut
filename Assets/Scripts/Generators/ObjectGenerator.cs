@@ -1,8 +1,11 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System.Linq;
 
-public class EntityGenerator : MonoBehaviour
+//Michael Schmidt
+//Henrick Hafner
+public class ObjectGenerator : MonoBehaviour
 {
     [Header("Set Spawn offset")]
     [SerializeField]
@@ -18,26 +21,31 @@ public class EntityGenerator : MonoBehaviour
 
     [Header("Spawn configurations")]
     [SerializeField]
-    [Range(0, 20)]
+    [Range(0,20)]
     int spawnMin;
     [SerializeField]
-    [Range(0, 20)]
+    [Range(0,20)]
     int spawnMax;
     [SerializeField]
-    GameObject entiyObject;
+    GameObject areaObject;
 
     int spawnCount;
 
     Collider2D[] colliders;
     GeneratorManager generatorManager;
     public List<GameObject> list = new List<GameObject>();
-    bool entitiesSpawned;
 
-    public void GenerateEntities()
+    public void Awake()
+    {
+        Generation();
+    }
+
+
+    public void Generation()
     {
         generatorManager = new GeneratorManager(offset, radius, mask,
                                                               spacing, spawnMin, spawnMax,
-                                                              entiyObject, colliders);
+                                                              areaObject, colliders);
 
         generatorManager.SpawnObject(this.transform);
     }

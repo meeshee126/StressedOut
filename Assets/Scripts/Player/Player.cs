@@ -41,10 +41,6 @@ public class Player : MonoBehaviour
     private GameObject gameManager;
     private ItemsList itemList;
 
-    #region Timers
-    private float invincibilityTimer;
-    #endregion
-
     [Header("Equipment")]
     [Space(15)]
     public GameObject playerHand;
@@ -55,9 +51,10 @@ public class Player : MonoBehaviour
     [Header("Abilities Related")]
     [Space(15)]
     public GameObject selectedAbility;
-    public float[] cooldownsListCopy;
-    public Dictionary<string, float> localCooldownsList;
-    
+    public GameObject ExampleAbility;
+    public GameObject[] libraryAbilityList;
+    public List<GameObject> LocalAbilityList;
+
 
     // Unity
     /// <summary>
@@ -81,12 +78,20 @@ public class Player : MonoBehaviour
 
     private void Start()
     {
-        cooldownsListCopy = new float[abilityLists.playerAbilities.Length];
+        LocalAbilityList = new List<GameObject>(abilityLists.playerAbilities);
 
-        for (int i = 0; i < cooldownsListCopy.Length; i++)
+        for (int i = 0; i < LocalAbilityList.Count; i++)
         {
-            cooldownsListCopy[i] = abilityLists.playerAbilities[i].GetComponent<Ability>().Cooldown;  
+            Debug.Log(LocalAbilityList[i].GetComponent<Ability>().CastName);
         }
+        //for (int i = 0; i < abilityLists.playerAbilities.Length; i++)
+        //{
+        //    List<GameObject> temporary = new List<GameObject>(abilityLists.playerAbilities);
+        //    LocalAbilityList.Add(ExampleAbility);
+        //    LocalAbilityList[i] = abilityLists.playerAbilities[i];
+        //    //ExampleAbility.GetComponent<Ability>().
+        //    //    SetValues(abilityLists.playerAbilities[i].GetComponent<Ability>());
+        //}
     }
 
 
@@ -174,31 +179,38 @@ public class Player : MonoBehaviour
     /// .. filters it to check wether it's still on cooldown..
     /// .. and finally instantiates it
     /// </summary>
-    private void ApplyAttackInput()
+    void ApplyAttackInput()
     {
         if (Input.GetKeyDown(KeyCode.Space))
         {
             GetAbility();
-            for (int i = 0; i < abilityLists.playerAbilities.Length; i++)
+            // CHECK WETHER THIS ABILITY IS ON COOLDOWN OR NOT
+            for (int i = 0; i < LocalAbilityList.Count; i++)
             {
-                if (selectedAbility.GetComponent<Ability>().CastName ==
-                    abilityLists.playerAbilities[i].GetComponent<Ability>().CastName)
+                if (selectedAbility.GetComponent<Ability>().CastName == LocalAbilityList[i].GetComponent<Ability>().CastName)
                 {
-                    if (cooldownsListCopy[i] > 0f)
+                    if (LocalAbilityList[i].GetComponent<Ability>().Cooldown > 0f)
                     {
-                        Debug.Log(selectedAbility.GetComponent<Ability>().CastName + " . . . is Still on cooldown . . .");
+                        Debug.Log(LocalAbilityList[i].GetComponent<Ability>().CastName + " . . . is Still on cooldown . . .");
                     }
-                    if (cooldownsListCopy[i] <= 0f)
+                    if (LocalAbilityList[i].GetComponent<Ability>().Cooldown <= 0f)
                     {
                         Instantiate(selectedAbility, transform.position, Quaternion.identity);
-                        cooldownsListCopy[i] = abilityLists.playerAbilities[i].GetComponent<Ability>().Cooldown;
+                        for (int j = 0; j < abilityLists.playerAbilities.Length; j++)
+                        {
+                            if (LocalAbilityList[i].GetComponent<Ability>().CastName ==
+                                abilityLists.playerAbilities[j].GetComponent<Ability>().CastName)
+                            {
+                                LocalAbilityList[i].GetComponent<Ability>().Cooldown =
+                                    abilityLists.playerAbilities[j].GetComponent<Ability>().Cooldown;
+                            }
+                        }
                     }
                 }
             }
         }
         CooldownManager();
     }
-
 
     // Dimitrios Kitsikidis
     /// <summary>
@@ -207,7 +219,7 @@ public class Player : MonoBehaviour
     /// .. and casts the correct attack based on that
     /// </summary>
     /// <returns> the obtained gameobject from the selected ability </returns>
-    private void GetAbility()
+    void GetAbility()
     {
         Item item = playerHand.GetComponent<Item>();
         if (item.itemType == Item.ItemType.weapon)
@@ -228,10 +240,6 @@ public class Player : MonoBehaviour
                 // Insert Bow Mechanics
             }
         }
-        if (item.itemType != Item.ItemType.weapon)
-        {
-            AbilitySelector("NonWeaponAttack");
-        }
 
         // Read from Combo manager
         // Filter thru the abilities available for the currently holding item
@@ -245,7 +253,7 @@ public class Player : MonoBehaviour
     /// </summary>
     /// <param name="selectedAbilityName"></param>
     /// <returns> the ability that matches the inputed name when the method got called </returns>
-    private void AbilitySelector(string selectedAbilityName)
+    public void AbilitySelector(string selectedAbilityName)
     {
         for (int i = 0; i < abilityLists.playerAbilities.Length; i++)
         {
@@ -268,13 +276,13 @@ public class Player : MonoBehaviour
     /// <summary>
     /// Simply allows all abilities that are on cooldown to run through the cooldown
     /// </summary>
-    private void CooldownManager()
+    public void CooldownManager()
     {
-        for (int i = 0; i < cooldownsListCopy.Length; i++)
+        for (int i = 0; i < LocalAbilityList.Count; i++)
         {
-            if (cooldownsListCopy[i] > 0f)
+            if (LocalAbilityList[i].GetComponent<Ability>().Cooldown > 0f)
             {
-                cooldownsListCopy[i] -= Time.deltaTime;
+                LocalAbilityList[i].GetComponent<Ability>().Cooldown -= Time.deltaTime;
                 //Debug.Log(LocalAbilityList[i].GetComponent<Ability>().Cooldown);
             }
         }
@@ -288,7 +296,7 @@ public class Player : MonoBehaviour
     /// </summary>
     /// <param name="list"></param>
     /// <returns> returns the closest collision found to this.gameobject </returns>
-    private Collider2D GetClosest(Collider2D[] list)
+    Collider2D GetClosest(Collider2D[] list)
     {
         Collider2D closestTarget = null;
         float closestDistance = 2f;
@@ -316,7 +324,7 @@ public class Player : MonoBehaviour
     /// ... the process of item pick-up
     /// <para>WARNING: Some components are incomplete</para>
     /// </summary>
-    private void ApplyItemHandlerInput()
+    public void ApplyItemHandlerInput()
     {
         Collider2D[] collisionsInCastArea = Physics2D.OverlapCircleAll(transform.position, 1f);
 
@@ -376,7 +384,7 @@ public class Player : MonoBehaviour
     /// <para>WARNING: It currently only works with weapons</para>
     /// </summary>
     /// <param name="pickedItem"></param>
-    private void ItemPickUp(GameObject pickedItem)
+    void ItemPickUp(GameObject pickedItem)
     {
         // Go thru item Collection
         for (int i = 0; i < itemList.itemCollection.Length; i++)
@@ -390,8 +398,7 @@ public class Player : MonoBehaviour
         }
     }
 
-
-    private void FoodSteps()
+    void FoodSteps()
     {
         audioSource.PlayOneShot(audioSource.clip);
     }
@@ -404,7 +411,7 @@ public class Player : MonoBehaviour
     /// <para>WARNING: method incomplete</para>
     /// </summary>
     /// <param name="collision"></param>
-    private void IfNoneItem(Collider2D collision)
+    void IfNoneItem(Collider2D collision)
     {
         if (collision.GetComponent<Item>().itemType == Item.ItemType.none)
         {
@@ -417,7 +424,7 @@ public class Player : MonoBehaviour
     /// Item handler if the Item the player just interacted with is type of      Resource
     /// </summary>
     /// <param name="collision"></param>
-    private void IfResourceItem(Collider2D collision)
+    void IfResourceItem(Collider2D collision)
     {
         if (collision.GetComponent<Item>().itemType == Item.ItemType.resource)
         {
@@ -436,7 +443,7 @@ public class Player : MonoBehaviour
     /// <para>WARNING: Method might be incomplete</para>
     /// </summary>
     /// <param name="collision"></param>
-    private void IfConsumableItem(Collider2D collision)
+    void IfConsumableItem(Collider2D collision)
     {
         if (collision.GetComponent<Item>().itemType == Item.ItemType.consumable)
         {
@@ -450,7 +457,7 @@ public class Player : MonoBehaviour
     /// Item handler if the Item the player just interacted with is type of      Weapon
     /// </summary>
     /// <param name="collision"></param>
-    private void IfWeaponItem(Collider2D collision)
+    void IfWeaponItem(Collider2D collision)
     {
         ItemPickUp(collision.gameObject);
         stats.currentCombo = 0;
@@ -462,7 +469,7 @@ public class Player : MonoBehaviour
     /// <para>WARNING: Method incomplete (Still under construction)</para>
     /// </summary>
     /// <param name="collision"></param>
-    private void IfArmorItem(Collider2D collision)
+    void IfArmorItem(Collider2D collision)
     {
         if (collision.GetComponent<Item>().itemType == Item.ItemType.armor)
         {
@@ -481,7 +488,7 @@ public class Player : MonoBehaviour
     /// <para>WARNING: method incomplete</para>
     /// </summary>
     /// <param name="collision"></param>
-    private void IfMiscellaneousItem(Collider2D collision)
+    void IfMiscellaneousItem(Collider2D collision)
     {
         if (collision.gameObject.GetComponent<Item>().itemType == Item.ItemType.miscelaneous)
         {
@@ -490,40 +497,5 @@ public class Player : MonoBehaviour
     }
     #endregion
 
-
-    /// <summary>
-    /// Reduces Players's health by ~damage
-    /// <para>Uses Customizeable invincibilityTimer</para>
-    /// <para>For Continuous Damaging</para>
-    /// <para>USAGE EXAMPLE: Poisoning damage of 1 every 1/4 of a second, etc.</para>
-    /// </summary>
-    /// <param name="damage">Amount of damage</param>
-    /// <param name="hitEverySoLong">in Seconds</param>
-    /// <param name="forSoLong">in Seconds</param>
-    public void TakeDamageContinuous(int damage, float hitEverySoLong, float forSoLong)
-    {
-        if (forSoLong > 0f && hitEverySoLong <= 0f)
-        {
-            if (stats.HurtVFX != null) Instantiate(stats.HurtVFX, gameObject.transform.position, Quaternion.identity);
-            stats.health -= damage;
-            Debug.Log("Damage DONE!!!  --  " + damage);
-        }
-    }
-
-
-    /// <summary>
-    /// Reduces Entity's health by ~damage
-    /// <para>Uses Default invincibilityTimer</para>
-    /// </summary>
-    /// <param name="damage">Amount of damage</param>
-    public void TakeDamage(int damage)
-    {
-        if (invincibilityTimer <= 0f)
-        {
-            if (stats.HurtVFX != null) Instantiate(stats.HurtVFX, gameObject.transform.position, Quaternion.identity);
-            stats.health -= damage;
-            Debug.Log("Damage DONE!!!  --  " + damage);
-        }
-    }
     // * To-Do - implement properly the casttimer     AND     Play animations code
 }

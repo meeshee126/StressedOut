@@ -46,19 +46,19 @@ MonoBehaviour:
   CastName: Entry-Attack
   isCircle: 0
   HitAllEntities: 0
-  Damage: 2
+  Damage: 1
   Bursts: 1
-  CastingTime: 0.1
-  Duration: 0.2
-  BurstWait: 0.1
-  Cooldown: 0.5
-  StartBurstWait: 0
+  CastingTime: -0.50540245
+  Duration: 1
+  BurstWait: 0.5
+  Cooldown: 1
+  StartBurstWait: 0.5
   ChildAbilityWait: 0
   isBoxDirectionalExpanding: 0
   Position_X: 3.68
   Position_Y: -3.24
-  boxColliderX: 3
-  boxColliderY: 3
+  boxColliderX: 30
+  boxColliderY: 30
   circleColliderRadius: 0
   ChildAbility: {fileID: 0}
   WhatCanItHit:
