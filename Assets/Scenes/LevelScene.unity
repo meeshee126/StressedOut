@@ -5918,9 +5918,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c019482daa8dfd9429d2ff8c6094ccc2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  minutes: 0
-  seconds: 5
-  panicTimer: 20
+  minutes: 4
+  seconds: 20
+  panicTimer: 12
   sun: {fileID: 1200453937}
   background: {fileID: 247979255}
   uiPanicTimer: {fileID: 374564962}
@@ -5928,11 +5928,11 @@ MonoBehaviour:
   uiNewDay: {fileID: 1170474673}
   fadeToBlack: {fileID: 1324703542}
   currentDayTime: 0
-  dayCounter: 0
-  dayOver: 0
-  backgroundMusic: {fileID: 1737240510}
   dayMusic: {fileID: 8300000, guid: 51615ea0c93f80647bc8def4a25f3b4c, type: 3}
   nightMusic: {fileID: 8300000, guid: c7ac4c859863c944cb104f8c5d2ab370, type: 3}
+  backgroundMusic: {fileID: 1737240510}
+  dayCounter: 0
+  dayOver: 0
 --- !u!4 &1034122285
 Transform:
   m_ObjectHideFlags: 0
@@ -5966,7 +5966,7 @@ MonoBehaviour:
   lowCost: 3
   middleCost: 4
   highCost: 5
-  duration: 1
+  duration: 1.5
   winQuickTimeEvent: 1
   loseQuickTimeEvent: 3
   crafting: 2
@@ -6026,7 +6026,6 @@ MonoBehaviour:
   AvailableSpotsList:
   - {fileID: 881330679}
   SetEnemiesList: []
-  enemiesDead: 0
 --- !u!1 &1040625333
 GameObject:
   m_ObjectHideFlags: 0
