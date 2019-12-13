@@ -13,8 +13,7 @@ public class GenerateBase : MonoBehaviour
 
     public GameObject Wood;
     public GameObject Stone;
-	public GameObject Iron;
-	public GameObject Ruin;
+    public GameObject Ruin;
     public SpriteRenderer mySprite;
     public GameObject buildSFX;
 
@@ -43,7 +42,6 @@ public class GenerateBase : MonoBehaviour
 			Ruin.gameObject.SetActive(true);
 			Wood.gameObject.SetActive(false);
 			Stone.gameObject.SetActive(false);
-			Iron.gameObject.SetActive(false);
 		}
 		else if (health < maxHealth)
 		{
@@ -94,38 +92,24 @@ public class GenerateBase : MonoBehaviour
             mySprite.enabled = false;
         }
 
-		//Make Resource Costs for build
-        if (Wood.gameObject.activeSelf == false && Stone.gameObject.activeSelf == false && Iron.gameObject.activeSelf == false && player.gameObject.tag == "Player" && doRepair == false)
+        if (Wood.gameObject.activeSelf == false && Stone.gameObject.activeSelf == false && player.gameObject.tag == "Player" && doRepair == false)
         {
             resourceManager.ResourceCosts("Wood_Chunk", "-10");
         }
-		else if (Wood.gameObject.activeSelf == true && Stone.gameObject.activeSelf == false && Iron.gameObject.activeSelf == false && player.gameObject.tag == "Player" && doRepair == false)
+		else if (Wood.gameObject.activeSelf == true && Stone.gameObject.activeSelf == false && player.gameObject.tag == "Player" && doRepair == false)
 		{
 			resourceManager.ResourceCosts("Wood_Chunk", "-20");
 			resourceManager.ResourceCosts("Stone_Chunk", "-10");
 		}
-		else if (Wood.gameObject.activeSelf == false && Stone.gameObject.activeSelf == true && Iron.gameObject.activeSelf == false && player.gameObject.tag == "Player" && doRepair == false)
-		{
-			resourceManager.ResourceCosts("Wood_Chunk", "-10");
-			resourceManager.ResourceCosts("Stone_Chunk", "-10");
-			resourceManager.ResourceCosts("Iron_Chunk", "-10");
-		}
 
-		//Make Resource Costs for repair
-		if (Wood.gameObject.activeSelf == true && Stone.gameObject.activeSelf == false && Iron.gameObject.activeSelf == false && player.gameObject.tag == "Player" && doRepair == true)
+		if (Wood.gameObject.activeSelf == true && Stone.gameObject.activeSelf == false && player.gameObject.tag == "Player" && doRepair == true)
 		{
 			resourceManager.ResourceCosts("Wood_Chunk", "-5");
 			resourceManager.ResourceCosts("Stone_Chunk", "");
 		}
-		else if (Wood.gameObject.activeSelf == false && Stone.gameObject.activeSelf == true && Iron.gameObject.activeSelf == false && player.gameObject.tag == "Player" && doRepair == true)
+		else if (Wood.gameObject.activeSelf == false && Stone.gameObject.activeSelf == true && player.gameObject.tag == "Player" && doRepair == true)
 		{
 			resourceManager.ResourceCosts("Wood_Chunk", "-10");
-			resourceManager.ResourceCosts("Stone_Chunk", "-5");
-		}
-		else if (Wood.gameObject.activeSelf == false && Stone.gameObject.activeSelf == false && Iron.gameObject.activeSelf == true && player.gameObject.tag == "Player" && doRepair == true)
-		{
-			resourceManager.ResourceCosts("Wood_Chunk", "-5");
-			resourceManager.ResourceCosts("Stone_Chunk", "-5");
 			resourceManager.ResourceCosts("Stone_Chunk", "-5");
 		}
 	}
@@ -179,26 +163,7 @@ public class GenerateBase : MonoBehaviour
 
             timeBehaviour.timeCost = timeBehaviour.crafting;
 		}
-
-		else if (doBuild == true && isBuild == true && Stone.gameObject.activeSelf == true && Iron.gameObject.activeSelf == false && Input.GetKeyDown(KeyCode.F) && resourceManager.wood >= 10 && resourceManager.stone >= 10 && resourceManager.iron >= 10 && health == maxHealth)
-		{
-			resourceManager.AddResource("Wood", -10);
-			resourceManager.AddResource("Stone_Chunk", -10);
-			resourceManager.AddResource("Iron_Chunk", -10);
-
-			Stone.gameObject.SetActive(false);
-			Iron.gameObject.SetActive(true);
-
-			health = 600;
-			maxHealth = 600;
-
-			buildPhase = "Iron";
-
-			if (buildFX != null) Instantiate(buildFX, this.transform);
-
-			timeBehaviour.timeCost = timeBehaviour.crafting;
-		}
-	}
+    }
 
     // Check if the building has been destroyed and check which was the last one to fix the right building again.
     void Repair()
@@ -216,7 +181,7 @@ public class GenerateBase : MonoBehaviour
 				Wood.gameObject.SetActive(true);
                 doRepair = false;
             }
-            else if (buildPhase == "Stone" && resourceManager.stone >= 10 && resourceManager.wood >= 5)
+            else if (buildPhase == "Stone" && resourceManager.stone >= 10)
             {
 				resourceManager.AddResource("Wood", -10);
 				resourceManager.AddResource("Stone_Chunk", -5);
@@ -224,15 +189,6 @@ public class GenerateBase : MonoBehaviour
 				Stone.gameObject.SetActive(true);
                 doRepair = false;
             }
-			else if (buildPhase == "Iron" && resourceManager.iron >= 5 && resourceManager.stone >= 5 && resourceManager.wood >= 5)
-			{
-				resourceManager.AddResource("Wood", -5);
-				resourceManager.AddResource("Stone_Chunk", -5);
-				resourceManager.AddResource("Iron_Chunk", -5);
-
-				Iron.gameObject.SetActive(true);
-				doRepair = false;
-			}
 
 			timeBehaviour.timeCost = timeBehaviour.crafting;
 		}
@@ -246,22 +202,12 @@ public class GenerateBase : MonoBehaviour
 
 				doRepair = false;
 			}
-			else if (buildPhase == "Stone" && resourceManager.stone >= 10 && resourceManager.wood >= 5)
+			else if (buildPhase == "Stone" && resourceManager.stone >= 10)
 			{
 				health = maxHealth;
 
 				resourceManager.AddResource("Wood", -10);
 				resourceManager.AddResource("Stone_Chunk", -5);
-
-				doRepair = false;
-			}
-			else if (buildPhase == "Iron" && resourceManager.iron >= 5 && resourceManager.stone >= 5 && resourceManager.wood >= 5)
-			{
-				health = maxHealth;
-
-				resourceManager.AddResource("Wood", -5);
-				resourceManager.AddResource("Stone_Chunk", -5);
-				resourceManager.AddResource("Iron_Chunk", -5);
 
 				doRepair = false;
 			}
