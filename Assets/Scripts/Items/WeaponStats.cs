@@ -13,12 +13,12 @@ public class WeaponStats : MonoBehaviour
 {
     [Header("Attributes")]
     [Space(10)]
-    public WeaponType type = WeaponType.none;
+    public WeaponType type = WeaponType.undefined;
     [Range(-5,100)]
     [Tooltip("Points")]
-    public int damage = 1;
+    public int damage = 0;
     [Range(0.1f, 10.0f)]
-    [Tooltip("Attacks per Second")]
+    [Tooltip("Divides Cast-Time by itself.")]
     public float attackSpeed = 1f;
     [Range(0.1f, 100.0f)]
     [Tooltip("Percentage")]
@@ -31,7 +31,7 @@ public class WeaponStats : MonoBehaviour
 
     public enum WeaponType
     {
-        none = 0,
+        undefined = -10,
         melee = 1,
         range = 2
     }

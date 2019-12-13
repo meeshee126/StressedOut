@@ -6,29 +6,24 @@ using UnityEngine;
 
 public class IWarning : MonoBehaviour, IState
 {
-    Entity entity;
+    private Entity entity;
 
     //get target from entityBehavior class
-    GameObject target => entity.target;
+    private GameObject target => entity.target;
 
-    float count;
-  
-    public IWarning(Entity entity)
-    {
-        this.entity = entity;
-    }
+    private float count;
+
+
+    public IWarning(Entity entity) => this.entity = entity;
+
 
     /// <summary>
-    /// Check this class Condition
+    /// Check if Target is INSIDE the Entity's(this) Observation Radius
     /// </summary>
     /// <returns></returns>
-    public bool Condition()
-    {
-        float distance = GetRadiusToTarget();
+    public bool Condition() => 
+        GetTargetDistance() <= entity.observationRadius;
 
-        //Check if target is inside entities radius
-        return distance <= this.entity.observationRadius;
-    }
 
     /// <summary>
     /// Execute this state
@@ -38,24 +33,22 @@ public class IWarning : MonoBehaviour, IState
         Debug.Log("Warning");
         entity.idle = false;
         entity.stats.movementSpeed = 3;
-        //LookAtTarget();
+        LookAtTarget();
         TimeToAttack();
     }
 
+
     /// <summary>
-    /// Set entities looking direction
+    /// Set Entity's facing direction towards Target position
     /// </summary>
-    void LookAtTarget()
-    {
-		Vector2 direction = target.transform.position - entity.transform.position;
-		float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
-		entity.transform.rotation = Quaternion.Euler(Vector3.forward * angle);
-	}
+    private void LookAtTarget() =>
+        entity.facingDirection.transform.LookAt(target.transform);
+
 
     /// <summary>
     /// Set entities state to attack after an amount of time
     /// </summary>
-    void TimeToAttack()
+    private void TimeToAttack()
     {
         count += Time.deltaTime;
 
@@ -63,16 +56,16 @@ public class IWarning : MonoBehaviour, IState
         if (count > 1.5f)
         {
             count = 0;
-            entity.attack = true;
+            entity.aggressive = true;
         }
     }
 
+
     /// <summary>
-    /// Check distance between entity and target
+    /// Returns the Distance between
+    /// <para>Entity(this) and Target</para>
     /// </summary>
     /// <returns></returns>
-    float GetRadiusToTarget()
-    {
-        return Vector2.Distance(entity.gameObject.transform.position, target.gameObject.transform.position);
-    }
+    private float GetTargetDistance() => Vector2.Distance(
+        entity.gameObject.transform.position, target.gameObject.transform.position);
 }

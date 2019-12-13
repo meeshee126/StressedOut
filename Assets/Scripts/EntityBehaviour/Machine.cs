@@ -13,7 +13,7 @@ public class Machine
     /// <param name="newState"></param>
     public void AddState(IState newState)
     {
-        this.states.Add(newState);
+        states.Add(newState);
     }
 
 

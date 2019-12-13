@@ -21,8 +21,10 @@ public class Entity : MonoBehaviour
     [Space(10)]
     [Header("Radiuses")]
     [Space]
+    [Range(0.5f, 9f)]
     public float observationRadius;
-    public float attackRadius, dodgeRadius, lostRadius;
+    [Range(0.5f, 9f)]
+    public float chaseRadius, dodgeRadius, lostRadius, attackRadius;
     [SerializeField]
     private bool showObservationRadius, showAttackRadius, showDodgeRadius, showLostRadius;
     public float currentAngle;
@@ -30,7 +32,7 @@ public class Entity : MonoBehaviour
     [Space(10)]
     [Header("Infight checks")]
     [Space]
-    public bool attack;
+    public bool aggressive;
     public bool idle;
 
 
@@ -92,10 +94,12 @@ public class Entity : MonoBehaviour
         }
         else if (stats.health > 0)
         {
-            if (characterRB != null && characterCapsuleCollider != null && characterAnimator != null) { }
-            else if (characterCapsuleCollider == null) Debug.LogWarning("Capsule Collider not attached to " + gameObject.name);
-            else if (characterAnimator == null) Debug.LogWarning("Animator not attached to " + gameObject.name);
-            else if (characterRB == null) Debug.LogWarning("Rigidbody not attached to " + gameObject.name);
+            if (characterCapsuleCollider == null)
+                Debug.LogWarning("Capsule Collider not attached to " + gameObject.name);
+            if (characterAnimator == null)
+                Debug.LogWarning("Animator not attached to " + gameObject.name);
+            if (characterRB == null)
+                Debug.LogWarning("Rigidbody not attached to " + gameObject.name);
         }
     }
 
@@ -160,7 +164,7 @@ public class Entity : MonoBehaviour
         if (showAttackRadius)
         {
             Gizmos.color = Color.green;
-            Gizmos.DrawWireSphere(this.transform.position, attackRadius);
+            Gizmos.DrawWireSphere(this.transform.position, chaseRadius);
         }
         if (showDodgeRadius)
         {

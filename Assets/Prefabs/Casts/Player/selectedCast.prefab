@@ -44,22 +44,22 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7c1e778a6c55b18479fa3f999eed0031, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  CastName: Entry-Attack
+  CastName: Second-MainAttack
   isCircle: 0
   HitAllEntities: 0
-  Damage: 1
+  Damage: 3
   Bursts: 1
-  CastingTime: -0.50540245
-  Duration: 1
-  BurstWait: 0.5
-  Cooldown: -0.013798529
-  StartBurstWait: 0.5
+  CastingTime: 0.3
+  Duration: 0.5
+  BurstWait: 0
+  Cooldown: 5
+  StartBurstWait: 0
   ChildAbilityWait: 0
   isBoxDirectionalExpanding: 0
   Position_X: 3.68
   Position_Y: -3.24
-  boxColliderX: 30
-  boxColliderY: 30
+  boxColliderX: 3
+  boxColliderY: 3
   circleColliderRadius: 0
   ChildAbility: {fileID: 0}
   WhatCanItHit:

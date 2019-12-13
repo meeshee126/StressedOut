@@ -6,91 +6,70 @@ using UnityEngine;
 
 public class IAttack : MonoBehaviour, IState
 {
-    Entity entity;
+    private Entity entity;
+
 
     //get target from entityBehavior class
-    GameObject target => entity.target;
+    private GameObject target => entity.target;
 
-    public IAttack(Entity entity)
-    {
-        this.entity = entity;
-    }
-    
+
+    public IAttack(Entity entity) => this.entity = entity;
+
+
     /// <summary>
-    /// Check this class Condition
+    /// Check if Target is INSIDE the Entity's(this) Chase Radius
+    /// <para>or is Aggressive</para>
     /// </summary>
     /// <returns></returns>
-    public bool Condition()
-    {
-        //Check if Entity is close to target or is in attack state 
-        if (entity.attackRadius >= GetRadiusToTarget() || entity.attack == true)
-        {
-            return true;
-        }
+    public bool Condition() =>
+        entity.chaseRadius > GetTargetDistance() ||
+        entity.aggressive == true;
 
-        return false;
-    }
 
     /// <summary>
     /// Execute this state
     /// </summary>
     public void Execute()
     {
-        Debug.Log("Attack" + target.name);
+        Debug.Log("Chasing :" + target.name);
         SwitchStates();
         Chase();
 
-        if(lost())
-        {
-            //Change state to "Wander"
-            entity.attack = false;
-        }
+        if(IsTargetLost())
+            entity.aggressive = false; //Change state to "Wander"
     }
 
+
     /// <summary>
-    /// Set Entity to attack state
+    /// Set Entity to "Attack" State
     /// </summary>
-    void SwitchStates()
+    private void SwitchStates()
     {
         entity.idle = false;
-        entity.attack = true;
+        entity.aggressive = true;
     }
+
 
     /// <summary>
-    /// Move toward to target
+    /// Moving towards facing direction
     /// </summary>
-    void Chase()
-    {
-        //Looks to target
-        entity.transform.up = target.transform.position - entity.transform.position;
+    private void Chase() =>
+        entity.characterRB.velocity = entity.facingDirection.transform.forward * 100 *
+            entity.stats.movementSpeed * Time.deltaTime;
 
-        //Move to target
-        entity.transform.position += entity.gameObject.transform.up * entity.stats.movementSpeed * Time.deltaTime;
-        //entity.characterRB.MovePosition(target.transform.position * (entity.stats.movementSpeed * Time.deltaTime));
-
-    }
 
     /// <summary>
     /// Check if Entity lost his target
     /// </summary>
     /// <returns></returns>
-    bool lost()
-    {
-        //check if target is outside of radius
-        if(entity.lostRadius <= GetRadiusToTarget())
-        {
-            return true;
-        }
+    private bool IsTargetLost() => entity.observationRadius > GetTargetDistance(); //check if target is outside of radius
 
-        return false;
-    }
 
     /// <summary>
-    /// Check distance between entity and target
+    /// Returns the Distance between
+    /// <para>Entity(this) and Target</para>
     /// </summary>
     /// <returns></returns>
-    float GetRadiusToTarget()
-    {
-        return Vector2.Distance(entity.gameObject.transform.position, target.gameObject.transform.position);
-    }
+    private float GetTargetDistance() => Vector2.Distance(
+        entity.gameObject.transform.position, target.gameObject.transform.position);
 }

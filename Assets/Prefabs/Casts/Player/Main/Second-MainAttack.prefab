@@ -51,7 +51,7 @@ MonoBehaviour:
   CastingTime: 0.3
   Duration: 0.5
   BurstWait: 0
-  Cooldown: 3
+  Cooldown: 5
   StartBurstWait: 0
   ChildAbilityWait: 0
   isBoxDirectionalExpanding: 0

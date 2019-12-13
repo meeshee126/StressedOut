@@ -31,6 +31,14 @@ public class Stats : MonoBehaviour
     // more to be added?
 
     [Space(10)]
+    [Header("Miscelaneous Combat Stats")]
+    [Space]
+    [Range(0f, 15f)]
+    public float comboTimer = 0f;
+    [Range(0,10)]
+    public int currentCombo = 0;
+
+    [Space(10)]
     [Header("VisualFX")]
     [Space]
     public GameObject HurtVFX;
@@ -48,14 +56,6 @@ public class Stats : MonoBehaviour
     public EntityIdentification entityID = EntityIdentification.undefined;
     public BehaviourType type = BehaviourType.undefined;
     public BehaviourState state = BehaviourState.undefined;
-
-    [Space(10)]
-    [Header("Miscelaneous Combat Stats")]
-    [Space]
-    [Range(0f, 15f)]
-    public float comboResetTimer = 0f;
-    [Range(0,100)]
-    public int currentCombo = 0;
 
     public enum BehaviourType
     {

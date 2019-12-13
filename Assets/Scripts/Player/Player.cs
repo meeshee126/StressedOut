@@ -54,10 +54,10 @@ public class Player : MonoBehaviour
     [Space(15)]
     [Header("Abilities Related")]
     [Space(15)]
+    private bool isCasting;
     public GameObject selectedAbility;
-    public float[] cooldownsListCopy;
-    public Dictionary<string, float> localCooldownsList;
-    
+    public float[] cooldownsListCopy, castTimeListCopy;
+
 
     // Unity
     /// <summary>
@@ -82,10 +82,12 @@ public class Player : MonoBehaviour
     private void Start()
     {
         cooldownsListCopy = new float[abilityLists.playerAbilities.Length];
+        castTimeListCopy = new float[abilityLists.playerAbilities.Length];
 
         for (int i = 0; i < cooldownsListCopy.Length; i++)
         {
-            cooldownsListCopy[i] = abilityLists.playerAbilities[i].GetComponent<Ability>().Cooldown;  
+            cooldownsListCopy[i] = abilityLists.playerAbilities[i].GetComponent<Ability>().Cooldown;
+            castTimeListCopy[i] = abilityLists.playerAbilities[i].GetComponent<Ability>().CastingTime;
         }
     }
 
@@ -97,43 +99,89 @@ public class Player : MonoBehaviour
     /// </summary>
     void Update()
     {
-        if (stats.comboResetTimer > 0f) stats.comboResetTimer -= Time.deltaTime;
-        if (stats.comboResetTimer <= 0f) stats.currentCombo = 0;
-        if (selectedAbility.GetComponent<Ability>().CastingTime > 0f)
-        {
-            // Set Player Movement to 0
-            characterRB.velocity = new Vector2(0f, 0f);
-            // Player Ability Casting animation
-            selectedAbility.GetComponent<Ability>().CastingTime -= Time.deltaTime;
-        }
-        if (selectedAbility.GetComponent<Ability>().CastingTime <= 0f)
-        {
-            ApplyItemHandlerInput();
-            ApplyMovementInput();
-            ApplyAttackInput();
-        }
+        ApplyItemHandlerInput();
+        ApplyMovementInput();
+
+        CountDownTimers();
+
+        CooldownManager();
+
         // MAKE IT READ THE 
     }
 
+    private void CountDownTimers()
+    {
+        if (Input.GetKeyDown(KeyCode.Space)) GetAbility();
+
+        // is ComboTime Over ?
+        if (stats.comboTimer <= 0f) ComboReset();
+
+        // Run thru Ability List.
+        for (int i = 0; i < abilityLists.playerAbilities.Length; i++)
+        {
+            // Ability Found ?
+            if (selectedAbility.GetComponent<Ability>().CastName ==
+                abilityLists.playerAbilities[i].GetComponent<Ability>().CastName)
+            {
+                // is on CastingTime ?
+                if (castTimeListCopy[i] > 0f)
+                {
+                    isCasting = true;
+                    characterRB.velocity = new Vector2(0f, 0f);
+                    // ADD HERE:    Player Ability Casting animation
+                }
+                // is CastingTime Over ?
+                if (castTimeListCopy[i] <= 0f)
+                    isCasting = false;
+            }
+        }
+
+        // is NOT Casting ?
+        if (isCasting == false)
+        {
+            // Run thru Ability List.
+            for (int i = 0; i < abilityLists.playerAbilities.Length; i++)
+            {
+                // Ability Found ?
+                if (selectedAbility.GetComponent<Ability>().CastName ==
+                    abilityLists.playerAbilities[i].GetComponent<Ability>().CastName)
+                {
+                    // is on Cooldown ?
+                    //if (cooldownsListCopy[i] > 0f)
+                        //Debug.Log(selectedAbility.GetComponent<Ability>().CastName + " . . . is Still on cooldown . . .");
+                    // is Cooldown Over ?    
+                    if (cooldownsListCopy[i] <= 0f)
+                    {
+                        // Get ability
+                        // Instantiate
+                        ApplyAttackInput(); // Set casting time
+                    }
+                }
+            }
+        }
+    }
 
     // Dimitrios Kitsikidis
     /// <summary>
     /// Translates  [User Input]
     /// into        [Player Movement].
     /// </summary>
-    void ApplyMovementInput()
+    private void ApplyMovementInput()
     {
-        float moveHorizontal = Input.GetAxis("Horizontal");
-        float moveVertical = Input.GetAxis("Vertical");
+        if (isCasting == false)
+        {
+            float moveHorizontal = Input.GetAxis("Horizontal");
+            float moveVertical = Input.GetAxis("Vertical");
 
-        MovementAnimationUpdate(moveHorizontal, moveVertical);
+            MovementAnimationUpdate(moveHorizontal, moveVertical);
 
-       characterRB.velocity = new Vector2(moveHorizontal, moveVertical) * 100 * stats.movementSpeed * Time.deltaTime;
-       // transform.Translate(new Vector2(moveHorizontal, moveVertical) * stats.movementSpeed * Time.deltaTime);
+            characterRB.velocity = new Vector2(moveHorizontal, moveVertical) * 100 * stats.movementSpeed * Time.deltaTime;
+            // transform.Translate(new Vector2(moveHorizontal, moveVertical) * stats.movementSpeed * Time.deltaTime);
 
-        #region old
-        //transform.Translate(new Vector2(moveHorizontal, moveVertical));
-        #endregion
+            #region old
+            //transform.Translate(new Vector2(moveHorizontal, moveVertical));
+            #endregion
+        }
     }
 
 
@@ -144,7 +192,7 @@ public class Player : MonoBehaviour
     /// </summary>
     /// <param name="moveX"></param>
     /// <param name="moveY"></param>
-    void MovementAnimationUpdate(float moveX, float moveY)
+    private void MovementAnimationUpdate(float moveX, float moveY)
     {
         // Changes Animation Based on direction facing.
         characterAnimator.SetFloat("FaceX", moveX);
@@ -178,56 +226,59 @@ public class Player : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.Space))
         {
-            GetAbility();
+
+
+            // Run through list.
             for (int i = 0; i < abilityLists.playerAbilities.Length; i++)
             {
+                // Ability Found ?
                 if (selectedAbility.GetComponent<Ability>().CastName ==
                     abilityLists.playerAbilities[i].GetComponent<Ability>().CastName)
                 {
-                    if (cooldownsListCopy[i] > 0f)
-                    {
-                        Debug.Log(selectedAbility.GetComponent<Ability>().CastName + " . . . is Still on cooldown . . .");
-                    }
-                    if (cooldownsListCopy[i] <= 0f)
-                    {
-                        Instantiate(selectedAbility, transform.position, Quaternion.identity);
-                        cooldownsListCopy[i] = abilityLists.playerAbilities[i].GetComponent<Ability>().Cooldown;
-                    }
+                    Debug.Log("Casted! " + selectedAbility.GetComponent<Ability>().CastName);
+                    // Cast it.
+                    Instantiate(selectedAbility, transform.position, Quaternion.identity);
+                    // Reset Cooldown.
+                    cooldownsListCopy[i] = abilityLists.playerAbilities[i].GetComponent<Ability>().Cooldown;
+                    // Reset Castime.
+                    castTimeListCopy[i] = abilityLists.playerAbilities[i].GetComponent<Ability>().CastingTime;
                 }
             }
         }
-        CooldownManager();
     }
 
 
     // Dimitrios Kitsikidis
     /// <summary>
-    /// Filters thru what item the player is holding..
-    /// .., what player's current combo status is..
-    /// .. and casts the correct attack based on that
+    /// Filters thru what item the player is holding
+    /// <para>what player's current combo status is</para>
+    /// <para>and casts the correct attack based on that</para>
     /// </summary>
-    /// <returns> the obtained gameobject from the selected ability </returns>
     private void GetAbility()
     {
         Item item = playerHand.GetComponent<Item>();
+        // is Weapon ?
         if (item.itemType == Item.ItemType.weapon)
         {
             WeaponStats weaponStats = playerHand.GetComponent<WeaponStats>(); // Use to adjust Ability's attributes
+            // is Sword ?
             if (item.itemName.Contains("Sword"))
             {
-                switch(stats.currentCombo)
+                // Current Combo ?
+                switch (stats.currentCombo)
                 {
                     case 0: AbilitySelector("Entry-Attack"); break;
                     case 1: AbilitySelector("First-MainAttack"); break;
                     case 2: AbilitySelector("Second-MainAttack"); break;
                 }
-                // Go thru the Sword Ability Selection
             }
+            // is Bow?
             if (item.itemName.Contains("Bow"))
             {
                 // Insert Bow Mechanics
             }
         }
+        // is non-Weapon ?
         if (item.itemType != Item.ItemType.weapon)
         {
             AbilitySelector("NonWeaponAttack");
@@ -241,43 +292,59 @@ public class Player : MonoBehaviour
     // Dimitrios Kitsikidis
     /// <summary>
     /// Filters thru player's abilities
-    /// Also handles player's combo status
+    /// <para>Also handles player's combo status</para>
     /// </summary>
-    /// <param name="selectedAbilityName"></param>
-    /// <returns> the ability that matches the inputed name when the method got called </returns>
+    /// <param name="selectedAbilityName">Ability name to search for</param>
     private void AbilitySelector(string selectedAbilityName)
     {
+        // Run through List.
         for (int i = 0; i < abilityLists.playerAbilities.Length; i++)
         {
+            // Ability Found ?
             if (abilityLists.playerAbilities[i].GetComponent<Ability>().CastName == selectedAbilityName)
             {
-                stats.currentCombo++;
-                stats.comboResetTimer = 1.5f;
-                if (stats.currentCombo >= 3) stats.currentCombo = 0;
+                ComboCountUp();
+                ComboTimeSet(1.5f);
+                // Max-Combo Reached ?
+                if (stats.currentCombo > 2)
+                    ComboReset();
+                // Set NEW Ability Values.
                 selectedAbility.GetComponent<Ability>().
                     SetValues(abilityLists.playerAbilities[i].GetComponent<Ability>());
-                //selectedAbility = abilityLists.playerAbilities[i];
-                //return selectedAbility = abilityLists.playerAbilities[i];
             }
         }
-        //return null;
     }
+
+
 
 
     // Dimitrios Kitsikidis
     /// <summary>
-    /// Simply allows all abilities that are on cooldown to run through the cooldown
+    /// Simply allows all abilities that are on cooldown to run through the process of cooling down
     /// </summary>
     private void CooldownManager()
     {
+        // Run through List.
         for (int i = 0; i < cooldownsListCopy.Length; i++)
         {
+            // is on Cooldown ?
             if (cooldownsListCopy[i] > 0f)
             {
+                // Count Down Cooldown.
                 cooldownsListCopy[i] -= Time.deltaTime;
-                //Debug.Log(LocalAbilityList[i].GetComponent<Ability>().Cooldown);
             }
         }
+        for (int i = 0; i < castTimeListCopy.Length; i++)
+        {
+            // is on CastTime ?
+            if (castTimeListCopy[i] > 0f)
+            {
+                // Count Down CastTime.
+                castTimeListCopy[i] -= Time.deltaTime;
+            }
+        }
+
+        if (stats.comboTimer > 0f) stats.comboTimer -= Time.deltaTime;
     }
 
 
@@ -318,39 +385,42 @@ public class Player : MonoBehaviour
     /// </summary>
     private void ApplyItemHandlerInput()
     {
-        Collider2D[] collisionsInCastArea = Physics2D.OverlapCircleAll(transform.position, 1f);
-
-        for (int i = 0; i < collisionsInCastArea.Length; i++)
+        if (isCasting == false)
         {
-            if (collisionsInCastArea[i].gameObject.GetComponent<Item>() &&
-                collisionsInCastArea[i] == GetClosest(collisionsInCastArea))
+            Collider2D[] collisionsInCastArea = Physics2D.OverlapCircleAll(transform.position, 1f);
+
+            for (int i = 0; i < collisionsInCastArea.Length; i++)
             {
-                // Is It an Item and Did Player PRESS <"F">
-                if (Input.GetKeyDown(KeyCode.F))
+                if (collisionsInCastArea[i].gameObject.GetComponent<Item>() &&
+                    collisionsInCastArea[i] == GetClosest(collisionsInCastArea))
                 {
-                    // Which Item Type
-                    switch (collisionsInCastArea[i].GetComponent<Item>().itemType)
+                    // Is It an Item and Did Player PRESS <"F">
+                    if (Input.GetKeyDown(KeyCode.F))
                     {
-                        case Item.ItemType.none:
-                            Debug.Log("Called none");
-                            IfNoneItem(collisionsInCastArea[i]);
-                            break;
-                        case Item.ItemType.consumable:
-                            Debug.Log("Called consumable");
-                            IfConsumableItem(collisionsInCastArea[i]);
-                            break;
-                        case Item.ItemType.weapon:
-                            Debug.Log("Called Weapon");
-                            IfWeaponItem(collisionsInCastArea[i]);
-                            break;
-                        case Item.ItemType.armor:
-                            Debug.Log("Called armor");
-                            IfArmorItem(collisionsInCastArea[i]);
-                            break;
-                        case Item.ItemType.miscelaneous:
-                            Debug.Log("Called miscelaneous");
-                            IfMiscellaneousItem(collisionsInCastArea[i]);
-                            break;
+                        // Which Item Type
+                        switch (collisionsInCastArea[i].GetComponent<Item>().itemType)
+                        {
+                            case Item.ItemType.none:
+                                Debug.Log("Called none");
+                                IfNoneItem(collisionsInCastArea[i]);
+                                break;
+                            case Item.ItemType.consumable:
+                                Debug.Log("Called consumable");
+                                IfConsumableItem(collisionsInCastArea[i]);
+                                break;
+                            case Item.ItemType.weapon:
+                                Debug.Log("Called Weapon");
+                                IfWeaponItem(collisionsInCastArea[i]);
+                                break;
+                            case Item.ItemType.armor:
+                                Debug.Log("Called armor");
+                                IfArmorItem(collisionsInCastArea[i]);
+                                break;
+                            case Item.ItemType.miscelaneous:
+                                Debug.Log("Called miscelaneous");
+                                IfMiscellaneousItem(collisionsInCastArea[i]);
+                                break;
+                        }
                     }
                 }
             }
@@ -502,6 +572,10 @@ public class Player : MonoBehaviour
     /// <param name="forSoLong">in Seconds</param>
     public void TakeDamageContinuous(int damage, float hitEverySoLong, float forSoLong)
     {
+        // WIP 
+        // WIP 
+        // WIP 
+        if (forSoLong > 0f) forSoLong -= Time.deltaTime;
         if (forSoLong > 0f && hitEverySoLong <= 0f)
         {
             if (stats.HurtVFX != null) Instantiate(stats.HurtVFX, gameObject.transform.position, Quaternion.identity);
@@ -525,5 +599,23 @@ public class Player : MonoBehaviour
             Debug.Log("Damage DONE!!!  --  " + damage);
         }
     }
+
+
+    #region Mini Methods.
+    /// <summary>
+    /// stats.currentCombo++;
+    /// </summary>
+    private void ComboCountUp() => stats.currentCombo++;
+    /// <summary>
+    /// stats.currentCombo = 0;
+    /// </summary>
+    private void ComboReset() => stats.currentCombo = 0;
+    /// <summary>
+    /// stats.comboTimer = value;
+    /// </summary>
+    private void ComboTimeSet(float value) => stats.comboTimer = value;
+    #endregion
+
+
     // * To-Do - implement properly the casttimer     AND     Play animations code
 }
