@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+//Michael Schmidt
 public class EntityGenerator : MonoBehaviour
 {
     [Header("Set Spawn offset")]
@@ -30,14 +31,15 @@ public class EntityGenerator : MonoBehaviour
 
     Collider2D[] colliders;
     GeneratorManager generatorManager;
-    public List<GameObject> list = new List<GameObject>();
-    bool entitiesSpawned;
 
+    /// <summary>
+    /// Spawns enemys in all areas except base area when night
+    /// </summary>
     public void GenerateEntities()
     {
         generatorManager = new GeneratorManager(offset, radius, mask,
-                                                              spacing, spawnMin, spawnMax,
-                                                              entiyObject, colliders);
+                                                spacing, spawnMin, spawnMax,
+                                                entiyObject, colliders);
 
         generatorManager.SpawnObject(this.transform);
     }

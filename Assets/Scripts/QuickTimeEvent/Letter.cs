@@ -42,8 +42,12 @@ public class Letter : MonoBehaviour
         Fail();
     }
 
+    /// <summary>
+    /// Chceck if daytime switch to panic mode while gathering
+    /// </summary>
     void CheckDayTime()
     {
+        //abort gathering when daytime switches to panic mode
         if(timer.currentDayTime != Timer.DayTime.Day)
         {
             Destroy(this.gameObject);
@@ -73,7 +77,10 @@ public class Letter : MonoBehaviour
             {
                 //count up correct input
                 letterEvent.correctInput++;
+
+                //play sound when correct input
                 if (letterEvent.gatherSound != null) Instantiate(letterEvent.gatherSound, player.position, Quaternion.identity);
+
                 Destroy(this.gameObject);
             }
 

@@ -140,6 +140,8 @@ public class GenerateBase : MonoBehaviour
 
             buildPhase = "Wood";
 
+            //Michael Schmidt
+            //play audio when buildung
             if (buildSFX != null) Instantiate(buildSFX, this.transform.position, Quaternion.identity);
 
 			timeBehaviour.timeCost = timeBehaviour.crafting;
@@ -159,6 +161,8 @@ public class GenerateBase : MonoBehaviour
 
             buildPhase = "Stone";
 
+            //Michael Schmidt
+            //play audio when upgrading
             if (buildSFX != null) Instantiate(buildSFX, this.transform);
 
             timeBehaviour.timeCost = timeBehaviour.crafting;

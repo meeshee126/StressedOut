@@ -59,9 +59,13 @@ public class LetterEvent : MonoBehaviour
         SpawnLetter();
     }
 
+    /// <summary>
+    /// Chceck if daytime switch to panic mode while gathering
+    /// </summary>
     void CheckDayTime()
     {
-        if(timer.currentDayTime != Timer.DayTime.Day)
+        //abort gathering when daytime switches to panic mode
+        if (timer.currentDayTime != Timer.DayTime.Day)
         {
             QuitLetterEvent();
         }
@@ -105,6 +109,7 @@ public class LetterEvent : MonoBehaviour
         //low cost for time behaviour
         timeBehaviour.timeCost = timeBehaviour.winQuickTimeEvent;
 
+        //play sound when winning event
         if (winSFX != null) Instantiate(winSFX, player.transform.position, Quaternion.identity);
 
         QuitLetterEvent();
@@ -122,6 +127,7 @@ public class LetterEvent : MonoBehaviour
         //middle cost for time behaviour
         timeBehaviour.timeCost = timeBehaviour.loseQuickTimeEvent;
 
+        //player sound when losing event
         if (loseSFX != null) Instantiate(loseSFX, player.transform.position, Quaternion.identity);
 
         QuitLetterEvent();

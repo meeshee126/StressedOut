@@ -139,7 +139,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f96ed1833eb8f0d4a9942f0c5cf7de3a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  decomposed: {fileID: 10913, guid: 0000000000000000f000000000000000, type: 0}
+  decomposed: {fileID: -7893043282184557800, guid: 18bb1cee91e3f304bb2137bc2dc5ea02,
+    type: 3}
   offset: {x: 4.48, y: 3.88, z: 0}
   radius: 3
   mask:

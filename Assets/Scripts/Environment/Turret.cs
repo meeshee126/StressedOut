@@ -38,6 +38,8 @@ public class Turret : MonoBehaviour
                     
 					timeBtwShots = startTimeBtwShots;
 
+                    //Michael Schmidt
+                    //play audio when firing
                     if (fireSFX != null) Instantiate(fireSFX, this.transform.position, Quaternion.identity);
 				}
 				else

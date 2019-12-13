@@ -33,14 +33,18 @@ public class ObjectGenerator : MonoBehaviour
 
     Collider2D[] colliders;
     GeneratorManager generatorManager;
-    public List<GameObject> list = new List<GameObject>();
 
     public void Awake()
     {
+        //Michael Schmidt
+        //Generate gatherrables when start scene
         Generation();
     }
 
-
+    //Michael Schmidt
+    /// <summary>
+    /// Generate new gatherrables
+    /// </summary>
     public void Generation()
     {
         generatorManager = new GeneratorManager(offset, radius, mask,

@@ -32,6 +32,16 @@ public class Timer : MonoBehaviour
     [Header("(INFO) current day time")]
     public DayTime currentDayTime = DayTime.Day;
 
+    [Header("Audio")]
+    [SerializeField]
+    AudioClip dayMusic;
+    [SerializeField]
+    AudioClip nightMusic;
+
+    [Header("Audio Source")]
+    [SerializeField]
+    AudioSource backgroundMusic;
+
     [HideInInspector]
     public int dayCounter;
 
@@ -41,17 +51,12 @@ public class Timer : MonoBehaviour
     Sun sunScript;
     NightWavesGen nightWaves;
 
-    public AudioSource backgroundMusic;
-    public AudioClip dayMusic;
-    public AudioClip nightMusic;
-    
     public TimeSpan time;
 
     bool showPanicTimer;
     bool musicSeted;
     bool coroutineStarted;
     bool entitiesSpawned;
-
 
     void Start()
     {
@@ -111,6 +116,7 @@ public class Timer : MonoBehaviour
 
                 if (!musicSeted)
                 {
+                    //set backgroundmusic
                     backgroundMusic.clip = dayMusic;
                     backgroundMusic.Play();
                     backgroundMusic.pitch = 1f;
@@ -141,9 +147,12 @@ public class Timer : MonoBehaviour
                 {
                     if(backgroundMusic.clip != dayMusic)
                     {
+                        //set background music
                         backgroundMusic.clip = dayMusic;
                         backgroundMusic.Play();
                     }
+
+                    //speed background music
                     backgroundMusic.pitch = 1.3f;
                     musicSeted = true;
                 }
@@ -176,6 +185,7 @@ public class Timer : MonoBehaviour
                 //disable UI Timer
                 uiPanicTimer.text = "";
 
+                //spanws entitys in all areas except base area
                 if (!entitiesSpawned)
                 {
                     for (int i = 0; i < entityGenerators.Length; i++)
@@ -188,6 +198,7 @@ public class Timer : MonoBehaviour
 
                 if (!musicSeted)
                 {
+                    //set background music
                     backgroundMusic.clip = nightMusic;
                     backgroundMusic.Play();
                     backgroundMusic.pitch = 1f;
@@ -208,7 +219,6 @@ public class Timer : MonoBehaviour
                 {
                     dayOver = false;
                     NewDay();
-
                 }
                 break;
         }
@@ -227,6 +237,10 @@ public class Timer : MonoBehaviour
         StartCoroutine(FadeIn());
     }
 
+    /// <summary>
+    /// Fade in black when a new day starts
+    /// </summary>
+    /// <returns></returns>
     IEnumerator FadeIn()
     {
         GameObject[] enemys = GameObject.FindGameObjectsWithTag("Enemy");
@@ -235,6 +249,7 @@ public class Timer : MonoBehaviour
 
         yield return new WaitForSeconds(1.8f);
 
+        //destoys all night enemys
         for (int i = 0; i < enemys.Length; i++)
         {
             Destroy(enemys[i]);
@@ -255,6 +270,7 @@ public class Timer : MonoBehaviour
         //Reset Day Time
         currentDayTime = DayTime.Day;
 
+        //reset background msuic
         musicSeted = false;
 
         //reset sun

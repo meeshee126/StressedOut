@@ -81,7 +81,10 @@ public class Entity : MonoBehaviour
             if (timeBeforeDestroy > 0f) timeBeforeDestroy -= Time.deltaTime;
             if (timeBeforeDestroy <= 0f)
             {
+                //Michael Schmidt
+                //Play audio
                 if (DestroySFX != null) Instantiate(DestroySFX, transform.position, Quaternion.identity);
+
                 Destroy(gameObject);
             }
 

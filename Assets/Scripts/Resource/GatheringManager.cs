@@ -62,33 +62,18 @@ public class GatheringManager : MonoBehaviour
         timer = GameObject.Find("GameManager").GetComponent<Timer>();
     }
 
-   /* void CheckCooldown()
-    {
-        if (letterEvent.failed)
-        {
-            count += Time.deltaTime;
-            if (count > cooldownTimer)
-            {
-                cooldown = false;
-                count = 0;
-                letterEvent.failed = false;
-            }
-            else
-            {
-
-                cooldown = true;
-            }
-
-        }
-    }
-    */
-
+    /// <summary>
+    /// interacting with gatherable object
+    /// </summary>
+    /// <param name="collision"></param>
     private void OnTriggerStay2D(Collider2D collision)
     {
+        //only gatherable when day
         if (collision.gameObject.name == "Player" && timer.currentDayTime == Timer.DayTime.Day)
         {
             transform.GetChild(0).gameObject.SetActive(true);
 
+            //start Event by pressing "f"
             if(Input.GetKeyDown(KeyCode.F))
             {
                 letterEvent.gatherSound = gatherSFX;
@@ -98,14 +83,21 @@ public class GatheringManager : MonoBehaviour
             if (letterEvent.won)
             {
                 this.gameObject.GetComponent<CircleCollider2D>().enabled = false;
+
                 letterEvent.won = false;
+
+                //spawning resources
                 generatorManager.SpawnObject(this.transform);
+
                 ChangeSprite();
-               
             }
         }
     }
     
+    /// <summary>
+    /// show "gather text"
+    /// </summary>
+    /// <param name="collision"></param>
     private void OnTriggerExit2D(Collider2D collision)
     {
         if (collision.gameObject.name == "Player")
@@ -129,11 +121,13 @@ public class GatheringManager : MonoBehaviour
         player.enabled = false;
     }
 
+    /// <summary>
+    /// Change sprite when quick time event won
+    /// </summary>
     void ChangeSprite()
     {
         spriteRenderer.sprite = decomposed;
     }
-
 
     private void OnDrawGizmosSelected()
     {

@@ -398,6 +398,10 @@ public class Player : MonoBehaviour
         }
     }
 
+    //Michael Schmidt
+    /// <summary>
+    /// Play sound while walking
+    /// </summary>
     void FoodSteps()
     {
         audioSource.PlayOneShot(audioSource.clip);
