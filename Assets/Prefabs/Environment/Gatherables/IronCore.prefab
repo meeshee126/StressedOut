@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 4783086282199227599}
   - component: {fileID: 4783086282199227595}
   - component: {fileID: 4783086282199227596}
-  - component: {fileID: 4783086282199227597}
+  - component: {fileID: 2920114574181806686}
   m_Layer: 9
   m_Name: IronCore
   m_TagString: Gatherable
@@ -127,7 +127,7 @@ CircleCollider2D:
   m_Offset: {x: -0.023282051, y: -0.48359025}
   serializedVersion: 2
   m_Radius: 1.45819
---- !u!114 &4783086282199227597
+--- !u!114 &2920114574181806686
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -136,20 +136,22 @@ MonoBehaviour:
   m_GameObject: {fileID: 4783086282199227632}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f96ed1833eb8f0d4a9942f0c5cf7de3a, type: 3}
+  m_Script: {fileID: 11500000, guid: a2d566e4b9b693445acd87267c9fb55d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  decomposed: {fileID: 10913, guid: 0000000000000000f000000000000000, type: 0}
-  offset: {x: 4.48, y: 3.88, z: 0}
-  radius: 3
+  decomposed: {fileID: 0}
+  offset: {x: 3.93, y: 3.62, z: 0}
+  radius: 2.71
   mask:
     serializedVersion: 2
     m_Bits: 3840
-  spacing: 0.7
-  cooldownTimer: 1.5
-  dropMin: 3
-  dropMax: 3
+  spacing: 1
+  cooldownTimer: 0
+  dropMin: 1
+  dropMax: 4
   ressource: {fileID: 91640884545294335, guid: c72e6f3caa87d624f8e2d0ed6454fe40, type: 3}
+  gatherSFX: {fileID: 1894752920469661790, guid: f1a50c531238a5d45a839072a38cf314,
+    type: 3}
   cooldown: 0
   count: 0
 --- !u!1 &4783086283068535055
@@ -163,7 +165,7 @@ GameObject:
   - component: {fileID: 4783086283068535054}
   - component: {fileID: 4783086283068535052}
   - component: {fileID: 4783086283068535053}
-  m_Layer: 9
+  m_Layer: 0
   m_Name: TextGather
   m_TagString: Untagged
   m_Icon: {fileID: 0}

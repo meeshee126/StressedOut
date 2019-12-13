@@ -40,7 +40,6 @@ public class BuildingManager : MonoBehaviour
 			{
 				building[i].Wood.SetActive(false);
 				building[i].Stone.SetActive(false);
-				building[i].Iron.SetActive(false);
 				building[i].Ruin.SetActive(false);
 
 				building[i].isBuild = false;
@@ -50,7 +49,6 @@ public class BuildingManager : MonoBehaviour
 			{
 				building[i].Wood.SetActive(true);
 				building[i].Stone.SetActive(false);
-				building[i].Iron.SetActive(false);
 				building[i].Ruin.SetActive(false);
 
 				building[i].isBuild = true;
@@ -60,7 +58,6 @@ public class BuildingManager : MonoBehaviour
 			{
 				building[i].Wood.SetActive(false);
 				building[i].Stone.SetActive(true);
-				building[i].Iron.SetActive(false);
 				building[i].Ruin.SetActive(false);
 
 				building[i].isBuild = true;
@@ -70,21 +67,10 @@ public class BuildingManager : MonoBehaviour
 			{
 				building[i].Wood.SetActive(false);
 				building[i].Stone.SetActive(false);
-				building[i].Iron.SetActive(false);
 				building[i].Ruin.SetActive(true);
 
 				building[i].isBuild = true;
 				building[i].doRepair = true;
-			}
-			else if (data.isActive[i] == 4)
-			{
-				building[i].Wood.SetActive(false);
-				building[i].Stone.SetActive(false);
-				building[i].Iron.SetActive(true);
-				building[i].Ruin.SetActive(false);
-
-				building[i].isBuild = true;
-				building[i].doRepair = false;
 			}
 		}
 	}
