@@ -5,7 +5,6 @@ using UnityEngine;
 using UnityEngine.UI;
 
 //Michael Schmidt
-
 public class ResourceManager : MonoBehaviour
 {
     Text uiWood, uiStone, uiIron, uiGold, uiDiamond;

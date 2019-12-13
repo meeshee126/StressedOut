@@ -13,10 +13,6 @@ public class NightWavesGen : MonoBehaviour
     Timer worldTimer;
     bool areEnemiesReady;
 
-    [HideInInspector]
-    public bool enemiesDead;
-
-
     private void Awake()
     {
         gameManager = GameObject.Find("GameManager");

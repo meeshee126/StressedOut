@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+//Michael Schmidt
 public class SoundManager : MonoBehaviour
 {
     [SerializeField]
@@ -16,6 +17,10 @@ public class SoundManager : MonoBehaviour
         StartCoroutine(PlaySound());
     }
 
+    /// <summary>
+    /// After instantiaded this GameObject the audio will play and after destroying his self
+    /// </summary>
+    /// <returns></returns>
     IEnumerator PlaySound()
     {
         audioSource.PlayOneShot(clip);

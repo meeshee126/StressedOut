@@ -165,7 +165,11 @@ public static class SaveSystem
 			return null;
 		}
 	}
-
+    //Michael Schmidt
+    /// <summary>
+    /// Saves impotertend datas from Sun Script
+    /// </summary>
+    /// <param name="sun"></param>
     public static void SaveSun(Sun sun)
     {
         BinaryFormatter formatter = new BinaryFormatter();
@@ -178,8 +182,9 @@ public static class SaveSystem
         stream.Close();
     }
 
+    //Michael Schmidt
     /// <summary>
-    /// Load the Datas from the Time
+    /// Load sun Datas
     /// </summary>
     /// <returns></returns>
     public static SunData LoadSun()

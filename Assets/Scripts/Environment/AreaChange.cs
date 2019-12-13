@@ -44,7 +44,7 @@ public class AreaChange : MonoBehaviour
 			}
 
 			// Michael Schmidt:
-			// Timecosts will call when player entering a new area
+			// Call timecosts when player entering a new area
 			timeBehaviour.timeCost = timeBehaviour.areaChanging;
 		}
 	}

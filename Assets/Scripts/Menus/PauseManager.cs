@@ -5,7 +5,6 @@ using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 //Michael Schmidt
-
 public class PauseManager : MonoBehaviour
 {
     [SerializeField]
@@ -89,7 +88,6 @@ public class PauseManager : MonoBehaviour
 
             // disable Player controls 
             GameObject.Find("Player").GetComponent<Player>().enabled = false;     
-            
         }
 
         // if pause menu is active after pressing "escape" button
@@ -112,7 +110,6 @@ public class PauseManager : MonoBehaviour
     /// </summary>
     public void ToggleOption()
     {
-
         //Check if Pausemenu or Option is active
 
         //if option is not active
@@ -134,7 +131,6 @@ public class PauseManager : MonoBehaviour
             //disable option
             uiOptions.gameObject.SetActive(false);
         }
-
     }
 
     /// <summary>

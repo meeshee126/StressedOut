@@ -4,7 +4,6 @@ using UnityEngine;
 using System.Linq;
 
 // Michael Schmidt
-
 public class TimeBehaviour : MonoBehaviour
 {
     [Header("Timecosts")]
@@ -55,6 +54,7 @@ public class TimeBehaviour : MonoBehaviour
         //no timecost anymore when in panic mode
         if (timer.currentDayTime != Timer.DayTime.Day)
         {
+            //clears all saved execuitons in list
             executionList.Clear();
             return;
         }
@@ -76,29 +76,49 @@ public class TimeBehaviour : MonoBehaviour
         } 
     }
 
+    /// <summary>
+    /// decides which timecost will seted after interacting
+    /// </summary>
     void SetTimeCost()
     {
+        //do not continue when list is empty
         if (executionList.Count == 0)
             return;
 
+        //start counter when list got one entry or more
         count += Time.deltaTime;
+
+        //speed timer for certain amount of time
         if (count <= duration)
         {
+            //check first entry in list and get timecost
             timer.SpeedTime(GetValue(executionList[0]));
         }
 
         if (count > duration)
         {
+            //reset counter
             count = 0;
+
+            //remove first entry in list
             executionList.RemoveAt(0);
         }
+
+        // reset time cost when list gets empty
         timeCost = TimeCost.NoCost;
     }
 
+    /// <summary>
+    /// Geting value from current time cost 
+    /// </summary>
+    /// <param name="currentTimeCost"></param>
+    /// <returns></returns>
     float GetValue(TimeCost currentTimeCost)
     {
+        //check which timecost is activated
         switch (currentTimeCost)
         {
+            //returns float to speed the time
             default: return 0;
             case TimeCost.VeryLowCost: return veryLowCost;
             case TimeCost.LowCost: return lowCost; 

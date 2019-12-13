@@ -4,7 +4,6 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 
 //Michael Schmidt
-
 public class MainMenuManager : MonoBehaviour
 {
     [SerializeField]

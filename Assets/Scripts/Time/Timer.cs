@@ -32,6 +32,16 @@ public class Timer : MonoBehaviour
     [Header("(INFO) current day time")]
     public DayTime currentDayTime = DayTime.Day;
 
+    [Header("Audio")]
+    [SerializeField]
+    AudioClip dayMusic;
+    [SerializeField]
+    AudioClip nightMusic;
+
+    [Header("Audio Source")]
+    [SerializeField]
+    AudioSource backgroundMusic;
+
     [HideInInspector]
     public int dayCounter;
 
@@ -41,16 +51,12 @@ public class Timer : MonoBehaviour
     Sun sunScript;
     NightWavesGen nightWaves;
 
-    public AudioSource backgroundMusic;
-    public AudioClip dayMusic;
-    public AudioClip nightMusic;
-    
     public TimeSpan time;
 
     bool showPanicTimer;
     bool musicSeted;
     bool coroutineStarted;
-
+    bool entitiesSpawned;
 
     void Start()
     {
@@ -110,6 +116,7 @@ public class Timer : MonoBehaviour
 
                 if (!musicSeted)
                 {
+                    //set backgroundmusic
                     backgroundMusic.clip = dayMusic;
                     backgroundMusic.Play();
                     backgroundMusic.pitch = 1f;
@@ -140,9 +147,12 @@ public class Timer : MonoBehaviour
                 {
                     if(backgroundMusic.clip != dayMusic)
                     {
+                        //set background music
                         backgroundMusic.clip = dayMusic;
                         backgroundMusic.Play();
                     }
+
+                    //speed background music
                     backgroundMusic.pitch = 1.3f;
                     musicSeted = true;
                 }
@@ -170,11 +180,25 @@ public class Timer : MonoBehaviour
 
             case DayTime.Night:
 
+                EntityGenerator[] entityGenerators = GameObject.FindObjectsOfType<EntityGenerator>();
+
                 //disable UI Timer
                 uiPanicTimer.text = "";
 
+                //spanws entitys in all areas except base area
+                if (!entitiesSpawned)
+                {
+                    for (int i = 0; i < entityGenerators.Length; i++)
+                    {
+                        entityGenerators[i].GenerateEntities();
+                    }
+
+                    entitiesSpawned = true;
+                }       
+
                 if (!musicSeted)
                 {
+                    //set background music
                     backgroundMusic.clip = nightMusic;
                     backgroundMusic.Play();
                     backgroundMusic.pitch = 1f;
@@ -195,7 +219,6 @@ public class Timer : MonoBehaviour
                 {
                     dayOver = false;
                     NewDay();
-
                 }
                 break;
         }
@@ -214,11 +237,23 @@ public class Timer : MonoBehaviour
         StartCoroutine(FadeIn());
     }
 
+    /// <summary>
+    /// Fade in black when a new day starts
+    /// </summary>
+    /// <returns></returns>
     IEnumerator FadeIn()
     {
+        GameObject[] enemys = GameObject.FindGameObjectsWithTag("Enemy");
+
         coroutineStarted = true;
 
         yield return new WaitForSeconds(1.8f);
+
+        //destoys all night enemys
+        for (int i = 0; i < enemys.Length; i++)
+        {
+            Destroy(enemys[i]);
+        }
 
         //counting day
         dayCounter++;
@@ -235,12 +270,15 @@ public class Timer : MonoBehaviour
         //Reset Day Time
         currentDayTime = DayTime.Day;
 
+        //reset background msuic
         musicSeted = false;
 
         //reset sun
         sunScript.sliderSeted = false;
 
         dayOver = false;
+
+        entitiesSpawned = false;
 
         //Fade In
         coroutineStarted = false;
@@ -256,7 +294,7 @@ public class Timer : MonoBehaviour
         GameObject[] areaObjects = GameObject.FindGameObjectsWithTag("Gatherable");
 
         //get all object generators and add it to an array
-        ObjectGeneration[] objectGenerators = GameObject.FindObjectsOfType<ObjectGeneration>();
+        ObjectGenerator[] objectGenerators = GameObject.FindObjectsOfType<ObjectGenerator>();
 
         //destroy all gatherable objects
         for (int i = 0; i < areaObjects.Length; i++)

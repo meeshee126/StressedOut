@@ -4,7 +4,6 @@ using UnityEngine;
 using UnityEngine.UI;
 
 //Michael Schmidt
-
 public class Sun : MonoBehaviour
 {
     [Header("Sun Color")]
@@ -24,8 +23,6 @@ public class Sun : MonoBehaviour
 
     Timer timer;
     Image image;
-
-   
 
     void Start()
     {
@@ -68,18 +65,21 @@ public class Sun : MonoBehaviour
                      (timer.panicTimer / 100) ? slider.normalizedValue : (timer.panicTimer / 100));
     }
 
+    /// <summary>
+    /// Save all Sun datas
+    /// </summary>
     public void SaveSun()
     {
         SaveSystem.SaveSun(this);
     }
 
-    //Henrik Hafner
-    // Load the SaveFiles to the Timer and changed the Time
+    /// <summary>
+    /// load Sun datas
+    /// </summary>
     public void LoadSun()
     {
         SunData data = SaveSystem.LoadSun();
 
-        //Michael Schmidt
         slider.maxValue = data.maxValue;
         sliderSeted = data.sliderCondition;
     }

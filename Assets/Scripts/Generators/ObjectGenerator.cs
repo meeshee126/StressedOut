@@ -5,7 +5,7 @@ using System.Linq;
 
 //Michael Schmidt
 //Henrick Hafner
-public class ObjectGeneration : MonoBehaviour
+public class ObjectGenerator : MonoBehaviour
 {
     [Header("Set Spawn offset")]
     [SerializeField]
@@ -31,19 +31,20 @@ public class ObjectGeneration : MonoBehaviour
 
     int spawnCount;
 
-    Timer timer;
     Collider2D[] colliders;
     GeneratorManager generatorManager;
-    public List<GameObject> list = new List<GameObject>();
 
     public void Awake()
     {
-        timer = GameObject.Find("GameManager").GetComponent<Timer>();
-
+        //Michael Schmidt
+        //Generate gatherrables when start scene
         Generation();
     }
 
-
+    //Michael Schmidt
+    /// <summary>
+    /// Generate new gatherrables
+    /// </summary>
     public void Generation()
     {
         generatorManager = new GeneratorManager(offset, radius, mask,

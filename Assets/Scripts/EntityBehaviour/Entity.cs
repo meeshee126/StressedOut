@@ -49,11 +49,11 @@ public class Entity : MonoBehaviour
     [Header("FX")]
     [Space]
     public GameObject HurtFX;
-    public GameObject HurtCriticalFX, SlowedFX, DazedFX, StunnedFX, DestroyFX;
+    public GameObject HurtCriticalFX, SlowedFX, DazedFX, StunnedFX;
 
     [Header("Audio")]
     [SerializeField]
-    AudioClip destroySound;
+    GameObject DestroySFX;
 
     [Space(10)]
     [Header("Other..")]
@@ -83,7 +83,10 @@ public class Entity : MonoBehaviour
             if (timeBeforeDestroy > 0f) timeBeforeDestroy -= Time.deltaTime;
             if (timeBeforeDestroy <= 0f)
             {
-                if (DestroyFX != null) Instantiate(DestroyFX, transform.position, Quaternion.identity);
+                //Michael Schmidt
+                //Play audio
+                if (DestroySFX != null) Instantiate(DestroySFX, transform.position, Quaternion.identity);
+
                 Destroy(gameObject);
             }
 
