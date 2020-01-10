@@ -34,6 +34,7 @@ public class Entity : MonoBehaviour
     [Space]
     public bool aggressive;
     public bool idle;
+    public bool isCasting;
 
 
     [Space(10)]
@@ -43,13 +44,17 @@ public class Entity : MonoBehaviour
     public float timeBeforeDestroy;
     public float waitTime;
 
-    private int randomSpot;
+    public float hitTimer;
+    public float startHitTimer;
+
+    public float castTimer;
+    public float castTimer_e;
 
     [Space(10)]
     [Header("FX")]
     [Space]
     public GameObject HurtFX;
-    public GameObject HurtCriticalFX, SlowedFX, DazedFX, StunnedFX;
+    public GameObject HurtCriticalFX, SlowedFX, DazedFX, StunnedFX, DeadFX;
 
     [Header("Audio")]
     [SerializeField]
@@ -60,24 +65,41 @@ public class Entity : MonoBehaviour
     [Space]
     public CapsuleCollider2D characterCapsuleCollider;
     public Animator characterAnimator;
+    public Animator charIconAnimator;
     public Rigidbody2D characterRB;
-    public Stats stats;
     public AudioSource audioSource;
+    public GameObject gameManager;
+    public Stats stats;
+    [SerializeField]
+    public GameObject abilityToCast;
 
     private void Awake()
     {
         //Finds Component in gameObject and uses it
         characterCapsuleCollider = GetComponent<CapsuleCollider2D>();
         characterAnimator = GetComponent<Animator>();
+        gameManager = GameObject.Find("GameManager");
+
+        charIconAnimator = transform.GetChild(1).GetComponent<Animator>();
         characterRB = GetComponent<Rigidbody2D>();
         audioSource = GetComponent<AudioSource>();
         target = GameObject.Find("Player");
         stats = GetComponent<Stats>();
+        //abilityToCast = gameManager.GetComponent<AbilityLists>().banditAbilities[0];
+        castTimer = abilityToCast.GetComponent<Ability>().CastingTime;
+        castTimer_e = castTimer;
     }
 
 
     private void FixedUpdate()
     {
+        //if (hitTimer > 0f) hitTimer -= Time.fixedDeltaTime;
+        //if (hitTimer <= 0f)
+        //{
+        //    characterAnimator.ResetTrigger("TakeDamage");
+            ApplyMovementInput();
+        //}
+
         if (stats.health <= 0)
         {
             if (timeBeforeDestroy > 0f) timeBeforeDestroy -= Time.deltaTime;
@@ -86,6 +108,7 @@ public class Entity : MonoBehaviour
                 //Michael Schmidt
                 //Play audio
                 if (DestroySFX != null) Instantiate(DestroySFX, transform.position, Quaternion.identity);
+                if (DestroySFX != null) Instantiate(DeadFX, transform.position, Quaternion.identity);
 
                 Destroy(gameObject);
             }
@@ -124,6 +147,7 @@ public class Entity : MonoBehaviour
     /// <param name="damage"></param>
     public void TakeDamage(int damage)
     {
+        characterAnimator.SetTrigger("TakeDamage");
         if(HurtFX != null) Instantiate(HurtFX, gameObject.transform.position, Quaternion.identity);
         stats.health -= damage;
         Debug.Log("Damage DONE!!!  --  " + damage);
@@ -152,6 +176,55 @@ public class Entity : MonoBehaviour
     /// <param name="duration"></param>
     public void TakeDaze(float duration)
     { }
+
+
+
+
+
+
+
+
+    private void ApplyMovementInput()
+    {
+        if (isCasting == false)
+        {
+            float moveHorizontal = characterRB.velocity.x;
+            float moveVertical = characterRB.velocity.y;
+
+            MovementAnimationUpdate(moveHorizontal, moveVertical);
+        }
+    }
+
+
+    // Dimitrios Kitsikidis
+    /// <summary>
+    /// Updates the [Player's Animation]
+    /// based on    [Player's Movement].
+    /// </summary>
+    /// <param name="moveX"></param>
+    /// <param name="moveY"></param>
+    private void MovementAnimationUpdate(float moveX, float moveY)
+    {
+        // Changes Animation Based on direction facing.
+        characterAnimator.SetFloat("FaceX", moveX);
+        characterAnimator.SetFloat("FaceY", moveY);
+
+        if (moveX != 0 || moveY != 0)
+        {
+            characterAnimator.SetBool("isWalking", true);
+            if (moveX > 0) characterAnimator.SetFloat("LastMoveX", 1f);
+            else if (moveX < 0) characterAnimator.SetFloat("LastMoveX", -1f);
+            else characterAnimator.SetFloat("LastMoveX", 0f);
+
+            if (moveY > 0) characterAnimator.SetFloat("LastMoveY", 1f);
+            else if (moveY < 0) characterAnimator.SetFloat("LastMoveY", -1f);
+            else characterAnimator.SetFloat("LastMoveY", 0f);
+        }
+        else
+        {
+            characterAnimator.SetBool("isWalking", false);
+        }
+    }
 
 
     /// <summary>

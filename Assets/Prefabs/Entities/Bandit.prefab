@@ -64,6 +64,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 8185858729299734944}
+  - {fileID: 5316217145743868625}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -105,7 +106,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 1
-  m_Sprite: {fileID: 6030282967955082072, guid: 3d66510a1391d1c43ad113e5d40de500,
+  m_Sprite: {fileID: -5274912228682211999, guid: eac40ee41eb3c544099e2ae30991425f,
     type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -116,7 +117,7 @@ SpriteRenderer:
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
-  m_SpriteSortPoint: 0
+  m_SpriteSortPoint: 1
 --- !u!50 &8186575995791015277
 Rigidbody2D:
   serializedVersion: 4
@@ -164,7 +165,7 @@ Animator:
   m_GameObject: {fileID: 6453389845522663360}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: b8dc65ed1f376f4428c22a798b9b6ca8, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
@@ -187,14 +188,25 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   entityName: Bandit
   description: Bandit gonna be staby staby and stealy stealy
-  health: 4
+  health: 15
+  damage: 1
   armor: 0
   movementSpeed: 3
+  comboTimer: 0
+  currentCombo: 0
+  HurtVFX: {fileID: 2754619200776676849, guid: a784ecf6ae1142e4588466612dc4cb3a, type: 3}
+  HurtCriticalVFX: {fileID: 0}
+  SlowedVFX: {fileID: 0}
+  DazedVFX: {fileID: 0}
+  StunnedVFX: {fileID: 0}
+  HurtFX: {fileID: 0}
+  HurtCriticalFX: {fileID: 0}
+  SlowedFX: {fileID: 0}
+  DazedFX: {fileID: 0}
+  StunnedFX: {fileID: 0}
   entityID: 2
   type: -10
   state: -10
-  comboResetTimer: 0
-  currentCombo: 0
 --- !u!114 &7238748255852453540
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -209,29 +221,140 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   target: {fileID: 0}
   facingDirection: {fileID: 5266417245860317746}
-  observationRadius: 3
+  observationRadius: 4
+  chaseRadius: 2
+  dodgeRadius: 0.5
+  lostRadius: 5
   attackRadius: 0
-  dodgeRadius: 2
-  lostRadius: 3
   showObservationRadius: 1
   showAttackRadius: 1
   showDodgeRadius: 1
   showLostRadius: 1
   currentAngle: 0
-  attack: 0
+  aggressive: 0
   idle: 0
+  isCasting: 0
   timeToCompleteCircle: 0
   timeBeforeDestroy: 0
   waitTime: 0
-  HurtFX: {fileID: 0}
+  hitTimer: 0
+  startHitTimer: 0
+  castTimer: 0
+  castTimer_e: 0
+  HurtFX: {fileID: 2754619200776676849, guid: a784ecf6ae1142e4588466612dc4cb3a, type: 3}
   HurtCriticalFX: {fileID: 0}
   SlowedFX: {fileID: 0}
   DazedFX: {fileID: 0}
   StunnedFX: {fileID: 0}
+  DeadFX: {fileID: 6143387398191298056, guid: b8908290c5121b143868d796d9c0783c, type: 3}
   DestroySFX: {fileID: 9023476143831567709, guid: ee8f50f72029c42478f0c4d9bbf37212,
     type: 3}
   characterCapsuleCollider: {fileID: 0}
   characterAnimator: {fileID: 0}
+  charIconAnimator: {fileID: 0}
   characterRB: {fileID: 0}
-  stats: {fileID: 0}
   audioSource: {fileID: 0}
+  gameManager: {fileID: 0}
+  stats: {fileID: 0}
+  abilityToCast: {fileID: 6219482984014311782, guid: 9a627e04e2bef5047a3d831f50dc8420,
+    type: 3}
+--- !u!1 &8406123772470490873
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 5316217145743868625}
+  - component: {fileID: 2274454232431355892}
+  - component: {fileID: 7895681520485312737}
+  m_Layer: 8
+  m_Name: Icon
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &5316217145743868625
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8406123772470490873}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -0.05, y: 0.9, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 7695174224223373713}
+  m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!95 &2274454232431355892
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8406123772470490873}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 446437b2988a5ed4b8652836c2aa1cd5, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!212 &7895681520485312737
+SpriteRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8406123772470490873}
+  m_Enabled: 1
+  m_CastShadows: 0
+  m_ReceiveShadows: 0
+  m_DynamicOccludee: 1
+  m_MotionVectors: 1
+  m_LightProbeUsage: 1
+  m_ReflectionProbeUsage: 1
+  m_RenderingLayerMask: 1
+  m_RendererPriority: 0
+  m_Materials:
+  - {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
+  m_StaticBatchInfo:
+    firstSubMesh: 0
+    subMeshCount: 0
+  m_StaticBatchRoot: {fileID: 0}
+  m_ProbeAnchor: {fileID: 0}
+  m_LightProbeVolumeOverride: {fileID: 0}
+  m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
+  m_PreserveUVs: 0
+  m_IgnoreNormalsForChartDetection: 0
+  m_ImportantGI: 0
+  m_StitchLightmapSeams: 1
+  m_SelectedEditorRenderState: 0
+  m_MinimumChartSize: 4
+  m_AutoUVMaxDistance: 0.5
+  m_AutoUVMaxAngle: 89
+  m_LightmapParameters: {fileID: 0}
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: 0
+  m_Sprite: {fileID: 0}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_FlipX: 0
+  m_FlipY: 0
+  m_DrawMode: 0
+  m_Size: {x: 2.6666667, y: 2.6666667}
+  m_AdaptiveModeThreshold: 0.5
+  m_SpriteTileMode: 0
+  m_WasSpriteAssigned: 0
+  m_MaskInteraction: 0
+  m_SpriteSortPoint: 0

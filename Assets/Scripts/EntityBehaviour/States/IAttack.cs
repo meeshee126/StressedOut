@@ -6,10 +6,13 @@ using UnityEngine;
 
 public class IAttack : MonoBehaviour, IState
 {
+    private float count;
+    private float count_e;
+
     private Entity entity;
 
-
     //get target from entityBehavior class
+
     private GameObject target => entity.target;
 
 
@@ -22,8 +25,7 @@ public class IAttack : MonoBehaviour, IState
     /// </summary>
     /// <returns></returns>
     public bool Condition() =>
-        entity.chaseRadius > GetTargetDistance() ||
-        entity.aggressive == true;
+        entity.isCasting == true;
 
 
     /// <summary>
@@ -31,38 +33,41 @@ public class IAttack : MonoBehaviour, IState
     /// </summary>
     public void Execute()
     {
-        Debug.Log("Chasing :" + target.name);
-        SwitchStates();
-        Chase();
+        if (count <= 0f) count_e = count = entity.castTimer / 4f;
+        // Don't move while casting
+        entity.characterRB.velocity = new Vector2(0f, 0f);
 
-        if(IsTargetLost())
-            entity.aggressive = false; //Change state to "Wander"
+        // CountDownTimeNextToHim
+        count_e -= Time.deltaTime;
+            // IF TimeNextToHimMet?
+        if (count_e <= 0f)
+        {
+            // LookTowardsPlayer
+            LookAtTarget();
+            entity.castTimer_e -= Time.deltaTime;
+            // Cast time
+            if (entity.castTimer_e <= 0f)
+            {
+                // Reset timers
+                entity.castTimer_e = entity.castTimer;
+                count_e = count;
+
+                // Cast Attack
+                Instantiate(entity.abilityToCast,
+                    entity.facingDirection.transform.position,
+                    entity.facingDirection.transform.rotation);
+                entity.isCasting = false;
+            }
+        }
+
     }
 
 
     /// <summary>
-    /// Set Entity to "Attack" State
+    /// Set Entity's facing direction towards Target position
     /// </summary>
-    private void SwitchStates()
-    {
-        entity.idle = false;
-        entity.aggressive = true;
-    }
-
-
-    /// <summary>
-    /// Moving towards facing direction
-    /// </summary>
-    private void Chase() =>
-        entity.characterRB.velocity = entity.facingDirection.transform.forward * 100 *
-            entity.stats.movementSpeed * Time.deltaTime;
-
-
-    /// <summary>
-    /// Check if Entity lost his target
-    /// </summary>
-    /// <returns></returns>
-    private bool IsTargetLost() => entity.observationRadius > GetTargetDistance(); //check if target is outside of radius
+    private void LookAtTarget() =>
+        entity.facingDirection.transform.LookAt(target.transform);
 
 
     /// <summary>

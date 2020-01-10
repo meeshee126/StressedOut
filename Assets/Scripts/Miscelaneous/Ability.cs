@@ -94,15 +94,17 @@ public class Ability : MonoBehaviour
     public void CastAttack()
     {
         Collider2D[] collisionsInCastArea = Physics2D.OverlapBoxAll(
-            new Vector3(Position_X, Position_Y), new Vector2(boxColliderX, boxColliderY), 0f);
+            new Vector3(Position_X, Position_Y), new Vector2(boxColliderX, boxColliderY), 0f, WhatCanItHit);
 
         for (int i = 0; i < collisionsInCastArea.Length; i++)
         {
             // If the Entity.state == Neutral or Bad or Good & Entity.type  == Aggresive
             if (collisionsInCastArea[i].GetComponent<Entity>())
-            {
                 collisionsInCastArea[i].GetComponent<Entity>().TakeDamage(Damage);
-            }
+
+            else if(collisionsInCastArea[i].GetComponent<Player>())
+                collisionsInCastArea[i].GetComponent<Player>().TakeDamage(Damage);
+
             else if (HitAllEntities)
             {
                 collisionsInCastArea[i].GetComponent<Entity>().TakeDamage(Damage);

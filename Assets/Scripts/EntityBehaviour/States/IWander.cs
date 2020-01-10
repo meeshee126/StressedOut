@@ -25,16 +25,19 @@ public class IWander : MonoBehaviour, IState
     /// </summary>
     /// <returns></returns>
     public bool Condition() =>
-        GetTargetDistance() > this.entity.observationRadius;
+        GetTargetDistance() > entity.observationRadius ||
+        IsTargetLost() == true;
 
 
-    /// <summary>
-    /// Execute this state
-    /// </summary>
     public void Execute()
     {
-        SetRotation();
+        entity.idle = true;
+        entity.aggressive = false;
+        entity.stats.movementSpeed = 1;
+        entity.charIconAnimator.SetInteger("iconstate", 0);
+
         if (entity.waitTime > 0f) entity.waitTime -= Time.deltaTime;
+        
         if (entity.waitTime <= 0f)
         {
             entity.characterRB.mass = 3;
@@ -43,10 +46,7 @@ public class IWander : MonoBehaviour, IState
         }
 
         // is the Direction the Entity is Facing Not Walkable ?
-        if (!Walkable())
-        {
-            AssignRandomRotation();
-        }
+        if (!Walkable()) AssignRandomRotation();
     }
 
 
@@ -54,7 +54,7 @@ public class IWander : MonoBehaviour, IState
     /// Moving towards facing direction
     /// </summary> 
     private void Move() =>
-        entity.characterRB.velocity = entity.facingDirection.transform.up * 100 * 
+        entity.characterRB.velocity = entity.facingDirection.transform.up * 100 *
             entity.stats.movementSpeed * Time.deltaTime;
 
 
@@ -66,7 +66,7 @@ public class IWander : MonoBehaviour, IState
         count += Time.deltaTime;
 
         // is moving time Over?
-        if (count > Random.Range(1.5f, 5f))
+        if (count > Random.Range(0f, 5f))
         {
             AssignRandomRotation();
             count = 0;
@@ -88,30 +88,9 @@ public class IWander : MonoBehaviour, IState
         //Set raylenght for scene view
         Debug.DrawRay(entity.facingDirection.transform.position, endpoint, Color.red);
 
-        if (hit)
-        {
-            Debug.Log(hit.collider.name + "In range");
-            return false;
-        }
+        if (hit) return false;
 
-        return true;  
-    }
-
-
-    /// <summary>
-    /// Reset Entity rotation
-    /// </summary>
-    private void SetRotation()
-    {
-        // If Entity lost his target
-        if(!entity.idle)
-        {
-            AssignRandomRotation();
-
-            //Entity is not in fight anymore
-            entity.idle = true;
-            entity.stats.movementSpeed = 1;
-        }
+        return true;
     }
 
 
@@ -130,6 +109,13 @@ public class IWander : MonoBehaviour, IState
         // Set Random Facing Direction
         entity.facingDirection.transform.Rotate(0, 0, Random.Range(0, 360));
     }
+
+
+    /// <summary>
+    /// Check if Entity lost his target
+    /// </summary>
+    /// <returns></returns>
+    private bool IsTargetLost() => GetTargetDistance() > entity.lostRadius; //check if target is outside of radius
 
 
     /// <summary>

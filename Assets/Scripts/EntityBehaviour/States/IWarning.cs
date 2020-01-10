@@ -7,13 +7,13 @@ using UnityEngine;
 public class IWarning : MonoBehaviour, IState
 {
     private Entity entity;
+        //get target from entityBehavior class
 
-    //get target from entityBehavior class
     private GameObject target => entity.target;
 
     private float count;
-
-
+    
+    
     public IWarning(Entity entity) => this.entity = entity;
 
 
@@ -21,8 +21,9 @@ public class IWarning : MonoBehaviour, IState
     /// Check if Target is INSIDE the Entity's(this) Observation Radius
     /// </summary>
     /// <returns></returns>
-    public bool Condition() => 
-        GetTargetDistance() <= entity.observationRadius;
+    public bool Condition() =>
+        GetTargetDistance() <= entity.observationRadius &&
+        entity.aggressive == false;
 
 
     /// <summary>
@@ -30,11 +31,13 @@ public class IWarning : MonoBehaviour, IState
     /// </summary>
     public void Execute()
     {
+
         Debug.Log("Warning");
+
+        if (entity.waitTime > 0f) entity.waitTime = 0f;
         entity.idle = false;
         entity.stats.movementSpeed = 3;
-        LookAtTarget();
-        TimeToAttack();
+        if (entity.aggressive == false) TimeToAttack();
     }
 
 
@@ -51,9 +54,9 @@ public class IWarning : MonoBehaviour, IState
     private void TimeToAttack()
     {
         count += Time.deltaTime;
-
+        entity.charIconAnimator.SetInteger("iconstate", 1);
         //If target is in radius for an amount of time, entities state will change to attack
-        if (count > 1.5f)
+        if (count > 1.5f || GetTargetDistance() < entity.chaseRadius)
         {
             count = 0;
             entity.aggressive = true;

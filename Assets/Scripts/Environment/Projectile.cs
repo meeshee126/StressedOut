@@ -9,6 +9,8 @@ public class Projectile : MonoBehaviour
 
     private GameObject enemy;
     //private Vector2 target;
+    [SerializeField]
+    private GameObject hitParticle;
 
 	Entity entity;
 
@@ -28,8 +30,9 @@ public class Projectile : MonoBehaviour
 
         if (transform.position.x == enemy.transform.position.x && transform.position.y == enemy.transform.position.y)
         {
-            Destroy(gameObject);
 			entity.TakeDamage(1);
+            Instantiate(hitParticle, transform.position, Quaternion.identity);
+            Destroy(gameObject);
 		}
 
         if (GameObject.FindWithTag("Enemy") != null)

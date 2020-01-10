@@ -42,15 +42,15 @@ public class Stats : MonoBehaviour
     [Header("VisualFX")]
     [Space]
     public GameObject HurtVFX;
-    public GameObject HurtCriticalVFX, SlowedVFX, DazedVFX, StunnedVFX;
+    public GameObject HurtCriticalVFX, SlowedVFX, DazedVFX, StunnedVFX, DeadFX;
 
     [Space(10)]
     [Header("AudioFX")]
     [Space]
     public GameObject HurtFX;
-    public GameObject HurtCriticalFX, SlowedFX, DazedFX, StunnedFX;
+    public GameObject HurtCriticalFX, SlowedFX, DazedFX, StunnedFX, DestroySFX;
 
-    [Space(10)]
+     [Space(10)]
     [Header("Non-Player Stats")]
     [Space]
     public EntityIdentification entityID = EntityIdentification.undefined;

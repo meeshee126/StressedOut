@@ -58,6 +58,8 @@ public class Player : MonoBehaviour
     public GameObject selectedAbility;
     public float[] cooldownsListCopy, castTimeListCopy;
 
+    private float defaultSpeedMultiplier;
+
 
     // Unity
     /// <summary>
@@ -99,6 +101,14 @@ public class Player : MonoBehaviour
     /// </summary>
     void Update()
     {
+        if (stats.health <= 0)
+        {
+            if (stats.DestroySFX != null) Instantiate(stats.DestroySFX, transform.position, Quaternion.identity);
+            if (stats.DeadFX != null) Instantiate(stats.DeadFX, transform.position, Quaternion.identity);
+
+            Destroy(gameObject);
+        }
+
         ApplyItemHandlerInput();
         ApplyMovementInput();
 
@@ -175,7 +185,9 @@ public class Player : MonoBehaviour
 
             MovementAnimationUpdate(moveHorizontal, moveVertical);
 
-            characterRB.velocity = new Vector2(moveHorizontal, moveVertical) * 100 * stats.movementSpeed * Time.deltaTime;
+            defaultSpeedMultiplier = 100f;
+            if (Input.GetButton("Horizontal") && Input.GetButton("Vertical")) defaultSpeedMultiplier = 75f;
+            characterRB.velocity = new Vector2(moveHorizontal, moveVertical) * defaultSpeedMultiplier * stats.movementSpeed * Time.deltaTime;
             // transform.Translate(new Vector2(moveHorizontal, moveVertical) * stats.movementSpeed * Time.deltaTime);
 
             #region old

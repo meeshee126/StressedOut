@@ -156,9 +156,8 @@ MonoBehaviour:
   - {fileID: 0}
   selectedAbility: {fileID: 2116037749963385260, guid: 6c9cf77ca40c7914697228b4411ff954,
     type: 3}
-  ExampleAbility: {fileID: 0}
-  libraryAbilityList: []
-  LocalAbilityList: []
+  cooldownsListCopy: []
+  castTimeListCopy: []
 --- !u!95 &7501630965559726236
 Animator:
   serializedVersion: 3
@@ -193,13 +192,27 @@ MonoBehaviour:
   entityName: Entity Sample
   description: 
   health: 4
+  damage: 1
   armor: 0
   movementSpeed: 4
+  comboTimer: 0
+  currentCombo: 0
+  HurtVFX: {fileID: 2754619200776676849, guid: a784ecf6ae1142e4588466612dc4cb3a, type: 3}
+  HurtCriticalVFX: {fileID: 0}
+  SlowedVFX: {fileID: 0}
+  DazedVFX: {fileID: 0}
+  StunnedVFX: {fileID: 0}
+  DeadFX: {fileID: 6143387398191298056, guid: b8908290c5121b143868d796d9c0783c, type: 3}
+  HurtFX: {fileID: 0}
+  HurtCriticalFX: {fileID: 0}
+  SlowedFX: {fileID: 0}
+  DazedFX: {fileID: 0}
+  StunnedFX: {fileID: 0}
+  DestroySFX: {fileID: 9023476143831567709, guid: ee8f50f72029c42478f0c4d9bbf37212,
+    type: 3}
   entityID: 100
   type: 0
   state: 1
-  comboResetTimer: 3.05
-  currentCombo: 0
 --- !u!114 &7501630965559726234
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -213,6 +226,3 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   mainCamera: {fileID: 0}
-  isTrigger: 0
-  posX: 0
-  posY: 0
