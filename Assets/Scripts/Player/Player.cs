@@ -37,7 +37,7 @@ public class Player : MonoBehaviour
     public TimeBehaviour timeBehaviour;
 
     private AudioSource audioSource;
-    private AbilityLists abilityLists;
+    protected AbilityLists abilityLists;
     private GameObject gameManager;
     private ItemsList itemList;
 
@@ -54,7 +54,7 @@ public class Player : MonoBehaviour
     [Space(15)]
     [Header("Abilities Related")]
     [Space(15)]
-    private bool isCasting;
+    protected bool isCasting;
     public GameObject selectedAbility;
     public float[] cooldownsListCopy, castTimeListCopy;
 
@@ -68,7 +68,7 @@ public class Player : MonoBehaviour
     private void Awake()
     {
         gameManager = GameObject.Find("GameManager");
-        resourceManager = GameObject.Find("GameManager").GetComponent<ResourceManager>();
+        resourceManager = gameManager.GetComponent<ResourceManager>();
         abilityLists = gameManager.GetComponentInChildren<AbilityLists>();
         itemList = gameManager.GetComponentInChildren<ItemsList>();
         timeBehaviour = gameManager.GetComponent<TimeBehaviour>();
